@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TheEinsteinsCrime/static/css/main.139187bb.css",
+    "main.js": "/TheEinsteinsCrime/static/js/main.0c1b0a67.js",
+    "index.html": "/TheEinsteinsCrime/index.html",
+    "main.139187bb.css.map": "/TheEinsteinsCrime/static/css/main.139187bb.css.map",
+    "main.0c1b0a67.js.map": "/TheEinsteinsCrime/static/js/main.0c1b0a67.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.139187bb.css",
+    "static/js/main.0c1b0a67.js"
+  ]
+}
