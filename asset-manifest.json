@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/TheEinsteinsCrime/static/css/main.139187bb.css",
-    "main.js": "/TheEinsteinsCrime/static/js/main.f51165c1.js",
+    "main.js": "/TheEinsteinsCrime/static/js/main.c51eb585.js",
     "index.html": "/TheEinsteinsCrime/index.html",
     "main.139187bb.css.map": "/TheEinsteinsCrime/static/css/main.139187bb.css.map",
-    "main.f51165c1.js.map": "/TheEinsteinsCrime/static/js/main.f51165c1.js.map"
+    "main.c51eb585.js.map": "/TheEinsteinsCrime/static/js/main.c51eb585.js.map"
   },
   "entrypoints": [
     "static/css/main.139187bb.css",
-    "static/js/main.f51165c1.js"
+    "static/js/main.c51eb585.js"
   ]
 }
