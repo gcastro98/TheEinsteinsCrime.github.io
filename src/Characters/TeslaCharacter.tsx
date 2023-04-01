@@ -11,7 +11,7 @@ type results = 1 | 2| 3| 4| 5| 6 | undefined
 export function TeslaCharacter(props: any) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF(
-    `${selectPath()}/characters/Tesla_character.glb`
+    `./TheEinsteinsCrime/models/characters/Tesla_character.glb`
   ) as any;
   // const { actions } = useAnimations(animations, group)
 

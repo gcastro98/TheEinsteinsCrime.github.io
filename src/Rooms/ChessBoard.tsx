@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 import { selectPath } from '../Utils/Utils';
 
 export function ChessBoard(props: any) {
-  const { nodes, materials } = useGLTF(`${selectPath()}/board/Chess_board.glb`) as any;
+  const { nodes, materials } = useGLTF(`./TheEinsteinsCrime/models/board/Chess_board.glb`) as any;
   return (
     <group {...props} dispose={null}>
       <group position={[13.88, 1.51, -13.29]} rotation={[1.89, 0.88, -2.05]} scale={0.21}>

@@ -4,6 +4,8 @@ import React, { Suspense } from 'react';
 import './App.css';
 import { TeslaCharacter } from './Characters/TeslaCharacter';
 import { ChessBoard } from './Rooms/ChessBoard';
+import { RoomClass } from './Rooms/RoomClass';
+import { RoomLibrary } from './Rooms/RoomLibrary';
 
 function App() {
   return (
@@ -26,10 +28,10 @@ function App() {
         <color args={["#2114db"]} attach="background" />
 
         <Suspense fallback={null}>
-            {/* <RoomClass /> */}
+            <RoomClass />
             <ChessBoard  />
             <TeslaCharacter />
-            {/* <RoomLibrary /> */}
+            <RoomLibrary />
             {/* <RoomWorkshop /> */}
         </Suspense>
         <gridHelper

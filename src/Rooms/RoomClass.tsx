@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 import { selectPath } from '../Utils/Utils'
 
 export function RoomClass(props: any) {
-  const { nodes, materials } = useGLTF(`${selectPath()}/rooms/Room_class.glb`) as any
+  const { nodes, materials } = useGLTF(`./TheEinsteinsCrime/models/rooms/Room_class.glb`) as any
   return (
     <group {...props} dispose={null}>
       <group position={[-8.72, 3.33, 8.99]} scale={0.57}>
