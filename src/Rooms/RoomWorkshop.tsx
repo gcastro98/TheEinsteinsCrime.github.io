@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { selectPath } from '../Utils/Utils';
 
 export function RoomWorkshop(props: any) {
-  const { nodes, materials } = useGLTF('./TheEinsteinsCrime/models/rooms/Room_workshop.glb') as any;
+  const { nodes, materials } = useGLTF(`${selectPath()}/rooms/Room_workshop.glb`) as any;
   return (
     <group {...props} dispose={null}>
       <group position={[11.17, 0.51, -7.59]} rotation={[-Math.PI / 2, 0, -2.34]} scale={0.09}>

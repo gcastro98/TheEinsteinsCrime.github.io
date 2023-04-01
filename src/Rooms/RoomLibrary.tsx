@@ -5,9 +5,10 @@ Command: npx gltfjsx@6.1.4 Room_library.gltf
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { selectPath } from '../Utils/Utils'
 
 export function RoomLibrary(props: any) {
-  const { nodes, materials } = useGLTF('./TheEinsteinsCrime/models/rooms/Room_library.glb') as any
+  const { nodes, materials } = useGLTF(`${selectPath()}/rooms/Room_library.glb`) as any
   return (
     <group {...props} dispose={null}>
       <group position={[5.62, 2.54, -19.98]} scale={0.24}>
