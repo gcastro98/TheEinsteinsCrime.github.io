@@ -5,12 +5,13 @@ Command: npx gltfjsx@6.1.4 Tesla_character.glb
 
 import React, { useRef, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { selectPath } from "../Utils/Utils";
 
 type results = 1 | 2| 3| 4| 5| 6 | undefined
 export function TeslaCharacter(props: any) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF(
-    "/models/characters/Tesla_character.glb"
+    `${selectPath()}/characters/Tesla_character.glb`
   ) as any;
   // const { actions } = useAnimations(animations, group)
 
