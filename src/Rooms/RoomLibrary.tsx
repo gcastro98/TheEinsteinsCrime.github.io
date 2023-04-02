@@ -12,16 +12,16 @@ export function RoomLibrary(props: any) {
   return (
     <group {...props} dispose={null}>
       <group position={[5.62, 2.54, -19.98]} scale={0.24}>
-        <pointLight intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        <pointLight intensity={5} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
       <group position={[3.35, 2.54, -19.98]} scale={0.24}>
-        <pointLight intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        <pointLight intensity={5} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
       <group position={[8.2, 2.53, -22.57]} scale={0.24}>
-        <pointLight intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        <pointLight intensity={5} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
-      <group position={[8.21, 2.54, -20.44]} scale={0.24}>
-        <pointLight intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      <group position={[8.21, 2.52, -20.67]} scale={0.24}>
+        <pointLight intensity={5} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
       <group position={[1.82, 0.6, -24.6]} rotation={[-Math.PI / 2, 0, 0]} scale={1.08}>
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.03}>
@@ -164,7 +164,7 @@ export function RoomLibrary(props: any) {
       </group>
       <group position={[8.17, 2.39, -21.05]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.24}>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.009']} position={[2.52, 0.03, 0]} />
+          <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.009']} position={[1.6, 0.13, 0]} />
         </group>
       </group>
       <group position={[5.62, 2.39, -20.04]} rotation={[-Math.PI / 2, 0, -3.14]} scale={0.24}>
@@ -183,10 +183,12 @@ export function RoomLibrary(props: any) {
       <group position={[4.03, 0.5, -23.06]} scale={[4, 1, 3.05]}>
         <mesh geometry={nodes.Plane001.geometry} material={materials['Room_wall_interior.001']} />
         <mesh geometry={nodes.Plane001_1.geometry} material={materials['Room_floor.001']} />
-        <mesh geometry={nodes.Plane001_2.geometry} material={materials['Room_wall_exterior.001']} />
+        <mesh geometry={nodes.Plane001_2.geometry} material={materials.wall_outside} />
       </group>
     </group>
   )
+
+
 }
 
 // useGLTF.preload('/models/rooms/Room_library.gltf')

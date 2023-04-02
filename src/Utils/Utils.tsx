@@ -12,6 +12,6 @@ export function selectPath(){
     // if(!host.includes('localhost')){
         // return './models';
     // } else {
-        return '/TheEinsteinsCrime/models';
+        return './TheEinsteinsCrime/models';
     // }
 }
