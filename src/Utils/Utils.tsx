@@ -15,3 +15,4 @@ export function selectPath(){
         return './TheEinsteinsCrime/models';
     // }
 }
+export const REDUCE_SCALE_DOOR = 0.55

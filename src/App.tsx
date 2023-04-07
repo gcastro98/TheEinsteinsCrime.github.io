@@ -1,16 +1,20 @@
-import { Loader, OrbitControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import React, { Suspense } from 'react';
-import './App.css';
-import { TeslaCharacter } from './Characters/TeslaCharacter';
-import { ChessBoard } from './Rooms/ChessBoard';
-import { RoomClass } from './Rooms/RoomClass';
-import { RoomLibrary } from './Rooms/RoomLibrary';
+import { Loader, OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import React, { Suspense } from "react";
+import "./App.css";
+import { TeslaCharacter } from "./Characters/TeslaCharacter";
+import { Board } from "./Board/Board";
+import { Class } from "./Rooms/Class";
+import { Library } from "./Rooms/Library";
+import { Workshop } from "./Rooms/Workshop";
+import { Laboratory } from "./Rooms/Laboratory";
+import { Arrows } from "./Characters/Arrows";
+import { Tesla } from "./Characters/Pieces/Tesla";
 
 function App() {
   return (
     <>
-    <Canvas
+      <Canvas
         orthographic
         shadows
         camera={{
@@ -28,21 +32,18 @@ function App() {
         <color args={["#2114db"]} attach="background" />
 
         <Suspense fallback={null}>
-            <RoomClass />
-            <ChessBoard  />
-            <TeslaCharacter />
-            <RoomLibrary />
-            {/* <RoomWorkshop /> */}
+          <Class />
+          <Board />
+          {/* <TeslaCharacter /> */}
+          <Library />
+          <Laboratory />
+          <Workshop />
+          <Arrows character={Tesla} />
         </Suspense>
         <gridHelper
           args={[200, 100, "#1100ff", "#1100ff"]}
           position={[0, -1.26, 0]}
         />
-        <gridHelper
-          args={[200, 1000, "#1100ff", "#1100ff"]}
-          position={[0, -1.27, 0]}
-        />
-        
       </Canvas>
       <Loader />
     </>
