@@ -507,7 +507,7 @@ export function Workshop(props: any) {
             </group>
           </group>
           <group name="LightLeft" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft_Orientation" intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+            <pointLight name="LightLeft_Orientation" intensity={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
           </group>
         </group>
         <group name="LampRight" position={[20.55, 2.78, -9.17]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
@@ -517,7 +517,7 @@ export function Workshop(props: any) {
             </group>
           </group>
           <group name="LightRight" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight_Orientation" intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+            <pointLight name="LightRight_Orientation" intensity={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
           </group>
         </group>
         <group name="LampLeft001" position={[18.81, 2.77, -7.45]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
@@ -527,7 +527,7 @@ export function Workshop(props: any) {
             </group>
           </group>
           <group name="LightLeft001" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft001_Orientation" intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+            <pointLight name="LightLeft001_Orientation" intensity={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
           </group>
         </group>
         <group name="LampRight001" position={[18.81, 2.78, -5.47]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
@@ -537,7 +537,7 @@ export function Workshop(props: any) {
             </group>
           </group>
           <group name="LightRight001" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight001_Orientation" intensity={1} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+            <pointLight name="LightRight001_Orientation" intensity={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
           </group>
         </group>
         <group name="ParentFlyMachine" position={[24.24, 1.12, -6.07]} rotation={[-Math.PI / 2, 0, 1.58]} scale={[0.35, 0.35, 0.5]}>

@@ -12,7 +12,7 @@ export function Tesla(props: any) {
   console.log(props)
   return (
     <group  dispose={null}>
-      <mesh geometry={nodes.Object_2001.geometry} material={materials.material_0} position={[0.51, 1.5, -0.47]} rotation={[-1.58 , 0, -0.26 + props.rotationZ]} scale={0.24} />
+      <mesh geometry={nodes.Object_2001.geometry} material={materials.material_0} position={[0.51, 1.5, -0.47]} rotation={[-1.58 , 0, -0.26 + props.rotationZ]} scale={0.24} castShadow receiveShadow/>
     </group>
   )
 }

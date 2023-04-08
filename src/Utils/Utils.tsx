@@ -12,7 +12,7 @@ export function selectPath(){
     // if(!host.includes('localhost')){
         // return './models';
     // } else {
-        return './TheEinsteinsCrime/models';
+        return './models';
     // }
 }
 export const REDUCE_SCALE_DOOR = 0.55
