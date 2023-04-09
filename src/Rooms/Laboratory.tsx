@@ -11,6 +11,7 @@ export function Laboratory(props: any) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Laboratory.glb`) as any;
   const { actions } = useAnimations(animations, group)
+  console.log('Animations', animations, actions)
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Class">

@@ -13,8 +13,7 @@
     "three": "0.149.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "npm run predeploy && firebase deploy",
+    "deploy": "npm run build && firebase deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
