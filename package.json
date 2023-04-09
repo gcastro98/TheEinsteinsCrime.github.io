@@ -2,8 +2,8 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
+    "@fluentui/react": "^8.107.3",
     "@react-three/drei": "9.56.25",
     "@react-three/fiber": "8.11.2",
     "@types/three": "0.149.0",

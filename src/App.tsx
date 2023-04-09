@@ -28,7 +28,7 @@ const buttons = [
 function App() {
   return (
     <>
-      <NavMenu logo="TheEinsteinsCrime_logo.png" buttons={buttons} />
+      <NavMenu logo="TheEinsteinsCrime_logo_recortado.png" buttons={buttons} />
       <Canvas
         style={{
           opacity: 1,

@@ -15,21 +15,23 @@ type NavTopMenuProps = {
 
 const NavMenu: React.FC<NavTopMenuProps> = ({ logo, buttons }) => {
   return (
-    <nav className="nav-top-menu">
-      <div className="nav-top-menu__logo">
-        <img src={logo} alt="Logo" />
+    <nav className="navMenu">
+      <div className="navMenuSectionLogo">
+        <img src={logo} alt="The Einstein's Crime" className="navMenuLogo"/>
       </div>
-      <ul className="nav-top-menu__buttons">
+      {/* <div className="navMenuUlButtons"> */}
+      <ul className="navMenuSectionButtons">
         {buttons?.map((button) => (
           <li
             key={button.name}
-            className={`nav-top-menu__button ${button.right ? 'right' : 'left'}`}
+            className={`navMenuButton ${button.right ? 'right' : 'left'}`}
             onClick={button.onClick}
           >
             {button.name}
           </li>
         ))}
       </ul>
+      {/* </div> */}
     </nav>
   );
 };

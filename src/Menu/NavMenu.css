@@ -1,48 +1,77 @@
-.nav-top-menu {
-  position: fixed; /* Set the navbar to fixed position */
+
+.navMenu {
+  position: fixed; 
+  display: inline-block;
   top: 15px;
   left: 10%;
   align-items: center;
   justify-content: space-between;
   background-color: #222;
-  height: 38px;
-  padding: 15px;
+  height: 7%;
+  padding: 1em;
   border-radius: 5px;
   z-index: 9999;
-  width: 80%
+  width: 80%;
+  vertical-align: middle;
 }
 
-.nav-top-menu__logo img {
-  max-height: 200px;
-  max-width: 200px;
+.navMenuSectionLogo {
+  top: 0;
+  display: block;
+  height: 100%;
+  width: 20%;
+  display: inline-block;
+}
+.navMenuLogo {
+  /* padding: 5px; */
+  height: 100%;
+  width: auto;
 }
 
-.nav-top-menu__buttons {
-  display: flex;
+
+
+
+.navMenuSectionButtons {
+  vertical-align: middle;
+  width:60%;
+  text-align: center;
+  display: inline-block;
+  top: 0;
+  left: 1em;
   list-style: none;
   margin: 0;
-  padding: 0;
-}
-
-.nav-top-menu__button {
-  display: flex;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  padding: 0 16px;
+}
+
+.navMenuButton {
+  display: inline-block;
+   width: 20%; 
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out; 
+  color: white;
+  font-size: 1.2em;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.nav-top-menu__button:hover {
+.navMenuButton:hover {
+  background-color:#800;
+  top:36px;
+  height:2px;
+  border-bottom:solid 1px 
+}
+
+/* .navMenuButton:hover {
   background-color: rgba(255, 255, 255, 0.1);
+} */
+
+.navMenuButton.left {
+  /* margin-right: auto; */
 }
 
-.nav-top-menu__button.left {
-  margin-right: auto;
-}
-
-.nav-top-menu__button.right {
-  margin-left: auto;
+.navMenuButton.right {
+  /* margin-left: auto; */
 }
 
 @media screen and (min-width: 768px) {
