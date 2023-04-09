@@ -15,10 +15,20 @@ import { Workshop } from "./Rooms/Workshop";
 import { Laboratory } from "./Rooms/Laboratory";
 import { Arrows } from "./Characters/Arrows";
 import { Tesla } from "./Characters/Pieces/Tesla";
+import { Davinci } from "./Characters/Pieces/Davinci";
+import NavMenu from "./Menu/NavMenu";
+
+const buttons = [
+  { name: "Inicio", onClick: () => console.log("clicked"), right: false },
+  { name: "Ajustes", onClick: () => console.log("clicked"), right: false },
+  { name: "Crear sala", onClick: () => console.log("clicked"), right: true },
+  { name: "Unirse a sala", onClick: () => console.log("clicked"), right: true },
+];
 
 function App() {
   return (
     <>
+      <NavMenu logo="TheEinsteinsCrime_logo.png" buttons={buttons} />
       <Canvas
         style={{
           opacity: 1,
@@ -36,7 +46,8 @@ function App() {
           <Library />
           <Laboratory />
           <Workshop />
-          <Arrows character={Tesla} />
+          <Arrows character={Tesla} initialPosition={{ x: 13, y: -13 }} />
+          <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} />
         </Suspense>
       </Canvas>
       <Loader />

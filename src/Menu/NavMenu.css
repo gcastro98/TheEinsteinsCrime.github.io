@@ -1,0 +1,59 @@
+.nav-top-menu {
+  position: fixed; /* Set the navbar to fixed position */
+  top: 15px;
+  left: 10%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #222;
+  height: 38px;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 9999;
+  width: 80%
+}
+
+.nav-top-menu__logo img {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.nav-top-menu__buttons {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-top-menu__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav-top-menu__button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-top-menu__button.left {
+  margin-right: auto;
+}
+
+.nav-top-menu__button.right {
+  margin-left: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .nav-top-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 80px;
+  }
+
+  .nav-top-menu__button {
+    font-size: 1.4rem;
+    padding: 0 24px;
+  }
+}
