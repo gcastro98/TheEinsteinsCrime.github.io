@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { REDUCE_SCALE_DOOR, selectPath } from '../Utils/Utils';
+import { REDUCE_SCALE_DOOR, selectPath } from '../../Utils/Utils';
 
 export function Workshop(props: any) {
   const group = useRef()
@@ -627,4 +627,4 @@ export function Workshop(props: any) {
   )
 }
 
-// useGLTF.preload('/models/rooms/Room_workshop.glb')
+useGLTF.preload(`${selectPath()}/rooms/Workshop.glb`)

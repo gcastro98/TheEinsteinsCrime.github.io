@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 Room_library.gltf
 
 import React, { useRef } from 'react'
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { REDUCE_SCALE_DOOR, selectPath } from '../Utils/Utils'
+import { REDUCE_SCALE_DOOR, selectPath } from '../../Utils/Utils'
 
 export function Library(props: any) {
   const group = useRef()
@@ -328,4 +328,4 @@ export function Library(props: any) {
   )
 }
 
-// useGLTF.preload('/models/rooms/Room_library.gltf')
+useGLTF.preload(`${selectPath()}/rooms/Library.glb`)

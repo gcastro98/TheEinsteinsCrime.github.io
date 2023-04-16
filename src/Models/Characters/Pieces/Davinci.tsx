@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Tesla.glb
 
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { selectPath } from "../../Utils/Utils";
+import { selectPath } from "../../../Utils/Utils";
 
 export function Davinci(props: any) {
   const { nodes, materials } = useGLTF(
@@ -29,4 +29,4 @@ export function Davinci(props: any) {
   );
 }
 
-// useGLTF.preload('/Tesla.glb')
+useGLTF.preload(  `${selectPath()}/characters/Davinci.glb`)

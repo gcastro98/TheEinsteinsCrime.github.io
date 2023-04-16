@@ -1,0 +1,98 @@
+.boardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.boardPivots {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    color: white;
+    margin-bottom: 2em;
+    z-index: 1000;
+}
+.pivot {
+    padding: 5px;
+    width: auto;
+    color: white;
+}
+.boardTable {
+    display: flex;
+    justify-content: center;
+}
+
+.boardColumnContainer {
+    padding-top: 2em;
+    display: flex;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.boardColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    height: 20px;
+    min-width: 20px;
+    width: auto;
+    padding: 10px;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.isLabel {
+    border: none;
+    height: 24px;
+}
+
+.isIcon {
+    border: 1px solid white !important;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.selectedCheck {
+    animation-name: fill;
+    animation-duration: 1.2s;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.selectedFail {
+    animation-name: fill;
+    animation-duration: 1.2s;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.selectedUnknown {
+    animation-name: fill;
+    animation-duration: 1.2s;
+    background-color: green;
+    border-radius: 5px;
+}
+
+@keyframes fill {
+    from {
+        background-color: white;
+        background-image: radial-gradient(circle at center, white 0%, white 50%, green 50%, green 100%);
+        background-size: 200%;
+        background-position: center;
+    }
+
+    to {
+        background-color: green;
+        background-image: none;
+        background-size: auto;
+        background-position: center;
+    }
+}

@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 Chess_board.glb
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { selectPath } from '../Utils/Utils';
+import { selectPath } from '../../Utils/Utils';
 
 export function Board(props: any) {
   const { nodes, materials } = useGLTF(`${selectPath()}/board/Board.glb`) as any;
@@ -58,4 +58,4 @@ export function Board(props: any) {
   )
 }
 
-// useGLTF.preload('./models/board/Chess_board.glb')
+useGLTF.preload(`${selectPath()}/board/Board.glb`)
