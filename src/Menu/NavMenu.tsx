@@ -1,39 +1,66 @@
+import { Stylesheet } from "@fluentui/react";
+import React, { useEffect, useState } from "react";
+import "./NavMenu.scss";
 
-import React from 'react';
-import './NavMenu.css';
+export enum ButtonMode {
+  StartScreen,
+  GameScreen,
+}
+export enum ButtonType {
+  None = "None",
+  Home = "Inicio",
+  Settings = "Ajustes",
+  Create = "Crear sala",
+  Join = "Unirse a sala",
+  Board = "Tablero",
+  Cards = "Cartas",
+  Dices = "Dados",
+}
 
 type ButtonProps = {
   name: string;
-  onClick: () => void;
-  right?: boolean;
+  mode?: ButtonMode;
+  type: ButtonType;
 };
 
 type NavTopMenuProps = {
   logo: string;
   buttons?: ButtonProps[];
+  loading: number;
+  activeButton: ButtonType;
+  onClick: (type: ButtonType) => void;
 };
 
-const NavMenu: React.FC<NavTopMenuProps> = ({ logo, buttons }) => {
+export function NavMenu(props: NavTopMenuProps) {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (props.loading >= 100) {
+      setLoading(false);
+    }
+  }, [props.loading]);
+
   return (
-    <nav className="navMenu">
-      <div className="navMenuSectionLogo">
-        <img src={logo} alt="The Einstein's Crime" className="navMenuLogo"/>
-      </div>
-      {/* <div className="navMenuUlButtons"> */}
-      <ul className="navMenuSectionButtons">
-        {buttons?.map((button) => (
-          <li
-            key={button.name}
-            className={`navMenuButton ${button.right ? 'right' : 'left'}`}
-            onClick={button.onClick}
-          >
-            {button.name}
-          </li>
-        ))}
+    <nav className={"navMenu"}>
+      <ul className={"navListButton"}>
+        <img
+          src={props.logo}
+          alt="The Einstein's Crime"
+          className={isLoading ? "navMenuLogoLoading" : "navMenuLogo"}
+        />
+        {!isLoading &&
+          props.buttons?.map((button) => (
+            <li
+              key={button.name}
+              className={`navButton`}
+              onClick={() => button.type !== ButtonType.None && (props.activeButton === button.type ? props.onClick(ButtonType.None) : props.onClick(button.type))}
+            >
+              {button.name}
+            </li>
+          ))}
       </ul>
-      {/* </div> */}
     </nav>
   );
-};
+}
 
 export default NavMenu;

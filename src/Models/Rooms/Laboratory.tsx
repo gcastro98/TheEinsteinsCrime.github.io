@@ -5,13 +5,13 @@ Command: npx gltfjsx@6.1.4 .\Laboratory.glb
 
 import React, { useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { REDUCE_SCALE_DOOR, selectPath } from '../Utils/Utils'
+import { REDUCE_SCALE_DOOR, selectPath } from '../../Utils/Utils'
 
 export function Laboratory(props: any) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Laboratory.glb`) as any;
   const { actions } = useAnimations(animations, group)
-  console.log('Animations', animations, actions)
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Class">
@@ -240,4 +240,4 @@ export function Laboratory(props: any) {
   )
 }
 
-// useGLTF.preload('/Laboratory.glb')
+useGLTF.preload(`${selectPath()}/rooms/Laboratory.glb`)

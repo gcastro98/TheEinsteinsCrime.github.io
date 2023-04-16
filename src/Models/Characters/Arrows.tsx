@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Arrows.glb
 
 import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { selectPath } from "../Utils/Utils";
+import { selectPath } from "../../Utils/Utils";
 
 export function Arrows(props: any) {
   const { nodes, materials } = useGLTF(
@@ -36,7 +36,7 @@ export function Arrows(props: any) {
   const XlimitLess = 0;
   const YlimitUp = 0;
   const YlimitLess = -25;
-  console.log(positionX, positionY);
+
   return (
     <group position={[positionX, 0.4, positionY]}>
       <mesh
@@ -80,4 +80,4 @@ export function Arrows(props: any) {
   );
 }
 
-// useGLTF.preload('/Arrows.glb')
+useGLTF.preload('./Arrows.glb')

@@ -1,56 +1,24 @@
 import {
-  BakeShadows,
-  Environment,
-  Loader,
-  OrbitControls,
-} from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { Suspense, useRef } from "react";
-import "./App.css";
-import { TeslaCharacter } from "./Characters/TeslaCharacter";
-import { Board } from "./Board/Board";
-import { Class } from "./Rooms/Class";
-import { Library } from "./Rooms/Library";
-import { Workshop } from "./Rooms/Workshop";
-import { Laboratory } from "./Rooms/Laboratory";
-import { Arrows } from "./Characters/Arrows";
-import { Tesla } from "./Characters/Pieces/Tesla";
-import { Davinci } from "./Characters/Pieces/Davinci";
-import NavMenu from "./Menu/NavMenu";
+ 
+  Loader, useProgress,
 
-const buttons = [
-  { name: "Inicio", onClick: () => console.log("clicked"), right: false },
-  { name: "Ajustes", onClick: () => console.log("clicked"), right: false },
-  { name: "Crear sala", onClick: () => console.log("clicked"), right: true },
-  { name: "Unirse a sala", onClick: () => console.log("clicked"), right: true },
-];
+} from "@react-three/drei";
+import React, { Suspense, useRef, useState } from "react";
+import { BoardGame } from "./Dialog/ChildComponents/BoardGame/BoardGame";
+import { DialogBoard } from "./Dialog/Dialog";
+import NavMenu, { ButtonType } from "./Menu/NavMenu";
+import { GameScene } from "./SceneManagement/GameScene";
+import { config } from "./Utils/Config";
+import { switchComponentsByActiveButton } from "./Utils/Utils";
 
 function App() {
+  const [activeButton, setActive] = useState(ButtonType.None)
+  const {progress} = useProgress();
   return (
     <>
-      <NavMenu logo="TheEinsteinsCrime_logo_recortado.png" buttons={buttons} />
-      <Canvas
-        style={{
-          opacity: 1,
-          transition: "opacity 200ms ease-in-out",
-        }}
-      >
-        <color attach="background" args={["#202030"]} />
-        <fog attach="fog" args={["#202030", 1, 45]} />
-        <OrbitControls target={[10, 10, 0]} />
-        <ambientLight intensity={0.15} />
-        <BakeShadows />
-        <Suspense fallback={null}>
-          <Class />
-          <Board />
-          <Library />
-          <Laboratory />
-          <Workshop />
-          <Arrows character={Tesla} initialPosition={{ x: 13, y: -13 }} />
-          <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} />
-        </Suspense>
-      </Canvas>
-      <Loader />
+      <NavMenu logo={config.logoPath} buttons={config.buttons} loading={ progress } onClick={(type) => setActive(type)} activeButton={activeButton}/>
+      <DialogBoard component={switchComponentsByActiveButton(activeButton)} hidden={activeButton === ButtonType.None}  />
+      <GameScene />
     </>
   );
 }
