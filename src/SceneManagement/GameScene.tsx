@@ -8,14 +8,14 @@ import {
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { Suspense, useRef } from "react";
-import { Board } from "../Models/Board/Board";
-import { Arrows } from "../Models/Characters/Arrows";
-import { Davinci } from "../Models/Characters/Pieces/Davinci";
-import { Tesla } from "../Models/Characters/Pieces/Tesla";
-import { Class } from "../Models/Rooms/Class";
-import { Laboratory } from "../Models/Rooms/Laboratory";
-import { Library } from "../Models/Rooms/Library";
-import { Workshop } from "../Models/Rooms/Workshop";
+import { Board } from "./Models/Board/Board";
+import { Arrows } from "./Models/Characters/Arrows";
+import { Davinci } from "./Models/Characters/Pieces/Davinci";
+import { Tesla } from "./Models/Characters/Pieces/Tesla";
+import { Class } from "./Models/Rooms/Class";
+import { Laboratory } from "./Models/Rooms/Laboratory";
+import { Library } from "./Models/Rooms/Library";
+import { Workshop } from "./Models/Rooms/Workshop";
 import './GameScene.scss';
 
 export function GameScene(props: any) {
@@ -33,7 +33,7 @@ export function GameScene(props: any) {
 
         <OrbitControls
           target={[13, 0, -13]}
-          autoRotate
+          // autoRotate
           // minAzimuthAngle={-Math.PI / 4}
           // maxAzimuthAngle={Math.PI / 4}
           // minPolarAngle={Math.PI / 6}

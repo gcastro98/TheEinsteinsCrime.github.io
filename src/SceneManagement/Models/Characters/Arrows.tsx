@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Arrows.glb
 
 import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { selectPath } from "../../Utils/Utils";
+import { selectPath } from '../../../Utils/Utils';
 
 export function Arrows(props: any) {
   const { nodes, materials } = useGLTF(
