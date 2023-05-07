@@ -16,7 +16,7 @@ import { Class } from "./Models/Rooms/Class";
 import { Laboratory } from "./Models/Rooms/Laboratory";
 import { Library } from "./Models/Rooms/Library";
 import { Workshop } from "./Models/Rooms/Workshop";
-import './GameScene.scss';
+import "./GameScene.scss";
 
 export function GameScene(props: any) {
   return (
@@ -47,11 +47,11 @@ export function GameScene(props: any) {
           <Library />
           <Laboratory />
           <Workshop />
-          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} />
-          <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} />
-          </Suspense>
+          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} path={"tesla"} />
+          {/* <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} path={"davinci"} /> */}
+        </Suspense>
       </Canvas>
-      <Loader/>
+      <Loader />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Stylesheet } from "@fluentui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./NavMenu.module.scss";
+import { GameContext } from "../Services/DataServices";
 export enum ButtonMode {
   StartScreen,
   GameScreen,
@@ -33,9 +34,9 @@ type NavTopMenuProps = {
 };
 
 export function NavMenu(props: NavTopMenuProps) {
+  // const context = useContext(GameContext);
   const [isLoading, setLoading] = useState(true);
   const [buttons, setButtons]:  [ButtonProps[], any] = useState(props.buttons?.filter((button) => button.mode === props.mode) || []);
-  console.log(props.buttons, props.mode);
   useEffect(() => {
     if (props.loading >= 100) {
       setLoading(false);

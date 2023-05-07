@@ -12,7 +12,6 @@ export function Davinci(props: any) {
     `${selectPath()}/characters/Davinci.glb`
   ) as any;
   let rotation = props.rotationZ;
-  console.log(rotation)
   return (
     // <group {...props} dispose={null} rotation={[-Math.PI, -Math.PI / 2,0 ]}>
     //   <mesh
