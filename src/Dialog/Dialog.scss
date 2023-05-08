@@ -1,6 +1,7 @@
 
 .Dialog {
     align-items: center;
+    justify-content: center;
     background-color: rgba(104,39,33,0.85);
     width: 40%;
     min-height: 50%;
@@ -13,5 +14,9 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    z-index: 999
+    z-index: 999;
+    color: white;
+    max-height: 70%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

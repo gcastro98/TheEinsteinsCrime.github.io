@@ -9,6 +9,7 @@ export const config: any = {
         { name: "Unirse a sala", type: ButtonType.Join, mode: ButtonMode.StartScreen   },
         { name: "Tablero",  type: ButtonType.Board, mode: ButtonMode.GameScreen  },
         { name: "Tarjetas",  type: ButtonType.Cards, mode: ButtonMode.GameScreen  },
+        { name: "Peticiones",  type: ButtonType.Request, mode: ButtonMode.GameScreen},
         { name: "Dados",  type: ButtonType.Dices, mode: ButtonMode.GameScreen  },
         { name: "Salir",  type: ButtonType.Exit, mode: ButtonMode.GameScreen  }
       ]

@@ -24,6 +24,7 @@ export function WaitingRoom(props: any) {
     const cards = generateRandomCards(auxGame.Cards, auxGame.Users);
     auxGame.Cards = cards;
     auxGame.OnProgress = true;
+    auxGame.ActivePlayer = 0;
     setGame(auxGame);
   }
 

@@ -1,0 +1,43 @@
+
+.Notification {
+  position: fixed; 
+  display: inline-block;
+  top: 15px;
+  background-color: rgba(104,39,33,0.85);
+  height: 10%;
+  border-radius: 5px;
+  z-index: 9999;
+  width: 15%;
+  max-height: 15%;
+  align-items: center;
+  padding: 0.5em;
+  vertical-align: middle;
+  top: 10%;
+  left: 85%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 1em;
+}
+
+.firstSection {
+  display: flex;
+  flex-direction: row;
+  float: left;
+  clear: none; 
+}
+
+.leftColumn {
+  width: 50%;
+  left: 0;
+  align-items: flex-start;
+}
+
+.rightColumn {
+  width: 50%;
+  align-items: flex-end;
+}
+
+
+
+

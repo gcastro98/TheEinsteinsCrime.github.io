@@ -10,6 +10,9 @@ import { GameContext, checkGameReference } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
 import { IGame, IGameContext } from "./Services/DataModels";
 import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/WaitingRoom";
+import { Notification } from "./Notification/Notification";
+import { GameInfo } from "./GameInfo/GameInfo";
+
 
 function App() {
   //Management game
@@ -55,7 +58,9 @@ function App() {
         component={IsWaitingRoom ? WaitingRoom : switchComponentsByActiveButton(activeButton)}
         hidden={activeButton === ButtonType.None && !IsWaitingRoom}
       />
-      {/* <GameScene /> */}
+      <Notification />
+      <GameInfo active={gameId !== undefined && gameId !== "initialData" && !IsWaitingRoom} />
+      <GameScene />
       </GameContext.Provider>
     </>
   );

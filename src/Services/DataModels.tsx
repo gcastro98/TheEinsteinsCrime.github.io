@@ -30,7 +30,7 @@ export interface IUser {
 export interface ICharacter {
     Name: string;
     id: number;
-    userId: string;
+    userId: number;
     position: IPosition;
 }
 
@@ -42,9 +42,10 @@ export interface ICard{
 }
 
 export interface IRequest {
-    cards: ICard[];
-    userId: string;
-    active: boolean;
+    roomId: number;
+    suspectId: number;
+    weaponId: number;
+    userId: number;
     response?: IResponse;
 }
 

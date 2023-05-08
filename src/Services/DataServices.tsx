@@ -1,7 +1,7 @@
 import { DatabaseReference, get, off, onValue, ref, set } from "firebase/database";
 import { createContext, useContext, useEffect, useState } from "react";
 import DataBase from "./DataBase";
-import { IGame, IGameContext, IPosition } from "./DataModels";
+import { IGame, IGameContext, IPosition, IRequest } from "./DataModels";
 
 //#region GameReference General Functions
 
@@ -94,7 +94,7 @@ export function usePosition(caracterId: number) {
   return [character?.position, (newPosition: IPosition) => setPosition(newPosition)];
 }
 
-export function useActiveRequest() {
+export function useActiveRequest(): [IRequest, (newRequest: IRequest) => void] {
   const {game, setGame} = useContext(GameContext);
   let activeRequest = game?.ActiveRequest;
 
@@ -107,7 +107,7 @@ export function useActiveRequest() {
 
 export function useActiveResponse() {
   const {game, setGame} = useContext(GameContext);
-  let activeResponse = game?.ActiveResponse;
+  
 
   const setResponse = (newResponse: any) => {
     const oldRequest = { ...game?.ActiveRequest };
@@ -115,5 +115,5 @@ export function useActiveResponse() {
     game.ActiveResponse = newResponse;
     setGame(game);
   };
-  return [activeResponse, (newResponse: any) => setResponse(newResponse)];
+  return [game?.ActiveResponse || undefined, (newResponse: any) => setResponse(newResponse)];
 }

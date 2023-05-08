@@ -15,7 +15,8 @@ export enum ButtonType {
   Board = "Tablero",
   Cards = "Cartas",
   Dices = "Dados",
-  Exit = "Exit"
+  Exit = "Exit",
+  Request = "Request"
 }
 
 type ButtonProps = {
