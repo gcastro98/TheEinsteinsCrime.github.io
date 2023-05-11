@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Teletype"; 
+  src: local("Teletype"),
+    url("./Fonts/JMH Typewriter.otf") format("truetype");
+}
 body,
 canvas {
   width: 100vw;
@@ -7,9 +12,7 @@ canvas {
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Teletype";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

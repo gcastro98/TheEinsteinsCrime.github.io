@@ -39,7 +39,6 @@ export function Field(props: IFieldProps) {
 
   const nextIcon = () => {
     setState((prevState) => ({ ...prevState, icon: (prevState.icon + 1) % iconList.length }));
-    console.log({ ...state, icon: (state.icon + 1) % iconList.length });
   };
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -55,7 +54,6 @@ export function Field(props: IFieldProps) {
     }
  
   );
-    console.log(state.icon, state.style);
   };
 
   const styleByIcon = (icon:number) => {
@@ -71,12 +69,10 @@ export function Field(props: IFieldProps) {
     }
   };
   useEffect(() => {
-    console.log('effec')
     initializeIcons();
     setState((prevState) => ({ ...prevState, content: contentByField(props.type, props.input) }));
   }, [state.icon]);
 
-  console.log(state);
   return (
     <div className={state.style} onClick={(ev) => props.type === FieldType.Icon && handleClick(ev)}>
       {state.content}

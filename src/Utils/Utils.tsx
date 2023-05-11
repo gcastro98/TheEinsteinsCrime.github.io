@@ -1,11 +1,13 @@
+import { createContext } from "react";
 import { BoardGame } from "../Dialog/ChildComponents/BoardGame/BoardGame";
 import { Show } from "../Dialog/ChildComponents/CardManagement/Components/Show";
-import { Create } from "../Dialog/ChildComponents/GameManagement/Components/Create";
+import { CreateOrJoinRoom } from "../Dialog/ChildComponents/GameManagement/Components/CreateOrJoin";
 import { Join } from "../Dialog/ChildComponents/GameManagement/Components/Join";
 import { ButtonType } from "../Menu/NavMenu";
+import { Request } from "../Dialog/ChildComponents/CardManagement/Components/Request";
 
 export function selectPath() {
-  return "./models";
+  return `./models`;
 }
 
 export const REDUCE_SCALE_DOOR = 0.55;
@@ -15,14 +17,25 @@ export function switchComponentsByActiveButton(type: ButtonType): () => JSX.Elem
     case ButtonType.None:
       return () => <></>;
     case ButtonType.Create:
-      return Create;
+      return CreateOrJoinRoom;
     case ButtonType.Join:
       return Join;
     case ButtonType.Cards:
       return Show;
     case ButtonType.Board:
       return BoardGame;
+    case ButtonType.Request:
+      return Request;
     default:
       return () => <></>;
+  }
+}
+
+export function getGameIdFromPath(): string {
+  const path = window.location.pathname;
+  if (path.includes("game")) {
+    return path.split("game:")[1];
+  } else {
+    return "";
   }
 }

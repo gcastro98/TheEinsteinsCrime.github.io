@@ -1,7 +1,7 @@
 import { Stylesheet } from "@fluentui/react";
-import React, { useEffect, useState } from "react";
-import "./NavMenu.scss";
-
+import React, { useContext, useEffect, useState } from "react";
+import styles from "./NavMenu.module.scss";
+import { GameContext } from "../Services/DataServices";
 export enum ButtonMode {
   StartScreen,
   GameScreen,
@@ -15,6 +15,8 @@ export enum ButtonType {
   Board = "Tablero",
   Cards = "Cartas",
   Dices = "Dados",
+  Exit = "Exit",
+  Request = "Request"
 }
 
 type ButtonProps = {
@@ -28,31 +30,36 @@ type NavTopMenuProps = {
   buttons?: ButtonProps[];
   loading: number;
   activeButton: ButtonType;
+  mode?: ButtonMode;
   onClick: (type: ButtonType) => void;
 };
 
 export function NavMenu(props: NavTopMenuProps) {
+  // const context = useContext(GameContext);
   const [isLoading, setLoading] = useState(true);
-
+  const [buttons, setButtons]:  [ButtonProps[], any] = useState(props.buttons?.filter((button) => button.mode === props.mode) || []);
   useEffect(() => {
     if (props.loading >= 100) {
       setLoading(false);
     }
-  }, [props.loading]);
+    if (props.mode){
+      setButtons(props.buttons?.filter((button) => button.mode === props.mode))
+    }
+  }, [props.loading, props.mode]);
 
   return (
-    <nav className={"navMenu"}>
-      <ul className={"navListButton"}>
+    <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : '' }`}>
+      <ul className={styles.navListButton}>
         <img
           src={props.logo}
           alt="The Einstein's Crime"
-          className={isLoading ? "navMenuLogoLoading" : "navMenuLogo"}
+          className={isLoading ? styles.navMenuLogoLoading : styles.navMenuLogo}
         />
         {!isLoading &&
-          props.buttons?.map((button) => (
+         buttons.map((button) => (
             <li
               key={button.name}
-              className={`navButton`}
+              className={`${styles.navButton} ${props.activeButton === button.type && styles.navButtonSelected}`}
               onClick={() => button.type !== ButtonType.None && (props.activeButton === button.type ? props.onClick(ButtonType.None) : props.onClick(button.type))}
             >
               {button.name}

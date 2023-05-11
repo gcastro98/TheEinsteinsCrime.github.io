@@ -1,24 +1,64 @@
-import {
- 
-  Loader, useProgress,
-
-} from "@react-three/drei";
-import React, { Suspense, useRef, useState } from "react";
+import { Loader, useProgress } from "@react-three/drei";
+import React, { Suspense, createContext, useEffect, useRef, useState } from "react";
 import { BoardGame } from "./Dialog/ChildComponents/BoardGame/BoardGame";
 import { DialogBoard } from "./Dialog/Dialog";
-import NavMenu, { ButtonType } from "./Menu/NavMenu";
+import NavMenu, { ButtonMode, ButtonType } from "./Menu/NavMenu";
 import { GameScene } from "./SceneManagement/GameScene";
 import { config } from "./Utils/Config";
-import { switchComponentsByActiveButton } from "./Utils/Utils";
+import { getGameIdFromPath, switchComponentsByActiveButton } from "./Utils/Utils";
+import { GameContext, checkGameReference } from "./Services/DataServices";
+import { useDataByPath } from "./Services/DataServices";
+import { IGame, IGameContext } from "./Services/DataModels";
+import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/WaitingRoom";
+import { GameInfo } from "./GameInfo/GamInfo";
+import { GameStatus } from "./GameStatus/GameStatus";
+
 
 function App() {
-  const [activeButton, setActive] = useState(ButtonType.None)
-  const {progress} = useProgress();
+  //Management game
+  const gameId = getGameIdFromPath() || "initialData";
+  const [game, updateGame] = useDataByPath<IGame>(`games/${gameId}`, {} as IGame);
+  const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === false;
+  const [userId, setUserId] = useState<number>(-2);
+  console.log(game);
+
+  //Management menu
+  const [activeButton, setActive] = useState<ButtonType>(ButtonType.None);
+  const [mode, setMode] = useState(ButtonMode.StartScreen);
+  // const { progress } = useProgress();
+  const progress = 100;
+  
+  useEffect(() => {
+    if (gameId !== "initialData") {
+      setMode(ButtonMode.GameScreen);
+      checkGameReference(gameId);
+      const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
+      if (userIdSaved !== null) {
+        setUserId(parseInt(userIdSaved));
+      }
+    }
+  }, []);
+
   return (
     <>
-      <NavMenu logo={config.logoPath} buttons={config.buttons} loading={ progress } onClick={(type) => setActive(type)} activeButton={activeButton}/>
-      <DialogBoard component={switchComponentsByActiveButton(activeButton)} hidden={activeButton === ButtonType.None}  />
+    <GameContext.Provider  value={{game, setGame: updateGame, mode, userId, setUserId, active: activeButton, setActive }}>
+      <NavMenu
+        logo={config.logoPath}
+        buttons={config.buttons}
+        loading={IsWaitingRoom ? 0 : progress }
+        onClick={(type) => setActive(type)}
+        activeButton={activeButton}
+        mode={mode}
+      />
+      <DialogBoard
+        component={IsWaitingRoom ? WaitingRoom : switchComponentsByActiveButton(activeButton)}
+        hidden={activeButton === ButtonType.None && !IsWaitingRoom}
+      />
+      <GameInfo />
+      {/* <GameStatus active={gameId !== undefined && gameId !== "initialData" && !IsWaitingRoom} /> */}
+      {/* <GameStatus active={true} /> */}
       <GameScene />
+      </GameContext.Provider>
     </>
   );
 }
