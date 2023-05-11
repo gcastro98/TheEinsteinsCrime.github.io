@@ -1,7 +1,7 @@
 import { DatabaseReference, get, off, onValue, ref, set } from "firebase/database";
 import { createContext, useContext, useEffect, useState } from "react";
 import DataBase from "./DataBase";
-import { IGame, IGameContext, IPosition, IRequest } from "./DataModels";
+import { IGame, IGameContext, IPosition, IRequest, IResponse } from "./DataModels";
 
 //#region GameReference General Functions
 
@@ -75,11 +75,22 @@ export function AddUserToGame(userName: string, game: IGame, setGame: (game: IGa
 
 }
 
+export function saveRequestAtHistoric(game: IGame, setGame: (game: IGame) => void) {
+  const auxGame = {...game};
+  if(auxGame.Requests === undefined){
+    auxGame.Requests = [];
+  }
+  auxGame.Requests.push(auxGame.ActiveRequest as IRequest);
+
+  delete auxGame.ActiveRequest;
+  setGame(auxGame);
+}
+
 //#region GameReference Custom Hooks
 
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
-export function usePosition(caracterId: number) {
+export function usePosition(caracterId: number): [IPosition, (position: IPosition) => void] {
   const {game, setGame} = useContext(GameContext);
   let character = game?.Characters[caracterId];
 
@@ -96,7 +107,7 @@ export function usePosition(caracterId: number) {
 
 export function useActiveRequest(): [IRequest, (newRequest: IRequest) => void] {
   const {game, setGame} = useContext(GameContext);
-  let activeRequest = game?.ActiveRequest;
+  let activeRequest = game?.ActiveRequest as IRequest;
 
   const setRequest = (newRequest: any) => {
     game.ActiveRequest = newRequest;
@@ -105,15 +116,57 @@ export function useActiveRequest(): [IRequest, (newRequest: IRequest) => void] {
   return [activeRequest, (newRequest: any) => setRequest(newRequest)];
 }
 
-export function useActiveResponse() {
+export function useActiveResponse():  [IResponse | undefined, (newRequest: IResponse) => void]  {
   const {game, setGame} = useContext(GameContext);
   
 
-  const setResponse = (newResponse: any) => {
-    const oldRequest = { ...game?.ActiveRequest };
-
-    game.ActiveResponse = newResponse;
-    setGame(game);
+  const setResponse = (newResponse: IResponse) => {
+    let oldRequest = { ...game?.ActiveRequest };
+    if (oldRequest){
+      oldRequest.response = newResponse;
+      game.ActiveRequest = oldRequest as IRequest;
+      setGame(game);
+    }
+ 
   };
-  return [game?.ActiveResponse || undefined, (newResponse: any) => setResponse(newResponse)];
+  return [game?.ActiveRequest?.response , (newResponse: IResponse) => setResponse(newResponse)];
+}
+
+export function useActivePlayer():  [number, () => void, (newTurn: number) => void]  {
+  const {game, setGame} = useContext(GameContext);
+  
+
+  const nextTurn = () => {
+    let auxGame = { ...game };
+    auxGame.ActivePlayer = (auxGame.ActivePlayer + 1) % auxGame.Users.length;
+
+    setGame(auxGame);
+  };
+
+  const setTurn = (newTurn: number) => {
+    let auxGame = { ...game };
+    auxGame.ActivePlayer = newTurn;
+
+    setGame(auxGame);
+  };
+
+  return [game?.ActivePlayer  , () => nextTurn(), (newTurn: number) => setTurn(newTurn)];
+}
+
+export function useRequests(): [IRequest[], (newRequest: IRequest) => void] {
+  const {game, setGame} = useContext(GameContext);
+  let activeRequest = game?.Requests;
+
+  const addRequest = (newRequest: any) => {
+    const auxGame = { ...game };
+    if (auxGame.Requests === undefined) {
+      auxGame.Requests = [];
+    }
+    auxGame.Requests.push(newRequest);
+    (auxGame.ActiveRequest as IRequest).readed = true;
+    
+    setGame(auxGame);
+    console.log(auxGame)
+  };
+  return [game?.Requests || [], (newRequest: any) => addRequest(newRequest)];
 }

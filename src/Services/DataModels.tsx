@@ -1,4 +1,4 @@
-import { ButtonMode } from "../Menu/NavMenu";
+import { ButtonMode, ButtonType } from "../Menu/NavMenu";
 
 export interface IGame {
     Id: string;
@@ -6,8 +6,7 @@ export interface IGame {
     OnProgress: Boolean;
     Characters: ICharacter[];
     Users: IUser[];
-    ActiveRequest: IRequest;
-    ActiveResponse: IResponse;
+    ActiveRequest?: IRequest;
     Requests: IRequest[];
     Cards: ICard[];
     ActivePlayer: number;
@@ -47,6 +46,7 @@ export interface IRequest {
     weaponId: number;
     userId: number;
     response?: IResponse;
+    readed?: boolean;
 }
 
 export interface IResponse {
@@ -61,8 +61,11 @@ export interface IGameContext {
     mode: ButtonMode;
     userId: number;
     setUserId: (userId: number) => void;
+    active: ButtonType;
+    setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
 }
 
-export interface IGameFunctions {
-
+export interface IGameManagement {
+    
 }
+

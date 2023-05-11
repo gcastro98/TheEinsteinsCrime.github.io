@@ -48,7 +48,7 @@ export function NavMenu(props: NavTopMenuProps) {
   }, [props.loading, props.mode]);
 
   return (
-    <nav className={styles.navMenu}>
+    <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : '' }`}>
       <ul className={styles.navListButton}>
         <img
           src={props.logo}

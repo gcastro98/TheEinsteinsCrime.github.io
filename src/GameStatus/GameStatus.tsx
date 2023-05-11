@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import styles from "./GameInfo.module.scss";
+import styles from "./GameStatus.module.scss";
 import { GameContext } from "../Services/DataServices";
 import { Icon, initializeIcons } from "@fluentui/react";
-interface IGameInfo {
+interface GameStatus {
   active: boolean;
 }
 
-export function GameInfo(props: IGameInfo): any {
+export function GameStatus(props: GameStatus): any {
   const { game, setGame, userId } = useContext(GameContext);
   const [timer, setTimer] = React.useState(60);
 
@@ -24,7 +24,7 @@ export function GameInfo(props: IGameInfo): any {
         <div className={styles.section}>
           <div className={styles.leftColumn}>
             <Icon iconName="Contact" />
-            {userId >= 0 && game?.Users[userId].Name}
+            {userId >= 0 && game?.Users?.length > 0 && game?.Users[userId].Name}
           </div>
         </div>
         <div className={styles.section}>

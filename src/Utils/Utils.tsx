@@ -5,6 +5,7 @@ import { CreateOrJoinRoom } from "../Dialog/ChildComponents/GameManagement/Compo
 import { Join } from "../Dialog/ChildComponents/GameManagement/Components/Join";
 import { ButtonType } from "../Menu/NavMenu";
 import { Request } from "../Dialog/ChildComponents/CardManagement/Components/Request";
+
 export function selectPath() {
   return `./models`;
 }

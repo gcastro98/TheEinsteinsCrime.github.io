@@ -3,6 +3,7 @@ import { IGame } from "../../../../Services/DataModels";
 import { useContext, useState } from "react";
 import { AddUserToGame, GameContext } from "../../../../Services/DataServices";
 import { generateRandomCards, generateRandomId, saveUserIdOnLocalStorage } from "../../Utils";
+import styles from "../GameManagement.module.scss";
 
 export function WaitingRoom(props: any) {
   const { game, setGame, userId, setUserId } = useContext(GameContext);
@@ -10,7 +11,6 @@ export function WaitingRoom(props: any) {
   const [name, setName] = useState<string>("");
 
   const addUser = (name: string) => {
-    debugger;
     const userId = AddUserToGame(name, game, setGame);
     console.log(userId);
     if (userId >= 0) {
@@ -30,22 +30,25 @@ export function WaitingRoom(props: any) {
 
   return (
     <div>
-      {userId < 0 && (
-        <div>
+       {userId < 0 && (
+        <div className={styles.inputNameSection}>
           <span>Introduce tu nombre para unirte a la partida</span>
-          <TextField
+          <TextField className={styles.textfield}
             onChange={(event: any, newValue: any) => setName(newValue as string)}
           />
-          <PrimaryButton onClick={() => addUser(name)}>Unirse</PrimaryButton>
+          <PrimaryButton className={styles.button} onClick={() => addUser(name)}>Unirse</PrimaryButton>
+          <hr/>
         </div>
       )}
-      <div>
+      <h3>Detectives en busca de pistas...</h3>
+      <div className={styles.playerList}>
         {game?.Users?.map((user: any) => (
-          <span>{user.Name}</span>
+          <span className={styles.userName}>{user.Name}</span>
         ))}
+       
         <Spinner label="Esperando a que el creador de la sala inicie la partida..." />
         {game?.Users?.length >= 2 && (
-          <PrimaryButton onClick={() => startGame()}>Iniciar partida</PrimaryButton>
+          <PrimaryButton className={styles.buttonStartGame} onClick={() => startGame()}>Iniciar partida</PrimaryButton>
         )}
       </div>
     </div>

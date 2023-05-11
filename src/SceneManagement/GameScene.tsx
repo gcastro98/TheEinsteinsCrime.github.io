@@ -47,7 +47,7 @@ export function GameScene(props: any) {
           <Library />
           <Laboratory />
           <Workshop />
-          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} path={"tesla"} />
+          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} path={"tesla"} characterId={1}/>
           {/* <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} path={"davinci"} /> */}
         </Suspense>
       </Canvas>

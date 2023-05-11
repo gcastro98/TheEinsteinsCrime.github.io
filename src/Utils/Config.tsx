@@ -1,7 +1,7 @@
 import { ButtonMode, ButtonType } from "../Menu/NavMenu";
 
 export const config: any = {
-    logoPath: "TheEinsteinsCrime_logo_recortado.png",
+    logoPath: "TheEinsteinsCrime_logo_recortado_beige_sinFondo.png",
     buttons: [
         { name: "Inicio", type: ButtonType.Home, mode: ButtonMode.StartScreen },
         { name: "Ajustes",  type: ButtonType.Settings, mode: ButtonMode.StartScreen   },

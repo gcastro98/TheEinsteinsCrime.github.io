@@ -10,8 +10,8 @@ import { GameContext, checkGameReference } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
 import { IGame, IGameContext } from "./Services/DataModels";
 import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/WaitingRoom";
-import { Notification } from "./Notification/Notification";
-import { GameInfo } from "./GameInfo/GameInfo";
+import { GameInfo } from "./GameInfo/GamInfo";
+import { GameStatus } from "./GameStatus/GameStatus";
 
 
 function App() {
@@ -23,14 +23,12 @@ function App() {
   console.log(game);
 
   //Management menu
-  const [activeButton, setActive] = useState(ButtonType.None);
+  const [activeButton, setActive] = useState<ButtonType>(ButtonType.None);
   const [mode, setMode] = useState(ButtonMode.StartScreen);
   // const { progress } = useProgress();
   const progress = 100;
-  // console.log(progress)
   
   useEffect(() => {
-    // const gameId = getGameIdFromPath();
     if (gameId !== "initialData") {
       setMode(ButtonMode.GameScreen);
       checkGameReference(gameId);
@@ -38,14 +36,12 @@ function App() {
       if (userIdSaved !== null) {
         setUserId(parseInt(userIdSaved));
       }
-      // setGameId(gameId);
-      // console.log(game);
     }
   }, []);
 
   return (
     <>
-    <GameContext.Provider  value={{game, setGame: updateGame, mode, userId, setUserId }}>
+    <GameContext.Provider  value={{game, setGame: updateGame, mode, userId, setUserId, active: activeButton, setActive }}>
       <NavMenu
         logo={config.logoPath}
         buttons={config.buttons}
@@ -58,8 +54,9 @@ function App() {
         component={IsWaitingRoom ? WaitingRoom : switchComponentsByActiveButton(activeButton)}
         hidden={activeButton === ButtonType.None && !IsWaitingRoom}
       />
-      <Notification />
-      <GameInfo active={gameId !== undefined && gameId !== "initialData" && !IsWaitingRoom} />
+      <GameInfo />
+      {/* <GameStatus active={gameId !== undefined && gameId !== "initialData" && !IsWaitingRoom} /> */}
+      {/* <GameStatus active={true} /> */}
       <GameScene />
       </GameContext.Provider>
     </>
