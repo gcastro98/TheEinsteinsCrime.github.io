@@ -1,4 +1,5 @@
-import { ButtonMode, ButtonType } from "../Menu/NavMenu";
+import { ButtonMode, ButtonType } from "../Utils/Config";
+
 
 export interface IGame {
     Id: string;
@@ -63,6 +64,15 @@ export interface IGameContext {
     setUserId: (userId: number) => void;
     active: ButtonType;
     setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
+    diceContext: IDiceContext;
+    
+}
+
+export interface IDiceContext {
+    diceValue: number;
+    setDiceValue: (value: number) => void;
+    throwDice: boolean;
+    setThrowDice: (value: boolean) => void;
 }
 
 export interface IGameManagement {

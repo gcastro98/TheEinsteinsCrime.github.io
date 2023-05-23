@@ -2,32 +2,10 @@ import { Stylesheet } from "@fluentui/react";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./NavMenu.module.scss";
 import { GameContext } from "../Services/DataServices";
-export enum ButtonMode {
-  StartScreen,
-  GameScreen,
-}
-export enum ButtonType {
-  None = "None",
-  Home = "Inicio",
-  Settings = "Ajustes",
-  Create = "Crear sala",
-  Join = "Unirse a sala",
-  Board = "Tablero",
-  Cards = "Cartas",
-  Dices = "Dados",
-  Exit = "Exit",
-  Request = "Request"
-}
+import {ButtonMode, ButtonProps, ButtonType, config} from "../Utils/Config"
 
-type ButtonProps = {
-  name: string;
-  mode?: ButtonMode;
-  type: ButtonType;
-};
 
 type NavTopMenuProps = {
-  logo: string;
-  buttons?: ButtonProps[];
   loading: number;
   activeButton: ButtonType;
   mode?: ButtonMode;
@@ -37,13 +15,13 @@ type NavTopMenuProps = {
 export function NavMenu(props: NavTopMenuProps) {
   // const context = useContext(GameContext);
   const [isLoading, setLoading] = useState(true);
-  const [buttons, setButtons]:  [ButtonProps[], any] = useState(props.buttons?.filter((button) => button.mode === props.mode) || []);
+  const [buttons, setButtons]:  [ButtonProps[], any] = useState(config.buttons?.filter((button: ButtonProps) => button.mode === props.mode) || []);
   useEffect(() => {
     if (props.loading >= 100) {
       setLoading(false);
     }
     if (props.mode){
-      setButtons(props.buttons?.filter((button) => button.mode === props.mode))
+      setButtons(config.buttons?.filter((button: ButtonProps) => button.mode === props.mode))
     }
   }, [props.loading, props.mode]);
 
@@ -51,7 +29,7 @@ export function NavMenu(props: NavTopMenuProps) {
     <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : '' }`}>
       <ul className={styles.navListButton}>
         <img
-          src={props.logo}
+          src={isLoading? config.logoPathLoading : config.logoPath}
           alt="The Einstein's Crime"
           className={isLoading ? styles.navMenuLogoLoading : styles.navMenuLogo}
         />

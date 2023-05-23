@@ -25,6 +25,7 @@ export function WaitingRoom(props: any) {
     auxGame.Cards = cards;
     auxGame.OnProgress = true;
     auxGame.ActivePlayer = 0;
+    auxGame.Users.map((user, i) => auxGame.Characters[i].userId = user.Id)
     setGame(auxGame);
   }
 

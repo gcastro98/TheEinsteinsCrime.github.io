@@ -3,8 +3,9 @@ import { BoardGame } from "../Dialog/ChildComponents/BoardGame/BoardGame";
 import { Show } from "../Dialog/ChildComponents/CardManagement/Components/Show";
 import { CreateOrJoinRoom } from "../Dialog/ChildComponents/GameManagement/Components/CreateOrJoin";
 import { Join } from "../Dialog/ChildComponents/GameManagement/Components/Join";
-import { ButtonType } from "../Menu/NavMenu";
+
 import { Request } from "../Dialog/ChildComponents/CardManagement/Components/Request";
+import { ButtonType } from "./Config";
 
 export function selectPath() {
   return `./models`;

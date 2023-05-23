@@ -11,14 +11,17 @@ import {
 import { RequestManagement } from "./ChildComponents/ShowRequest";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { ICard, IRequest, IUser } from "../Services/DataModels";
-import { ButtonType } from "../Menu/NavMenu";
+import { ButtonType } from "../Utils/Config";
+
 interface INotification {
   users: number[] | "all";
   active: boolean;
 }
 
 export function GameInfo() {
-  const { game, setGame, userId, active, setActive } = useContext(GameContext);
+  const { game, userId, active, setActive, diceContext } = useContext(GameContext);
+  const [throwedDice, setThrowedDice] = useState<boolean>(false);
+  const { diceValue, setDiceValue, throwDice, setThrowDice } = diceContext;
   const [activeRequest, setActiveRequest] = useActiveRequest();
   const [activeResponse, setActiveResponse] = useActiveResponse();
   const [responseState, setResponseState] = useState<{
@@ -26,19 +29,13 @@ export function GameInfo() {
     cardId: number;
     cardOptions: ICard[];
   }>({ button: false, cardId: -2, cardOptions: [] });
-  const [rollDice, setRollDice] = useState<boolean>(false);
   const [activePlayer, nextTurn, setTurn] = useActivePlayer();
   const [requests, addRequestToHistoric] = useRequests();
   const isYourTurn = game?.ActivePlayer === userId;
 
-  console.log(game?.ActivePlayer, userId);
-
-  console.log(activeRequest);
-
   useEffect(() => {
-    console.log("effect");
-  }, [activeRequest]);
-
+    setThrowedDice(false);
+  }, [throwedDice && !isYourTurn]);
   const createActiveResponse = (optionId: number) => {
     const activeResponse = {
       cardId: optionId,
@@ -84,7 +81,6 @@ export function GameInfo() {
                   readResponse();
                 }}
               />
-              {/* {showRequestButtons(activeRequest)} */}
             </div>
           );
         }
@@ -92,12 +88,7 @@ export function GameInfo() {
         if (reqUserId !== userId && isActivePlayer && userId === user.Id) {
           return showRequestButtons(options);
         }
-        return (
-          <div>
-            {showMessage(`Está esperando para responder...`)}
-            {/* {showRequestButtons(activeRequest)} */}
-          </div>
-        );
+        return <div>{showMessage(`Está esperando para responder...`)}</div>;
       }
     }
     if (isActivePlayer) {
@@ -110,13 +101,22 @@ export function GameInfo() {
   function showOptionsButtons(user?: IUser) {
     return (
       <div className={styles.footer}>
-        <PrimaryButton text="Lanzar dados" onClick={() => {}} />
-        <PrimaryButton
-          text="Hacer pregunta"
-          onClick={() => {
-            setActive(active === ButtonType.Request ? ButtonType.None : ButtonType.Request);
-          }}
-        />{" "}
+        {throwedDice ? (
+          <PrimaryButton
+            text="Hacer pregunta"
+            onClick={() => {
+              setActive(active === ButtonType.Request ? ButtonType.None : ButtonType.Request);
+            }}
+          />
+        ) : (
+          <PrimaryButton
+            text="Lanzar dados"
+            onClick={() => {
+              setThrowDice(true);
+              setThrowedDice(true);
+            }}
+          />
+        )}
       </div>
     );
   }

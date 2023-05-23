@@ -7,7 +7,7 @@ import {
   PerspectiveCamera,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useContext, useRef } from "react";
 import { Board } from "./Models/Board/Board";
 import { Arrows } from "./Models/Characters/Arrows";
 import { Davinci } from "./Models/Characters/Pieces/Davinci";
@@ -17,8 +17,12 @@ import { Laboratory } from "./Models/Rooms/Laboratory";
 import { Library } from "./Models/Rooms/Library";
 import { Workshop } from "./Models/Rooms/Workshop";
 import "./GameScene.scss";
+import { GameContext } from "../Services/DataServices";
 
 export function GameScene(props: any) {
+  const { game, setGame } = useContext(GameContext);
+  const { Users, Characters } = game || undefined;
+  console.log(Characters)
   return (
     <>
       <Canvas
@@ -47,8 +51,9 @@ export function GameScene(props: any) {
           <Library />
           <Laboratory />
           <Workshop />
-          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} path={"tesla"} characterId={1}/>
-          {/* <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} path={"davinci"} /> */}
+          {Characters?.filter((char) => char.userId !== -1).map((char) => {
+            return {...<Arrows initialPosition={{ x: 2, y: 2 }} path={"Tesla"} characterId={char.userId} />};
+          })}
         </Suspense>
       </Canvas>
       <Loader />
