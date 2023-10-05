@@ -5,8 +5,8 @@ import { Dropdown, IDropdownOption, PrimaryButton, Stylesheet } from "@fluentui/
 import styles from "../GameInfo.module.scss";
 
 export function RequestManagement(activeRequest?: IRequest) {
-  const { game, setGame, userId } = useContext(GameContext);
-  const [response, setResponse] = useActiveResponse();
+  const { gameId, game, setGame, userId } = useContext(GameContext);
+  const [response, setResponse] = useActiveResponse(gameId);
   const [showCardOptions, setShowCardOptions] = useState(false);
   if (activeRequest) {
     const room =  game?.Cards[activeRequest.roomId] ;

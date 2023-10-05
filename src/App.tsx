@@ -6,12 +6,12 @@ import NavMenu from "./Menu/NavMenu";
 import { GameScene } from "./SceneManagement/GameScene";
 import { ButtonMode, ButtonType, config } from "./Utils/Config";
 import { getGameIdFromPath, switchComponentsByActiveButton } from "./Utils/Utils";
-import { GameContext, checkGameReference } from "./Services/DataServices";
+import { GameContext, checkGameReference, useDiceManagement } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
 import { IGame, IGameContext } from "./Services/DataModels";
 import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/WaitingRoom";
 import { GameInfo } from "./GameInfo/GamInfo";
-import { GameStatus } from "./GameStatus/GameStatus";
+import { DiceInfo } from "./GameInfo/ChildComponents/DiceInfo/DiceInfo";
 
 
 function App() {
@@ -19,16 +19,15 @@ function App() {
   const gameId = getGameIdFromPath() || "initialData";
   const [game, updateGame] = useDataByPath<IGame>(`games/${gameId}`, {} as IGame);
   const [userId, setUserId] = useState<number>(-2);
-  const [diceValue, setDiceValue] = useState<number>(-1);
-  const [throwDice, setThrowDice] = useState<boolean>(false);
+  const diceManagement = useDiceManagement(gameId);
   const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === false;
 
   //Management menu
   const [activeButton, setActive] = useState<ButtonType>(ButtonType.None);
   const [mode, setMode] = useState(ButtonMode.StartScreen);
-  const { progress } = useProgress();
-  // const progress = 10;
-  console.log(progress )
+  // const { progress } = useProgress();
+  const progress = 100;
+  // console.log(progress )
   
   useEffect(() => {
     if (gameId !== "initialData") {
@@ -43,7 +42,7 @@ function App() {
 
   return (
     <>
-    <GameContext.Provider  value={{game, setGame: updateGame, mode, userId, setUserId, active: activeButton, setActive, diceContext: { diceValue, setDiceValue, throwDice, setThrowDice } }}>
+    <GameContext.Provider  value={{gameId, game, setGame: updateGame, mode, userId, setUserId, active: activeButton, setActive, diceManagement }}>
       <NavMenu
         loading={IsWaitingRoom ? 0 : progress }
         onClick={(type) => setActive(type)}
@@ -56,8 +55,8 @@ function App() {
       />
       <GameInfo />
       {/* <GameStatus active={gameId !== undefined && gameId !== "initialData" && !IsWaitingRoom} /> */}
-      <GameStatus active={true} />
-      <GameScene />
+     
+      {/* <GameScene /> */}
       </GameContext.Provider>
     </>
   );

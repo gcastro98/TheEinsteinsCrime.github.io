@@ -1,10 +1,12 @@
 import { DatabaseReference, get, off, onValue, ref, set } from "firebase/database";
-import { createContext, useContext, useEffect, useState } from "react";
+import { RefObject, createContext, useContext, useEffect, useRef, useState } from "react";
 import DataBase from "./DataBase";
-import { IGame, IGameContext, IPosition, IRequest, IResponse } from "./DataModels";
+import { ICard, IDiceManagement, IGame, IGameContext, IPosition, IRequest, IResponse, IUser } from "./DataModels";
+import { ReactDiceRef } from "react-dice-complete";
+import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
 
 //#region GameReference General Functions
-
+/* tslint:disable */
 export function useDataByPath<T>(path: string, initialData: T): [T, (data: T) => void] {
   const [state, setState] = useState<T>(initialData);
   // console.log('useDataByPath', path)
@@ -54,23 +56,47 @@ export function checkGameReference(gameId: string) {
 
 //#region GameReference functions
 
-export function AddUserToGame(userName: string, game: IGame, setGame: (game: IGame) => void){
-  // const {game, setGame} = GameContext;
-  const auxGame = {...game};
-  if (auxGame.Users === undefined) {
-    auxGame.Users = [];
+export function useUserById(gameId: string, userId: number): [IUser, (newUser: IUser) => void] {
+  // const {gameId, game, setGame} = useContext(GameContext);
+  const [user, setUser] = useDataByPath<IUser>(`games/${gameId}/Users/${userId}`, {} as IUser);
+  
+  return [user || {} as IUser, (newUser: IUser) => setUser(newUser)];
+}
+
+export function useUsers(gameId: string): [IUser[], (newUsers: IUser[]) => void] {
+  // const {gameId, game, setGame} = useContext(GameContext);
+  const [users, setUsers] = useDataByPath<IUser[]>(`games/${gameId}/Users`, []);
+  
+  return [users || [], (newUsers: IUser[]) => setUsers(newUsers)];
+}
+
+export function useAuthor(gameId: string): [number, (newAuthor: number) => void] {
+  // const {gameId, game, setGame} = useContext(GameContext);
+  const [author, setAuthor] = useDataByPath<number>(`games/${gameId}/AuthorId`, -1);
+  
+  return [author || -1, (newAuthor: number) => setAuthor(newAuthor)];
+}
+
+export function AddUserToGame(gameId: string, userName: string){
+  debugger;
+  const [users, setUsers] = useUsers(gameId);
+  const [author, setAuthor] = useAuthor(gameId);
+
+  const userId = users.length;
+  const user: IUser = {
+    userId: userId,
+    name: userName,
+    connected: true,
+    position: {positionX: 0, positionY: 0},
+    status: 0,
   }
-  const userId = auxGame.Users.length;
-  const user = {
-    Id: userId,
-    Name: userName,
-    Connected: true
+
+  const auxUsers = [...users]
+  auxUsers.push(user);
+  if(author === -1){
+    setAuthor(userId);
   }
-  auxGame.Users.push(user);
-  if(auxGame.AuthorId === -1){
-    auxGame.AuthorId = userId;
-  }
-  setGame(auxGame);
+  setUsers(auxUsers);
   return userId;
 
 }
@@ -90,83 +116,124 @@ export function saveRequestAtHistoric(game: IGame, setGame: (game: IGame) => voi
 
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
-export function usePosition(caracterId: number): [IPosition, (position: IPosition) => void] {
-  const {game, setGame} = useContext(GameContext);
-  let character = game?.Characters[caracterId];
-
-  const setPosition = (newPosition: IPosition) => {
-      const auxGame = { ...game };
-      const newCaracter = { ...character };
-      newCaracter.position = newPosition;
-      auxGame.Characters[caracterId] = newCaracter;
-      setGame(auxGame);
-  };
-
-  return [character?.position, (newPosition: IPosition) => setPosition(newPosition)];
+export function usePosition(gameId: string, userId: number): [IPosition, (position: IPosition) => void] {
+  const [user, setUser] = useUserById(gameId, userId);
+  return [user?.position, (position: IPosition) => setUser({...user, position})];
 }
 
-export function useActiveRequest(): [IRequest, (newRequest: IRequest) => void] {
-  const {game, setGame} = useContext(GameContext);
-  let activeRequest = game?.ActiveRequest as IRequest;
-
-  const setRequest = (newRequest: any) => {
-    game.ActiveRequest = newRequest;
-    setGame(game);
-  };
-  return [activeRequest, (newRequest: any) => setRequest(newRequest)];
+export function useActiveRequest(gameId: string): [IRequest, (newRequest: IRequest) => void] {
+  const [activeRequest, setActiveRequest] = useDataByPath<IRequest>(`games/${gameId}/ActiveRequest`, {} as IRequest);
+  return [activeRequest || {}, (newRequest: any) => setActiveRequest(newRequest)];
 }
 
-export function useActiveResponse():  [IResponse | undefined, (newRequest: IResponse) => void]  {
-  const {game, setGame} = useContext(GameContext);
-  
+export function useActiveResponse(gameId: string):  [IResponse | undefined, (newRequest: IResponse) => void]  {
+  const [activeRequest, setActiveRequest] = useActiveRequest(gameId);
 
   const setResponse = (newResponse: IResponse) => {
-    let oldRequest = { ...game?.ActiveRequest };
-    if (oldRequest){
-      oldRequest.response = newResponse;
-      game.ActiveRequest = oldRequest as IRequest;
-      setGame(game);
-    }
- 
+    const auxRequest = {...activeRequest};
+    auxRequest.response = newResponse;
+    setActiveRequest(auxRequest);
   };
-  return [game?.ActiveRequest?.response , (newResponse: IResponse) => setResponse(newResponse)];
+
+  return [activeRequest?.response || undefined , (newResponse: IResponse) => setResponse(newResponse)];
 }
 
-export function useActivePlayer():  [number, () => void, (newTurn: number) => void]  {
-  const {game, setGame} = useContext(GameContext);
-  
-
+export function useActivePlayer(gameId: string):  [number, () => void, (newTurn: number) => void]  {
+  const users = useUsers(gameId)[0];
+  const [activePlayerIndex, setActivePlayerIndex] = useDataByPath<number>(`games/${gameId}/ActivePlayer`, -1);
   const nextTurn = () => {
-    let auxGame = { ...game };
-    auxGame.ActivePlayer = (auxGame.ActivePlayer + 1) % auxGame.Users.length;
-
-    setGame(auxGame);
+    setActivePlayerIndex((activePlayerIndex + 1) % users?.length);
+    // let auxGame = { ...game };
+    // auxGame.ActivePlayer.userId = (auxGame.ActivePlayer.userId + 1) % auxGame.Users.length;
+    // auxGame.ActivePlayer.dice = [0, 0];
+    // auxGame.ActivePlayer.throwedDice = false;    
+    // setGame(auxGame);
   };
 
   const setTurn = (newTurn: number) => {
-    let auxGame = { ...game };
-    auxGame.ActivePlayer = newTurn;
+    // let auxGame = { ...game };
+    // auxGame.ActivePlayer.userId = newTurn;
 
-    setGame(auxGame);
+    // setGame(auxGame);
+    setActivePlayerIndex(newTurn);
   };
 
-  return [game?.ActivePlayer  , () => nextTurn(), (newTurn: number) => setTurn(newTurn)];
+  return [activePlayerIndex  , () => nextTurn(), (newTurn: number) => setTurn(newTurn)];
 }
 
-export function useRequests(): [IRequest[], (newRequest: IRequest) => void] {
-  const {game, setGame} = useContext(GameContext);
-  let activeRequest = game?.Requests;
-
-  const addRequest = (newRequest: any) => {
-    const auxGame = { ...game };
-    if (auxGame.Requests === undefined) {
-      auxGame.Requests = [];
+export function useRequests(gameId: string): [IRequest[], (newRequest: IRequest) => void] {
+  let [requests, setRequests] = useDataByPath<IRequest[]>(`games/${gameId}/Requests`, []);
+  let [activeRequest, setActiveRequest] = useActiveRequest(gameId);
+  const addActiveRequestToHistory = () => {
+    if(!requests){
+      requests = [];
     }
-    auxGame.Requests.push(newRequest);
-    (auxGame.ActiveRequest as IRequest).readed = true;
-    
-    setGame(auxGame);
-    console.log(auxGame)
+    let auxActiveRequest = { ...activeRequest };
+    auxActiveRequest.readed = true;
+    requests.push(auxActiveRequest);
+    setActiveRequest(auxActiveRequest)
+    setRequests(requests);
   };
-  return [game?.Requests || [], (newRequest: any) => addRequest(newRequest)];
+  return [requests || [], (newRequest: any) => addActiveRequestToHistory()];
+}
+
+export function useResponseTurn(gameId: string): [number, (newResponseTurn: number) => void] {
+  const [responseTurn, setResponseTurn] = useDataByPath<number>(`games/${gameId}/ResponseTurn`, -1);
+  return [responseTurn || -1, (newResponseTurn: number) => setResponseTurn(newResponseTurn)];
+}
+
+export function useDice(gameId: string): [number[], (newDice: number[]) => void] {
+  const [dice, setDice] = useDataByPath<number[]>(`games/${gameId}/Dice`, [0,0]);
+  
+  // const setDice = (newDice: number[]) => {
+  //   const auxGame = { ...game };
+  //   auxGame.Dice = newDice;
+  //   setGame(auxGame);
+  // }
+
+  return [dice || [0, 0], (newDice: number[]) => setDice(newDice)];
+}
+
+// export function useThrowedDice(): [boolean, (newThrowedDice: boolean) => void] {
+//   const {game, setGame} = useContext(GameContext);
+  
+//   const setThrowedDice = (newThrowedDice: boolean) => {
+//     const auxGame = { ...game };
+//     auxGame.ThrowedDice = newThrowedDice;
+//     setGame(auxGame);
+//   }
+
+//   return [game?.ThrowedDice || false, (newThrowedDice: boolean) => setThrowedDice(newThrowedDice)];
+// }
+
+export function useDiceManagement(gameId: string): IDiceManagement {
+  const {game, setGame} = useContext(GameContext);
+  const [dice, setDice] = useDice(gameId);
+  const [result, setResult] = useState(0);
+
+  const ref = useRef<ReactDiceRef>(null);
+
+  const throwDice = (dice:number[]) => {
+    ref.current?.rollAll(dice);
+    setResult(dice[0] + dice[1]);
+  }
+
+  const getRandomValue = () => {
+    const auxDice = [Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1]
+    console.log(auxDice)
+    setDice(auxDice);
+  }
+
+  const resetValues = () => {
+    setResult(0);
+    setDice([0, 0])
+  }
+
+  return {ref, result, setResult, dice,  throwDice, getRandomValue, resetValues };
+  
+}
+
+export function useCards(gameId: string): [ICard[], (newCards: ICard[]) => void] {
+  const [cards, setCards] = useDataByPath<ICard[]>(`games/${gameId}/Cards`, []);
+  return [cards || [], (newCards: ICard[]) => setCards(newCards)];
 }

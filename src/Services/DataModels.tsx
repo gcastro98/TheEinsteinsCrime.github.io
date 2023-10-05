@@ -1,16 +1,19 @@
+import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
 import { ButtonMode, ButtonType } from "../Utils/Config";
+import { RefObject } from "react";
 
 
 export interface IGame {
     Id: string;
     AuthorId: number;
     OnProgress: Boolean;
-    Characters: ICharacter[];
     Users: IUser[];
     ActiveRequest?: IRequest;
     Requests: IRequest[];
     Cards: ICard[];
     ActivePlayer: number;
+    ResponseTurn?: number;
+    Dice: number[];
 }
 
 export interface IPosition {
@@ -20,18 +23,35 @@ export interface IPosition {
     roomId?: string; 
   }
   
+export interface IActivePlayer {
+    userId: number;
+    dice: number[];
+    throwedDice: boolean;
+}
 
 export interface IUser {
-    Name: string;
-    Id: number;
-    Connected: boolean;
+    name: string;
+    userId: number;
+    connected: boolean;
+    status: IStatusPlayer;
+    position: IPosition;
+}
+
+export enum IStatusPlayer {
+    WaitingTurn = 0,
+    ThrowingDice = 1,
+    Movement = 2,
+    Asking = 3,
+    WaitingResponse = 4,
+    MarkingAsReaded = 5,
+
 }
 
 export interface ICharacter {
     Name: string;
     id: number;
     userId: number;
-    position: IPosition;
+    Position: IPosition;
 }
 
 export interface ICard{
@@ -57,6 +77,7 @@ export interface IResponse {
 }
 
 export interface IGameContext {
+    gameId: string;
     game: IGame;
     setGame: (game: IGame) => void;
     mode: ButtonMode;
@@ -64,18 +85,19 @@ export interface IGameContext {
     setUserId: (userId: number) => void;
     active: ButtonType;
     setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
-    diceContext: IDiceContext;
+    diceManagement: IDiceManagement;
     
 }
 
-export interface IDiceContext {
-    diceValue: number;
-    setDiceValue: (value: number) => void;
-    throwDice: boolean;
-    setThrowDice: (value: boolean) => void;
-}
+export interface IDiceManagement {
+    ref: RefObject<DieContainerRef>;
+    result: number;
+    setResult: (value: number) => void;
+    dice: number[];
+    throwDice:(dice:number[]) => void;
+    getRandomValue: () => void;
+    resetValues: () => void;
+  }
+  
 
-export interface IGameManagement {
-    
-}
 

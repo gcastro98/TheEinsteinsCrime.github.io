@@ -21,8 +21,7 @@ import { GameContext } from "../Services/DataServices";
 
 export function GameScene(props: any) {
   const { game, setGame } = useContext(GameContext);
-  const { Users, Characters } = game || undefined;
-  console.log(Characters)
+  // const { Users, Characters } = game || undefined;
   return (
     <>
       <Canvas
@@ -51,8 +50,8 @@ export function GameScene(props: any) {
           <Library />
           <Laboratory />
           <Workshop />
-          {Characters?.filter((char) => char.userId !== -1).map((char) => {
-            return {...<Arrows initialPosition={{ x: 2, y: 2 }} path={"Tesla"} characterId={char.userId} />};
+          {game?.Users?.length > 0 && game?.Users?.map((user) => {
+            return {...<Arrows initialPosition={{ x: 2, y: 2 }} path={"Tesla"} characterId={user.userId} />};
           })}
         </Suspense>
       </Canvas>

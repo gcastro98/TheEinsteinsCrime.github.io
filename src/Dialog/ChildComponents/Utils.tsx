@@ -24,7 +24,7 @@ export function generateRandomCards(cards: ICard[], users: IUser[]){
     cards[getRandomCardByType(cards, "room")].userId = "Solution" ;
     const shuffleCards = shuffle(cards.filter(card => card.userId !== "Solution"));
     shuffleCards.forEach((card, index) => {
-        cards[card.id].userId = users[index % users.length].Id;
+        cards[card.id].userId = users[index % users.length].userId;
     }
     );
     return cards;

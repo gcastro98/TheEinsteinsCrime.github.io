@@ -13,21 +13,21 @@ import { IPosition } from "../../../Services/DataModels";
 import { piecesByName } from "../../Utils/Utils";
 
 export function Arrows(props: any) {
-  const { game, setGame, userId, active, setActive, diceContext } = useContext(GameContext);
-  const { diceValue, setDiceValue, throwDice, setThrowDice } = diceContext;
+  const { gameId,  game, setGame, userId, active, setActive, diceManagement } = useContext(GameContext);
+  const { result, setResult, dice, throwDice, getRandomValue, resetValues } = diceManagement;
   const { nodes, materials } = useGLTF(`${selectPath()}/characters/Arrows.glb`) as any;
-  const [position, setPosition] = usePosition(props.characterId);
+  const [position, setPosition] = usePosition(gameId, props.characterId);
   const [showArrows, setShowArrows] = useState(false);
 
   const pieces = piecesByName(props.path);
 
   useEffect(() => {
-    setShowArrows(userId === props.characterId && diceValue > 0 && game?.ActivePlayer === userId);
-  }, [diceValue, game?.ActivePlayer, props.characterId, userId]);
+    setShowArrows(userId === props.characterId && result > 0 && game?.ActivePlayer === userId);
+  }, [result, game?.ActivePlayer, props.characterId, userId]);
 
   const handleMove = (dx: number, dy: number) => {
     const newPos: IPosition = { positionX: position.positionX + dx, positionY: position.positionY + dy };
-    setDiceValue(diceValue - 1);
+    setResult(result - 1);
     setPosition(newPos);
   };
   

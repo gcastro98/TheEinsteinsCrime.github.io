@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^5.0.0",
     "node-sass": "^7.0.3",
     "sass-loader": "^13.2.2",
