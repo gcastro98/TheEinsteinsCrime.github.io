@@ -40,13 +40,18 @@ export function createDataByPath<T>(path: string, data: T) {
 export function checkGameReference(gameId: string) {
   (async () => {
     // Check if the field `games/${gameId}` exists in the database
-    const gameRef = ref(DataBase, `games/${gameId}`);
-    const snapshot = await get(gameRef);
-    if (!snapshot.exists()) {
-      const initialRef = ref(DataBase, `games/initialData`);
-      const initialDataSnapshot = await get(initialRef);
-      const initialData = initialDataSnapshot.val();
-      set(ref(DataBase, `games/${gameId}`), initialData);
+    // const gameRef = ref(DataBase, `games/${gameId}`);
+    // const snapshot = await get(gameRef);
+    // if (!snapshot.exists()) {
+    //   const initialRef = ref(DataBase, `games/initialData`);
+    //   const initialDataSnapshot = await get(initialRef);
+    //   const initialData = initialDataSnapshot.val();
+    //   set(ref(DataBase, `games/${gameId}`), initialData);
+    //   return ref(DataBase, `games/${gameId}`);
+    // }
+    console.log("A")
+    let value = await fetch(`https://the-einsteins-crime-backend.glitch.me/api/games/${gameId}/checkGameReference`)
+    if(value){
       return ref(DataBase, `games/${gameId}`);
     }
   })();
@@ -79,6 +84,8 @@ export function useAuthor(gameId: string): [number, (newAuthor: number) => void]
 
 export function AddUserToGame(gameId: string, userName: string){
   debugger;
+
+  
   const [users, setUsers] = useUsers(gameId);
   const [author, setAuthor] = useAuthor(gameId);
 
