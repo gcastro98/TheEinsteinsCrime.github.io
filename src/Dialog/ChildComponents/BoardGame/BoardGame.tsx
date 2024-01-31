@@ -85,6 +85,7 @@ export function BoardGame(props?: any): JSX.Element {
       </div>
     );
   };
+  
 
   return (
     <div className={styles.boardContainer}>

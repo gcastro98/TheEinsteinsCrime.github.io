@@ -1,14 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./GameInfo.module.scss";
 import {
-  GameContext,
-  saveRequestAtHistoric,
-  useActivePlayer,
-  useActiveRequest,
-  useActiveResponse,
-  useDice,
-  useDiceManagement,
-  useRequests,
+  GameContext, useDataByPath,
+ 
 } from "../Services/DataServices";
 import { RequestManagement } from "./ChildComponents/ShowRequest";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
@@ -16,24 +10,29 @@ import { ICard, IRequest, IUser } from "../Services/DataModels";
 import { ButtonType } from "../Utils/Config";
 import { DiceInfo } from "./ChildComponents/DiceInfo/DiceInfo";
 import { ReactDiceRef } from "react-dice-complete";
+import * as BackendService from "../Services/BackendServices";
 
 export function GameInfo() {
-  const { gameId, game, userId, active, setActive } = useContext(GameContext);
-  const diceContext = useDiceManagement(gameId);
+  const {  game, userId, active, setActive } = useContext(GameContext);
+  const gameId = game?.Id
 
-  const { getRandomValue } = diceContext;
-  const activeRequest = useActiveRequest(gameId)[0];
-  const [activeResponse, setActiveResponse] = useActiveResponse(gameId);
+  const [dice, throwDice] = useDataByPath(`/games/${gameId}/dice`, [0,0], () => BackendService.throwDice(gameId))
+  const [activeRequest, setActiveRequest] = useDataByPath(`/games/${gameId}/dice`, [0,0], (req: any) => BackendService.createRequest(gameId, req))
+
+  const setResponse = async (res: any) => await BackendService.setResponse(gameId, res)
 
   const [responseState, setResponseState] = useState<{
     button: Boolean;
     cardId: number;
     cardOptions: ICard[];
   }>({ button: false, cardId: -2, cardOptions: [] });
-  const [activePlayer, nextTurn, setTurn] = useActivePlayer(gameId);
-  const [requests, addRequestToHistoric] = useRequests(gameId);
+
+  const nextTurn = async () => await BackendService.nextTurn(gameId);
+  const markAsReaded = async () => await BackendService.markAsReaded(gameId);
+
+  // const [activePlayer, nextTurn, setTurn] = useActivePlayer(gameId);
+
   const isYourTurn = activePlayer === userId;
-  const [dice, setDice] = useDice(gameId)
   const [throwedDice, setThrowedDice] = useState<boolean>(false);
   const [showRequestOption, setRequestOption] = useState<boolean>(false);
 
@@ -43,51 +42,47 @@ export function GameInfo() {
       readed: false,
       userId,
     };
-    setActiveResponse(activeResponse);
+    setResponse(activeResponse);
     setResponseState({ button: false, cardId: -2, cardOptions: [] });
-    setTurn(game?.ActiveRequest?.userId as number);
   };
 
-  const markActiveResponseAsReaded = () => {
-    addRequestToHistoric(activeRequest as IRequest);
-    nextTurn();
-  };
+  
 
-  const getActionByInfo = (userToCheck: number) => {
-    const isUserTurn = activePlayer === userToCheck;
-    const isYourUser = userToCheck === userId;
-    const isActiveRequest = activeRequest && !activeRequest?.readed;
-    const isActiveRequestUser = activeRequest?.userId === userToCheck || -1;
-    const isThrowedDice = dice?.length > 0 && dice[0] !== 0 && dice[1] !== 0;
+  // const getActionByInfo = (userToCheck: number) => {
+  //   const isUserTurn = activePlayer === userToCheck;
+  //   const isYourUser = userToCheck === userId;
+  //   const isActiveRequest = activeRequest && !activeRequest?.readed;
+  //   const isActiveRequestUser = activeRequest?.userId === userToCheck || -1;
+  //   const isThrowedDice = dice?.length > 0 && dice[0] !== 0 && dice[1] !== 0;
 
-   if (isActiveRequest){ //Hay una request activa
-    if (isActiveRequestUser){
-      return "ShowRequest"
-    } 
-    if (isUserTurn && isYourUser){
-      return "SelectResponse"
-    }
-    if (isUserTurn && !isYourUser){
-      return "PendingAnswer"
-    }
-   }else {
-      if (isUserTurn && isYourUser){
-        if (isThrowedDice){
-          return "Movement"
-        }
-        return "ThrowDice"
-      }
-      if (isUserTurn && !isYourUser){
-        return "WaitingTurn"
-      }
-      if (!isUserTurn && isYourUser){
-        return "WaitingTurn"
-      }
-      if (!isUserTurn && !isYourUser){
-        return "WaitingTurn"
-      }
-   }
-  };
+  //  if (isActiveRequest){ //Hay una request activa
+  //   if (isActiveRequestUser){
+  //     return "ShowRequest"
+  //   } 
+  //   if (isUserTurn && isYourUser){
+  //     return "SelectResponse"
+  //   }
+  //   if (isUserTurn && !isYourUser){
+  //     return "PendingAnswer"
+  //   }
+  //  }else {
+  //     if (isUserTurn && isYourUser){
+  //       if (isThrowedDice){
+  //         return "Movement"
+  //       }
+  //       return "ThrowDice"
+  //     }
+  //     if (isUserTurn && !isYourUser){
+  //       return "WaitingTurn"
+  //     }
+  //     if (!isUserTurn && isYourUser){
+  //       return "WaitingTurn"
+  //     }
+  //     if (!isUserTurn && !isYourUser){
+  //       return "WaitingTurn"
+  //     }
+  //  }
+  // };
 
   const switchInfoByAction = (action: string, props?: any): JSX.Element => {
     switch (action) {
@@ -98,10 +93,8 @@ export function GameInfo() {
           <div className={styles.footer}>
             <PrimaryButton
               text="Lanzar dados"
-              onClick={() => {
-                getRandomValue();
-                setRequestOption(true);
-                setThrowedDice(true);
+              onClick={async () => {
+                await BackendService.throwDice(gameId)
               }}
             />
           </div>
@@ -122,9 +115,9 @@ export function GameInfo() {
       case "PendingAnswer": // No es tu turno de responder, se ha hecho una pregunta y estas a la espera de responder
         return showMessage(`Pendiente de responder...`);
       case "SelectResponse": // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
-        const room = game?.Cards[activeRequest.roomId];
-        const suspect = game?.Cards[activeRequest.suspectId];
-        const weapon = game?.Cards[activeRequest.weaponId];
+        const room = game?.AllCards[activeRequest.roomId];
+        const suspect = game?.AllCards[activeRequest.suspectId];
+        const weapon = game?.AllCards[activeRequest.weaponId];
         const options = [room, suspect, weapon].filter((card) => card?.userId === userId && (card as ICard));
 
         return (
@@ -193,20 +186,20 @@ export function GameInfo() {
     isYourTurn?: boolean
   ) {
     if (activeRequest && !activeRequest.readed) {
-      const room = game?.Cards[activeRequest.roomId];
-      const suspect = game?.Cards[activeRequest.suspectId];
-      const weapon = game?.Cards[activeRequest.weaponId];
+      const room = game?.AllCards[activeRequest.roomId];
+      const suspect = game?.AllCards[activeRequest.suspectId];
+      const weapon = game?.AllCards[activeRequest.weaponId];
       const options = [room, suspect, weapon].filter((card) => card?.userId === userId && (card as ICard));
 
       const reqUserId = activeRequest.userId;
       const checkResponse = activeRequest?.response !== undefined;
-      if (reqUserId === user.userId) {
+      if (reqUserId === +user.Id) {
         return showMessage(`Supone que ha sido ${suspect.name} con ${weapon.name} en ${room.name}`);
       } else {
-        if (checkResponse && activeRequest?.response?.userId === user.userId && reqUserId === userId) {
+        if (checkResponse && activeRequest?.response?.userId === +user.Id && reqUserId === userId) {
           return (
             <div>
-              {showMessage(`Te ha enseñado el/la ${game?.Cards[activeRequest?.response.cardId].name}`)}
+              {showMessage(`Te ha enseñado el/la ${game?.AllCards[activeRequest?.response.cardId].name}`)}
               <PrimaryButton
                 text="Marcas como leído"
                 onClick={() => {
@@ -216,8 +209,8 @@ export function GameInfo() {
             </div>
           );
         }
-        console.log(reqUserId, userId, isActivePlayer, user.userId);
-        if (reqUserId !== userId && isActivePlayer && userId === user.userId) {
+        console.log(reqUserId, userId, isActivePlayer, user.Id);
+        if (reqUserId !== userId && isActivePlayer && userId === +user.Id) {
           return showRequestButtons(options);
         }
         return <div>{showMessage(`Está esperando para responder...`)}</div>;
@@ -294,7 +287,7 @@ export function GameInfo() {
         <div className={styles.Notification}>
           {game?.Users?.length > 0 &&
             game?.Users.map((user) => {
-              const isActivePlayer = game?.ActivePlayer === user.userId;
+              const isActivePlayer = game?.ActivePlayer === +user.Id;
               console.log(isActivePlayer);
               return (
                 <div className={styles.userSection}>
@@ -302,7 +295,7 @@ export function GameInfo() {
                     <div className={styles.ledBox}>
                       <div className={isActivePlayer ? styles.ledOn : styles.ledOff} />
                     </div>
-                    <span className={styles.name}>{user.name}</span>
+                    <span className={styles.name}>{user.Name}</span>
                   </div>
                   {showInfoByUser(user, activeRequest, isActivePlayer, isYourTurn)}
                 </div>

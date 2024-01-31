@@ -1,57 +1,20 @@
 import { PrimaryButton, Spinner, TextField } from "@fluentui/react";
 import { IGame, IUser } from "../../../../Services/DataModels";
 import { useContext, useState } from "react";
-import {  GameContext, useAuthor, useUsers } from "../../../../Services/DataServices";
+import {  GameContext } from "../../../../Services/DataServices";
 import { generateRandomCards, generateRandomId, saveUserIdOnLocalStorage } from "../../Utils";
 import styles from "../GameManagement.module.scss";
 
 export function WaitingRoom(props: any) {
-  const {gameId, game, setGame, userId, setUserId } = useContext(GameContext);
+  const {game,users, userId } = useContext(GameContext);
   const [name, setName] = useState<string>("");
-  const [users, setUsers] = useUsers(gameId);
-  const [author, setAuthor] = useAuthor(gameId);
 
-  const AddUserToGame = ( userName: string) => {
-    debugger;
-    const userId = users.length;
-    const user: IUser = {
-      userId: userId,
-      name: userName,
-      connected: true,
-      position: {positionX: 0, positionY: 0},
-      status: 0,
-    }
-  
-    const auxUsers = [...users]
-    auxUsers.push(user);
-    if(author === -1){
-      setAuthor(userId);
-    }
-    setUsers(auxUsers);
-    return userId;
-  
+  const AddUser = (user: string)=> {
+
   }
 
-  const AddUser = (name: string) => {
-    const userId = AddUserToGame(name);
-    console.log(userId);
-    if (userId >= 0) {
-      setUserId(userId);
-      saveUserIdOnLocalStorage(userId.toString());
-    }
-  };
+  const StartGame = () => {}
 
-  const StartGame = () => {
-    const auxGame = { ...game };
-    const cards = generateRandomCards(auxGame.Cards, auxGame.Users);
-    auxGame.Cards = cards;
-    auxGame.OnProgress = true;
-    auxGame.ActivePlayer = 0;
-    setGame(auxGame);
-  };
-  debugger;
-
-  console.log(users);
   return (
     <div>
       {userId < 0 && (
