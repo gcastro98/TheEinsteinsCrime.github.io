@@ -6,29 +6,32 @@ Command: npx gltfjsx@6.1.4 .\Arrows.glb
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { selectPath } from "../../../Utils/Utils";
-import { GameContext, useDataByPath, usePosition } from "../../../Services/DataServices";
-import { off, onValue, ref } from "firebase/database";
-import DataBase from "../../../Services/DataBase";
-import { IPosition } from "../../../Services/DataModels";
+import { GameContext } from "../../../Services/DataServices";
+import { IPosition, IUser } from "../../../Services/DataModels";
 import { piecesByName } from "../../Utils/Utils";
+export interface IArrowsProps {
+  user: IUser;
+  showArrows: boolean;
+  setPosition: (position: IPosition) => void;
+}
 
-export function Arrows(props: any) {
-  const { gameId,  game, setGame, userId, active, setActive, diceManagement } = useContext(GameContext);
-  const { result, setResult, dice, throwDice, getRandomValue, resetValues } = diceManagement;
+
+export function Arrows(props: IArrowsProps) {
+  const { game, userId, active, setActive, myCards, users } = useContext(GameContext);
+  // const { result, setResult, dice, throwDice, getRandomValue, resetValues } = diceManagement;
   const { nodes, materials } = useGLTF(`${selectPath()}/characters/Arrows.glb`) as any;
-  const [position, setPosition] = usePosition(gameId, props.characterId);
+  // const [position, setPosition] = usePosition(game?.Id, props.characterId);
   const [showArrows, setShowArrows] = useState(false);
 
-  const pieces = piecesByName(props.path);
-
-  useEffect(() => {
-    setShowArrows(userId === props.characterId && result > 0 && game?.ActivePlayer === userId);
-  }, [result, game?.ActivePlayer, props.characterId, userId]);
+  const pieces = piecesByName("Tesla");
+  let position = props.user.Position;
+  // useEffect(() => {
+  //   setShowArrows(userId === props.characterId && result > 0 && game?.ActivePlayer === userId);
+  // }, [result, game?.ActivePlayer, props.characterId, userId]);
 
   const handleMove = (dx: number, dy: number) => {
-    const newPos: IPosition = { positionX: position.positionX + dx, positionY: position.positionY + dy };
-    setResult(result - 1);
-    setPosition(newPos);
+    const newPos: IPosition = { positionX: position?.positionX + dx, positionY: position?.positionY + dy };
+    props.setPosition(newPos);
   };
   
   const [rotationZ, setRotationZ] = useState(0);
@@ -56,7 +59,7 @@ export function Arrows(props: any) {
 
   return (
     <group position={[position.positionX, 0.4, position.positionY]}>
-      <group visible={showArrows}>
+      <group visible={props.showArrows}>
         <mesh
           visible={position.positionX < XlimitUp}
           geometry={nodes.right.geometry}

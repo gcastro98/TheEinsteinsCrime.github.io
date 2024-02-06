@@ -41,7 +41,8 @@ export function Field(props: IFieldProps) {
     setState((prevState) => ({ ...prevState, icon: (prevState.icon + 1) % iconList.length }));
   };
 
-  cont prevIcon =   
+
+  
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // nextIcon();

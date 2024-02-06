@@ -14,11 +14,11 @@ export interface IMyUserInfo extends IUser {
 export interface IGame {
   Id: string;
   OnProgress: boolean;
-  Users: IUser[];
-  AllCards: ICard[];
-  ActivePlayer: number;
-  ActiveRequest: IRequest;
-  Dice: number[];
+  Users?: IUser[];
+  AllCards?: ICard[];
+  ActivePlayer?: number;
+  ActiveRequest?: IRequest;
+  Dice?: number[];
   Private: IPrivateGame;
 }
 export interface IPrivateGame {
@@ -40,12 +40,15 @@ export interface IActivePlayer {
 
 
 export enum IStatusPlayer {
-  WaitingTurn = 0,
-  ThrowingDice = 1,
-  Movement = 2,
-  Asking = 3,
-  WaitingResponse = 4,
-  MarkingAsReaded = 5,
+  WaitingTurn,
+  ThrowingDice,
+  Movement,
+  PreparingRequest,
+  ShowingRequest,
+  NothingToResponse,
+  WaitingResponse,
+  MarkingAsReaded,
+  ShowingCard,
 }
 
 
@@ -57,18 +60,17 @@ export interface ICard {
 }
 
 export interface IRequest {
-  roomId: number;
-  suspectId: number;
-  weaponId: number;
-  userId: number;
+  roomId?: number;
+  suspectId?: number;
+  weaponId?: number;
+  userId?: number;
   response?: IResponse;
   readed?: boolean;
 }
 
 export interface IResponse {
-  cardId: number;
-  userId: number;
-  readed: boolean;
+  cardId?: number;
+  userId?: number;
 }
 
 export interface IGameContext {

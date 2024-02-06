@@ -34,7 +34,7 @@ import * as BackendService from "./BackendServices";
 //   return [state, setFunction ?  (input: any) => void setFunction(input) : setDataState];
 // }
 
-export function useDataByPath<T>(path: string, initialData: T, setFunction?: (input: any) => Promise<void>): [T, (data: any) => void] {
+export function useDataByPath<T>(path: string, initialData: T, setFunction?: (input: any) => Promise<void>): [T, (data?: any) => void] {
   const [state, setState] = useState<T>(initialData);
 
   useEffect(() => {

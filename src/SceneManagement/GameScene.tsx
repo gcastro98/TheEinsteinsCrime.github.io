@@ -18,10 +18,12 @@ import { Library } from "./Models/Rooms/Library";
 import { Workshop } from "./Models/Rooms/Workshop";
 import "./GameScene.scss";
 import { GameContext } from "../Services/DataServices";
+import { IPosition } from "../Services/DataModels";
 
 export function GameScene(props: any) {
-  const { game, setGame } = useContext(GameContext);
-  // const { Users, Characters } = game || undefined;
+  const { game, users, userId } = useContext(GameContext);
+  const setPosition = (position: IPosition) => {}
+
   return (
     <>
       <Canvas
@@ -50,8 +52,8 @@ export function GameScene(props: any) {
           <Library />
           <Laboratory />
           <Workshop />
-          {game?.Users?.length > 0 && game?.Users?.map((user) => {
-            return {...<Arrows initialPosition={{ x: 2, y: 2 }} path={"Tesla"} characterId={user.userId} />};
+          {users.length > 0 && users?.map((user) => {
+            return {...<Arrows user={user} showArrows={+user.Id === userId} setPosition={setPosition}/>};
           })}
         </Suspense>
       </Canvas>

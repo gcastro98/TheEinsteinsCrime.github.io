@@ -2,7 +2,7 @@ import { PrimaryButton, Spinner, TextField } from "@fluentui/react";
 import { IGame, IUser } from "../../../../Services/DataModels";
 import { useContext, useState } from "react";
 import {  GameContext } from "../../../../Services/DataServices";
-import { generateRandomCards, generateRandomId, saveUserIdOnLocalStorage } from "../../Utils";
+// import { generateRandomCards, generateRandomId, saveUserIdOnLocalStorage } from "../../Utils";
 import styles from "../GameManagement.module.scss";
 
 export function WaitingRoom(props: any) {
