@@ -1,6 +1,7 @@
-import { ICard, IGame, IUser } from "./DataModels";
+import { ICard, IGame, IPosition, IRequest, IUser } from "./DataModels";
 
-const backendUri = "https://the-einsteins-crime-backend.glitch.me/api/games";
+// const backendUri = "https://the-einsteins-crime-backend.glitch.me/api/games";
+const backendUri = "http://localhost:3000/api/games"
 
 export async function getGame(gameId: string) {
   try {
@@ -29,7 +30,7 @@ export async function startGame(gameId: string): Promise<void> {
     const options = {
       method: "POST",
     };
-    await fetch(`${backendUri}/${gameId}/StartGame`, options);
+    await fetch(`${backendUri}/${gameId}/startGame`, options);
   } catch (ex) {
     console.error("Error");
   }
@@ -61,15 +62,18 @@ export async function getMyCards(gameId: string, userId: string): Promise<ICard[
   return [];
 }
 
-export async function addUserToGame(gameId: string, body: any): Promise<void> {
+export async function addUserToGame(gameId: string, name: string): Promise<any> {
   try {
     const options = {
       method: "POST",
-      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({"username": name}),
     };
-    await fetch(`${backendUri}/${gameId}/addUserToGame`, options).then((res) => res.json());
+    return await fetch(`${backendUri}/${gameId}/addUserToGame`, options).then(body => body.json());
   } catch (ex) {
-    console.error("Error");
+    console.error("Error", ex);
   }
 }
 
@@ -78,7 +82,7 @@ export async function throwDice(gameId: string): Promise<void> {
     const options = {
       method: "POST",
     };
-    await fetch(`${backendUri}/${gameId}/throwDice`, options).then((res) => res.json());
+    await fetch(`${backendUri}/${gameId}/throwDice`, options);
   } catch (ex) {
     console.error("Error");
   }
@@ -99,6 +103,9 @@ export async function createRequest(gameId: string, body: any) {
   try {
     const options = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     };
     await fetch(`${backendUri}/${gameId}/createRequest`, options);
@@ -111,6 +118,9 @@ export async function setResponse(gameId: string, body: any) {
   try {
     const options = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     };
     await fetch(`${backendUri}/${gameId}/setResponse`, options);
@@ -128,4 +138,38 @@ export async function markAsReaded(gameId: string){
       } catch (ex) {
         console.error("Error");
       }
+}
+
+export async function makeMovement(gameId: string, userId: string, position: IPosition){
+  try {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        position: position,
+        userId: userId
+      }),
+    };
+    await fetch(`${backendUri}/${gameId}/makeMovement`, options);
+  } catch (ex) {
+    console.error("Error");
+  }
+}
+
+export async function checkSolution(gameId: string, request: IRequest): Promise<boolean> {
+  try {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    };
+    return await fetch(`${backendUri}/${gameId}/checkSolution`, options).then(body => body.json());
+  } catch (ex) {
+    console.error("Error");
+  }
+  return false;
 }

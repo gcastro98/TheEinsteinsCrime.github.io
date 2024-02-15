@@ -1,9 +1,10 @@
 import { Icon, initializeIcons, IPivotStyles, Pivot, PivotItem } from "@fluentui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CharactersKey, FieldType, PivotKey, RoomsKey, WweaponsKey } from "./EnumsBoardGame";
 
 import styles from "./BoardGame.module.scss";
 import { Field } from "./childComponents/Field";
+import { GameContext } from "../../../Services/DataServices";
 
 const pivotStyles: IPivotStyles = {
   root: [
@@ -50,11 +51,29 @@ const pivotStyles: IPivotStyles = {
 
 export function BoardGame(props?: any): JSX.Element {
   const [selectedKey, setKey] = useState(PivotKey.Characters);
+  const {users, game, myCards} = useContext(GameContext)
 
 
+  const [characterBoard, setCharacterBoard] = useState<[][]>([]);
+  const [weaponBoard, setWeaponBoard] = useState<[][]>([]);
+  const [roomBoard, setRoomBoard] = useState<[][]>([]);
+
+  useEffect(() =>{ 
+    if (characterBoard?.length === 0 && myCards?.length > 0){
+      setCharacterBoard(Array(Object.keys(CharactersKey)?.length).fill(Array(users?.length).fill(0)))
+      setWeaponBoard(Array(Object.keys(WweaponsKey)?.length).fill(Array(users?.length).fill(0)))
+      setRoomBoard(Array(Object.keys(RoomsKey)?.length).fill(Array(users?.length).fill(0)))
+    }
+   }, [game])
+
+  useEffect(() => {
+
+  }, [])
+
+  console.log(characterBoard, weaponBoard, roomBoard)
   //   const users: string[] = props.users || [];
-  const users = ["Maria Antonieta", "Julio Jose Dominguez", "Jacinto2334", "Irene_Rodriguez"];
-
+  // const users = ["Maria Antonieta", "Julio Jose Dominguez", "Jacinto2334", "Irene_Rodriguez"];
+  const usersName = users?.map(user => user?.Name)
   const getBoardContain = (keys: string[], users: string[]) => {
     return (
       <div className={styles.boardColumnContainer}>
@@ -97,13 +116,13 @@ export function BoardGame(props?: any): JSX.Element {
           onLinkClick={(item: any) => setKey(item.key.substring(2) as PivotKey)}
         >
           <PivotItem className={styles.pivot} key={PivotKey.Characters} headerText={PivotKey.Characters}>
-            {getBoardContain(Object.keys(CharactersKey), users)}
+            {getBoardContain(Object.keys(CharactersKey), usersName)}
           </PivotItem>
           <PivotItem className={styles.pivot} key={PivotKey.Weapons} headerText={PivotKey.Weapons}>
-            {getBoardContain(Object.keys(WweaponsKey), users)}
+            {getBoardContain(Object.keys(WweaponsKey), usersName)}
           </PivotItem>
           <PivotItem className={styles.pivot} key={PivotKey.Rooms} headerText={PivotKey.Rooms}>
-            {getBoardContain(Object.keys(RoomsKey), users)}
+            {getBoardContain(Object.keys(RoomsKey), usersName)}
           </PivotItem>
         </Pivot>
       </div>

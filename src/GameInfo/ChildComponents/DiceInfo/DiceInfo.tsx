@@ -1,28 +1,25 @@
 import React, { RefObject, useContext, useEffect, useRef, useState } from "react";
 import styles from "./DiceInfo.module.scss";
-import { GameContext } from "../../../Services/DataServices";
+import { GameContext, useDataByPath } from "../../../Services/DataServices";
 import { Icon, PrimaryButton, initializeIcons } from "@fluentui/react";
 import ReactDice, { ReactDiceRef } from "react-dice-complete";
 import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
 interface GameStatus {
-  // active: boolean;
-  // throwedDice: boolean;
-  // setThrowedDice: (value: boolean) => void;
-  // // throwDice?: (dice: number[]) => void;
-  dice?: number[];
+ hidden: boolean;
 }
 
 export function DiceInfo(props: GameStatus): any {
-  const {  game, userId, active, setActive } = useContext(GameContext);
-//   const [activePlayer] = useActivePlayer(gameId);
-//   // const { dice, throwDice, ref } = useDiceManagement(gameId);
-// const dice = useDice(gameId)[0];
+  const { game } = useContext(GameContext);
   const ref = useRef<ReactDiceRef>(null);
-  const [auxActivePlayer, setAuxActivePlayer] = useState<number>(0);
-  const [auxDice, setAuxDice] = useState<number[]>([0, 0]);
+  const dice = game?.Dice;
+  // const [dice, throwDice] = useDataByPath(`/games/${game.Id}/Dice`, [0, 0]);
+  // console.log(props.hidden)
+
   useEffect(() => {
-    ref.current?.rollAll(props.dice);
-  }, [props.dice]);
+    // console.log(dice)
+    if (dice?.length)
+    ref.current?.rollAll(dice);
+  }, [dice && !props.hidden]);
 
   return (
     <div className={styles.GameInfo} >
@@ -30,13 +27,13 @@ export function DiceInfo(props: GameStatus): any {
         numDice={2}
         ref={ref}
         rollDone={(totalNumber: any) => {
-          // props.setThrowedDice(false);
+          console.log(totalNumber)
         }}
         faceColor={"#65211C"}
         dotColor={"#F2F2F2"}
         disableIndividual
         outline
-        // disableRandom
+
       />
     </div>
   );

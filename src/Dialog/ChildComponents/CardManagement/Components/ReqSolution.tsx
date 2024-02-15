@@ -3,16 +3,16 @@ import { GameContext } from "../../../../Services/DataServices";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { IRequest } from "../../../../Services/DataModels";
 import styles from "../CardManagement.module.scss";
-import * as BackendService from "../../../../Services/BackendServices";
 import { ButtonType } from "../../../../Utils/Config";
+import * as BackendService from "../../../../Services/BackendServices";
 interface IDropdownOption {
   key: string;
   text: string;
 }
 
-export function Request(): JSX.Element {
+export function ReqSolution(): JSX.Element {
   const { game, userId, setActive } = useContext(GameContext);
-  const allCards = game && game?.AllCards && game?.AllCards?.length > 0 ? game?.AllCards : [];
+  const allCards = game.AllCards || [];
   
   const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
   const [weapon, setWeapon] = useState<IDropdownOption | undefined>(undefined);
@@ -22,10 +22,10 @@ export function Request(): JSX.Element {
     setSuspect(undefined);
     setWeapon(undefined);
     setRoom(undefined);
-    setActive(ButtonType.None)
+    setActive(ButtonType.None);
   };
 
-  const createRequest = async () => {
+  const checkSolution = async () => {
     try {
       const request: IRequest = {
         roomId: parseInt(room?.key as string),
@@ -35,9 +35,9 @@ export function Request(): JSX.Element {
         readed: false,
         response: undefined,
       };
+      const solution = await BackendService.checkSolution(game?.Id, request);
+      console.log(solution)
       reset();
-      await BackendService.createRequest(game?.Id, request);
-      
     } catch (ex) {
       console.log(ex);
     }
@@ -45,12 +45,12 @@ export function Request(): JSX.Element {
 
   return (
     <div>
-      <h2>Request</h2>
+      <h2>Solución</h2>
       <span>Ha sido </span>
       <Dropdown
         className={styles.textfield}
-        options={(allCards)
-          .filter((x) => x?.type === "Suspect")
+        options={allCards
+          .filter((x) => x.type === "Suspect")
           .map((x) => {
             return { key: x.id, text: x.name };
           })}
@@ -61,8 +61,8 @@ export function Request(): JSX.Element {
       <span>con</span>
       <Dropdown
         className={styles.textfield}
-        options={(allCards)
-          .filter((x) => x?.type === "Weapon")
+        options={allCards
+          .filter((x) => x.type === "Weapon")
           .map((x) => {
             return { key: x.id, text: x.name };
           })}
@@ -73,8 +73,8 @@ export function Request(): JSX.Element {
       <span>en</span>
       <Dropdown
         className={styles.textfield}
-        options={(allCards)
-          .filter((x) => x?.type === "Room")
+        options={allCards
+          .filter((x) => x.type === "Room")
           .map((x) => {
             return { key: x.id, text: x.name };
           })}
@@ -85,7 +85,7 @@ export function Request(): JSX.Element {
       <PrimaryButton
         className={styles.button}
         text="Enviar"
-        onClick={createRequest}
+        onClick={checkSolution}
         disabled={!suspect || !room || !weapon}
       />
     </div>

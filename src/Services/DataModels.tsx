@@ -19,7 +19,7 @@ export interface IGame {
   ActivePlayer?: number;
   ActiveRequest?: IRequest;
   Dice?: number[];
-  Private: IPrivateGame;
+  Private?: IPrivateGame;
 }
 export interface IPrivateGame {
   Cards: ICard[];
@@ -63,24 +63,28 @@ export interface IRequest {
   roomId?: number;
   suspectId?: number;
   weaponId?: number;
-  userId?: number;
+  userId?: string;
   response?: IResponse;
   readed?: boolean;
 }
 
 export interface IResponse {
   cardId?: number;
-  userId?: number;
+  userId?: string;
 }
 
 export interface IGameContext {
   game: IGame;
   mode: ButtonMode;
-  userId: number;
+  userId: string;
   myCards: ICard[];
   active: ButtonType;
   users: IUser[];
+  loaded: boolean;
+  setUserId: (id: string) => void;
+  setMyCards: (cards: ICard[]) => void;
   setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
+  isYourTurn: boolean;
 }
 
 

@@ -34,6 +34,26 @@ import * as BackendService from "./BackendServices";
 //   return [state, setFunction ?  (input: any) => void setFunction(input) : setDataState];
 // }
 
+export function POC<T>(path: string, setFunction: (input: T) => Promise<void>){
+  useEffect(() => {
+    const reference = ref(DataBase, path);
+
+    const callback = (snapshot: any) => {
+      console.log("snapshot", snapshot.val())
+      setFunction(snapshot.val());
+    };
+
+    onValue(reference, callback, (error) => {
+      console.error(error);
+    });
+
+    return () => {
+      off(reference, callback as any);
+    };
+  },[]);
+}
+
+
 export function useDataByPath<T>(path: string, initialData: T, setFunction?: (input: any) => Promise<void>): [T, (data?: any) => void] {
   const [state, setState] = useState<T>(initialData);
 
@@ -41,6 +61,7 @@ export function useDataByPath<T>(path: string, initialData: T, setFunction?: (in
     const reference = ref(DataBase, path);
 
     const callback = (snapshot: any) => {
+      console.log("snapshot", snapshot.val())
       setState(snapshot.val());
     };
 
@@ -72,6 +93,10 @@ export function createDataByPath<T>(path: string, data: T) {
   set(ref(DataBase, path), data);
 }
 
+export async function getDataByPath<T>(path:string): Promise<T>{
+  const snapshot = await get(ref(DataBase, path));
+  return snapshot.val();
+}
 // export function checkGameReference(gameId: string) {
 //   (async () => {
 //     // Check if the field `games/${gameId}` exists in the database

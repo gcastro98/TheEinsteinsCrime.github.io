@@ -18,11 +18,14 @@ import { Library } from "./Models/Rooms/Library";
 import { Workshop } from "./Models/Rooms/Workshop";
 import "./GameScene.scss";
 import { GameContext } from "../Services/DataServices";
-import { IPosition } from "../Services/DataModels";
+import { IPosition, IStatusPlayer } from "../Services/DataModels";
+import * as BackendService from "../Services/BackendServices"
 
 export function GameScene(props: any) {
   const { game, users, userId } = useContext(GameContext);
-  const setPosition = (position: IPosition) => {}
+  const setPosition = async (position: IPosition) => {
+    await BackendService.makeMovement(game?.Id, userId, position)
+  }
 
   return (
     <>
@@ -47,13 +50,13 @@ export function GameScene(props: any) {
         <ambientLight intensity={0.15} />
         <BakeShadows />
         <Suspense>
-          <Class />
+          {/* <Class /> */}
           <Board position={[0, 0, 0]} />
-          <Library />
-          <Laboratory />
-          <Workshop />
-          {users.length > 0 && users?.map((user) => {
-            return {...<Arrows user={user} showArrows={+user.Id === userId} setPosition={setPosition}/>};
+          {/* <Library /> */}
+          {/* <Laboratory /> */}
+          {/* <Workshop /> */}
+          {users?.length > 0 && users?.map((user) => {
+            return {...<Arrows user={user} showArrows={user.Id === userId && user.Status === IStatusPlayer.Movement} setPosition={setPosition}/>};
           })}
         </Suspense>
       </Canvas>

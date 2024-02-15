@@ -4,20 +4,27 @@ import { useContext, useState } from "react";
 import {  GameContext } from "../../../../Services/DataServices";
 // import { generateRandomCards, generateRandomId, saveUserIdOnLocalStorage } from "../../Utils";
 import styles from "../GameManagement.module.scss";
-
-export function WaitingRoom(props: any) {
-  const {game,users, userId } = useContext(GameContext);
+import * as BackendService from "./../../../../Services/BackendServices";
+export function WaitingRoom() {
+  const {game, users, userId, setUserId } = useContext(GameContext);
   const [name, setName] = useState<string>("");
 
-  const AddUser = (user: string)=> {
+  // console.log(userId)
 
+  const AddUser = async (user: string)=> {
+    const myUser = await BackendService.addUserToGame(game?.Id, user);
+    // console.log(myUser)
+    setUserId(myUser.Id)
+    sessionStorage.setItem(`${game.Id}:userId`, myUser.Id);
   }
 
-  const StartGame = () => {}
-
+  const StartGame = () => {
+    BackendService.startGame(game?.Id)
+  }
+ 
   return (
     <div>
-      {userId < 0 && (
+      {!userId && (
         <div className={styles.inputNameSection}>
           <span>Introduce tu nombre para unirte a la partida</span>
           <TextField
@@ -32,8 +39,9 @@ export function WaitingRoom(props: any) {
       )}
       <h3>Detectives en busca de pistas...</h3>
       <div className={styles.playerList}>
-        {users?.length && users?.map((user: any) => (
-          <span className={styles.userName}>{user.name}</span>
+        {users?.length > 0 && users?.map((user: IUser) => (
+          <span className={styles.userName}>{user.Name}</span>
+          
         ))}
 
         <Spinner label="Esperando a que el creador de la sala inicie la partida..." />

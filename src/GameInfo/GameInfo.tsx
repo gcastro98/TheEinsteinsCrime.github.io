@@ -1,39 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styles from "./GameInfo.module.scss";
-import { GameContext, useDataByPath } from "../Services/DataServices";
+import { GameContext, POC, getDataByPath, useDataByPath } from "../Services/DataServices";
 // import { RequestManagement } from "./ChildComponents/ShowRequest";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { ICard, IRequest, IStatusPlayer, IUser } from "../Services/DataModels";
 import { ButtonType } from "../Utils/Config";
 import { DiceInfo } from "./ChildComponents/DiceInfo/DiceInfo";
-import { ReactDiceRef } from "react-dice-complete";
+// import { ReactDiceRef } from "react-dice-complete";
 import * as BackendService from "../Services/BackendServices";
 
-export function GameInfo() {
-  const { game, userId, active, setActive, myCards, users } = useContext(GameContext);
-  const gameId = game?.Id;
+export interface IRequestWithCards {
+  suspect?: ICard;
+  room?: ICard;
+  weapon?: ICard;
+}
 
+export function GameInfo() {
+  const { game, userId, active, setActive, myCards, users, loaded } = useContext(GameContext);
+  const gameId = game?.Id;
+  const hideDice =
+    users?.findIndex(
+      (user) => user.Status === IStatusPlayer.Movement || user.Status === IStatusPlayer.ThrowingDice
+    ) === -1;
   const [responseState, setResponseState] = useState<{
     button: Boolean;
     cardId: number;
     cardOptions: ICard[];
   }>({ button: false, cardId: -2, cardOptions: [] });
+  // const [activeRequest, setactiveRequest] = useDataByPath<IRequest>(
+  //   `/games/${gameId}/ActiveRequest`,
+  //   {}
+  // );
+  
+  const activeRequest = game?.ActiveRequest;
 
-
-  const [showRequestOption, setRequestOption] = useState<boolean>(false);
-
-  // const users: IUser[] = useDataByPath(`/games/${gameId}/Users`, [])[0];
-  const [dice, throwDice] = useDataByPath(`/games/${gameId}/dice`, [0, 0], () =>
-    BackendService.throwDice(gameId)
-  );
-  const [activeRequest, setActiveRequest] = useDataByPath<IRequest>(
-    `/games/${gameId}/activeRequest`,
-    {},
-    (req: any) => BackendService.createRequest(gameId, req)
-  );
-
+  const throwDice = async () => await BackendService.throwDice(gameId);
   const setResponse = async (res: any) => await BackendService.setResponse(gameId, res);
-  const nextTurn = async () => await BackendService.nextTurn(gameId);
   const markActiveResponseAsReaded = async () => await BackendService.markAsReaded(gameId);
   const createActiveResponse = (optionId: number) => {
     const activeResponse = {
@@ -45,101 +47,31 @@ export function GameInfo() {
     setResponseState({ button: false, cardId: -2, cardOptions: [] });
   };
 
-  // const getActionByInfo = (userToCheck: number) => {
-  //   const isUserTurn = activePlayer === userToCheck;
-  //   const isYourUser = userToCheck === userId;
-  //   const isActiveRequest = activeRequest && !activeRequest?.readed;
-  //   const isActiveRequestUser = activeRequest?.userId === userToCheck || -1;
-  //   const isThrowedDice = dice?.length > 0 && dice[0] !== 0 && dice[1] !== 0;
+  const completeCards = () => {
+    const room = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.roomId);
+    const suspect = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.suspectId);
+    const weapon = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.weaponId);
+    return { suspect, room, weapon };
+  };
 
-  //  if (isActiveRequest){ //Hay una request activa
-  //   if (isActiveRequestUser){
-  //     return "ShowRequest"
-  //   }
-  //   if (isUserTurn && isYourUser){
-  //     return "SelectResponse"
-  //   }
-  //   if (isUserTurn && !isYourUser){
-  //     return "PendingAnswer"
-  //   }
-  //  }else {
-  //     if (isUserTurn && isYourUser){
-  //       if (isThrowedDice){
-  //         return "Movement"
-  //       }
-  //       return "ThrowDice"
-  //     }
-  //     if (isUserTurn && !isYourUser){
-  //       return "WaitingTurn"
-  //     }
-  //     if (!isUserTurn && isYourUser){
-  //       return "WaitingTurn"
-  //     }
-  //     if (!isUserTurn && !isYourUser){
-  //       return "WaitingTurn"
-  //     }
-  //  }
-  // };
+  const responseCardName = () => {
+    const cardId = activeRequest?.response?.cardId;
+    if (cardId && game?.AllCards){
+      return game?.AllCards.find(card => card?.id === cardId)?.name
+    }
+  }
 
-  // function ShowOptionsButtons() {
-  //   return (
-  //     <div className={styles.footer}>
-  //       {showRequestOption ? (
-  //         <PrimaryButton
-  //           text="Hacer pregunta"
-  //           onClick={() => {
-  //             setActive(active === ButtonType.Request ? ButtonType.None : ButtonType.Request);
-  //           }}
-  //         />
-  //       ) : (
-  //         <PrimaryButton
-  //           text="Lanzar dados"
-  //           onClick={() => {
-  //             getRandomValue();
-  //             setRequestOption(true);
-  //             setThrowedDice(true);
-  //           }}
-  //         />
-  //       )}
-  //     </div>
-  //   );
-  // }
-
-  // function showRequestButtons(options: ICard[]) {
-  //   return (
-  //     <div className={styles.footer}>
-  //       {responseState.button ? (
-  //         <PrimaryButton
-  //           text="Enseñar carta"
-  //           onClick={() => {
-  //             setResponseState({ ...responseState, button: true });
-  //           }}
-  //         />
-  //       ) : (
-  //         <div>
-  //           <Dropdown
-  //             options={options.map((card) => ({ key: card.id, text: card.name }))}
-  //             onChange={(e, option) => {
-  //               setResponseState({ ...responseState, cardId: option?.key as number });
-  //             }}
-  //           />
-  //           <PrimaryButton
-  //             text="Enviar respuesta"
-  //             onClick={() => {
-  //               createActiveResponse(responseState.cardId);
-  //             }}
-  //           />
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // }
-
+  const responseCardUser = () => {
+    const userId = activeRequest?.response?.userId;
+    if (userId && users){
+      return users.find(user => user?.Id === userId)?.Name
+    }
+  }
   const showMessage = (message: string) => {
     return <div className={styles.message}>{message}</div>;
   };
 
-  const showMessageByAction = (action: IStatusPlayer, props?: any): JSX.Element => {
+  const showMessageByAction = (action: IStatusPlayer): JSX.Element => {
     switch (action) {
       case IStatusPlayer.WaitingTurn: // No es tu turno, no hay acciones activas
         return showMessage(`Está buscando pistas...`);
@@ -150,7 +82,10 @@ export function GameInfo() {
       case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
         return showMessage(`Preparando la pregunta...`);
       case IStatusPlayer.ShowingRequest: // Es tu turno, te has desplazado y has hecho una pregunta
-        return showMessage(`Supone que ha sido ${props?.name} con ${props?.card} en ${props?.room}`);
+        const requestCards = completeCards();
+        return showMessage(
+          `Supone que ha sido ${requestCards.suspect?.name} con ${requestCards.weapon?.name} en ${requestCards.room?.name}`
+        );
       case IStatusPlayer.WaitingResponse: // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
         return showMessage(`Seleccionando respuesta...`);
       case IStatusPlayer.ShowingCard: // Has hecho una pregunta y te han respondido, debes marcarla como leido para continuar
@@ -170,19 +105,31 @@ export function GameInfo() {
             <PrimaryButton
               text="Lanzar dados"
               onClick={async () => {
+                setActive(ButtonType.None)
                 await throwDice();
               }}
             />
+            <PrimaryButton
+            text="Solucionar"
+            onClick={async () => {
+              setActive(ButtonType.Solution)
+            }}
+          />
           </div>
+          
+          
+     
         );
       case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
         return (
+          <div className={styles.footer}>
           <PrimaryButton
             text="Hacer pregunta"
             onClick={() => {
               setActive(active === ButtonType.Request ? ButtonType.None : ButtonType.Request);
             }}
           />
+          </div>
         );
 
       case IStatusPlayer.WaitingResponse: // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
@@ -202,9 +149,15 @@ export function GameInfo() {
                 }}
               />
             ) : (
-              <div>
+              <div className={styles.footer}>
                 <Dropdown
-                  options={options.map((card) => ({ key: card.id, text: card.name }))}
+                  options={myCards
+                    .filter((myCard) =>
+                      [activeRequest?.roomId, activeRequest?.suspectId, activeRequest?.weaponId].some(
+                        (id) => myCard.id === id
+                      )
+                    )
+                    .map((card) => ({ key: card.id, text: card.name }))}
                   onChange={(e, option) => {
                     setResponseState({ ...responseState, cardId: option?.key as number });
                   }}
@@ -219,25 +172,14 @@ export function GameInfo() {
             )}
           </div>
         );
-      case IStatusPlayer.ShowingCard: // Has hecho una pregunta y te han respondido, debes marcarla como leido para continuar
+      case IStatusPlayer.MarkingAsReaded: // Has hecho una pregunta y te han respondido, debes marcarla como leido para continuar
         return (
-          <div>
-            {showMessage(`Te ha enseñado el/la ${activeRequest.response?.cardId}`)}
+          <div className={styles.footer}>
+            {activeRequest?.response?.cardId !== -1
+              ? showMessage(`${responseCardUser()} te ha enseñado la carta de ${responseCardName()}`)
+              : showMessage("No hay nada que enseñarte")}
             <PrimaryButton
-              text="Marcas como leído"
-              onClick={() => {
-                markActiveResponseAsReaded();
-              }}
-            />
-          </div>
-        );
-
-      case IStatusPlayer.NothingToResponse: // Naide te ha podido responder, debes marcarla como leido para continuar
-        return (
-          <div>
-            {showMessage(`Pendiente de responder...`)}
-            <PrimaryButton
-              text="Marcas como leído"
+              text="Marcar como leído"
               onClick={() => {
                 markActiveResponseAsReaded();
               }}
@@ -249,74 +191,28 @@ export function GameInfo() {
     }
   };
 
-  // const showInfoByUser = (
-  //   user: IUser,
-  //   activeRequest?: IRequest,
-  //   isActivePlayer?: boolean,
-  //   isYourTurn?: boolean
-  // ) => {
-  //   if (activeRequest && !activeRequest.readed) {
-  //     const room = game?.AllCards[activeRequest.roomId];
-  //     const suspect = game?.AllCards[activeRequest.suspectId];
-  //     const weapon = game?.AllCards[activeRequest.weaponId];
-  //     const options = [room, suspect, weapon].filter((card) => card?.userId === userId && (card as ICard));
-
-  //     const reqUserId = activeRequest.userId;
-  //     const checkResponse = activeRequest?.response !== undefined;
-  //     if (reqUserId === +user.Id) {
-  //       return showMessage(`Supone que ha sido ${suspect.name} con ${weapon.name} en ${room.name}`);
-  //     } else {
-  //       if (checkResponse && activeRequest?.response?.userId === +user.Id && reqUserId === userId) {
-  //         return (
-  //           <div>
-  //             {showMessage(`Te ha enseñado el/la ${game?.AllCards[activeRequest?.response.cardId].name}`)}
-  //             <PrimaryButton
-  //               text="Marcas como leído"
-  //               onClick={() => {
-  //                 markActiveResponseAsReaded();
-  //               }}
-  //             />
-  //           </div>
-  //         );
-  //       }
-  //       console.log(reqUserId, userId, isActivePlayer, user.Id);
-  //       if (reqUserId !== userId && isActivePlayer && userId === +user.Id) {
-  //         return showRequestButtons(options);
-  //       }
-  //       return <div>{showMessage(`Está esperando para responder...`)}</div>;
-  //     }
-  //   }
-  //   if (isActivePlayer) {
-  //     if (isYourTurn) return <div>{ShowOptionsButtons()}</div>;
-  //     else return <div>{showMessage(`Buscando pistas...`)}</div>;
-  //   }
-  //   return <div>{showMessage(`Está esperando su turno...`)}</div>;
-  // }
-
   return (
-    game?.OnProgress ? (
-      <>
-        <div className={styles.Notification}>
-          {users?.length > 0 &&
-            users.map((user) => {
-              const isActivePlayer = game?.ActivePlayer === +user.Id;
-              const isYourUser = userId === +user.Id;
-              console.log(isActivePlayer);
-              return (
-                <div className={styles.userSection}>
-                  <div className={styles.userName}>
-                    <div className={styles.ledBox}>
-                      <div className={isActivePlayer ? styles.ledOn : styles.ledOff} />
-                    </div>
-                    <span className={styles.name}>{user.Name}</span>
+    <div hidden={!(loaded && game?.OnProgress)}>
+      <div className={styles.Notification}>
+        {users?.length > 0 &&
+          users.map((user, i) => {
+            const isActivePlayer = game?.ActivePlayer === i;
+            const isYourUser = userId === user.Id;
+            console.log(isYourUser)
+            return (
+              <div className={styles.userSection}>
+                <div className={styles.userName}>
+                  <div className={styles.ledBox}>
+                    <div className={isActivePlayer ? styles.ledOn : styles.ledOff} />
                   </div>
-                  {isYourUser ? showOptionsInYourTurn(user.Status) : showMessageByAction(user.Status)}
+                  <span className={styles.name}>{user.Name}</span>
                 </div>
-              );
-            })}
-        </div>
-        <DiceInfo dice={dice} />
-      </>
-    ) : <></>
+                {isYourUser ? showOptionsInYourTurn(user.Status) : showMessageByAction(user.Status)}
+              </div>
+            );
+          })}
+      </div>
+      <DiceInfo hidden={hideDice || !loaded} />
+    </div>
   );
 }
