@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 interface IFieldProps {
   type: FieldType;
   input: string;
+  icon?: number;
+  setIcon?: (icon: number) => void;
 }
+
+
 
 export function Field(props: IFieldProps) {
   const iconList = Object.values(IconsType);
@@ -22,9 +26,15 @@ export function Field(props: IFieldProps) {
     }
   };
   const baseStyle = styleByType();
-  let [state, setState] = useState({ icon: 0, content: <></>, style: baseStyle });
 
+const [icon, setIcon] = useState<number>(0)
 
+useEffect(() => {
+  console.log("useEffect")
+  if (props?.icon){
+    setIcon(props?.icon);
+  }
+}, [props?.icon])
 
   const contentByField = (type: FieldType, input: string) => {
     switch (type) {
@@ -32,34 +42,44 @@ export function Field(props: IFieldProps) {
         return <></>;
       case FieldType.Label:
         return <>{input}</>;
-      case FieldType.Icon:
-        return <Icon iconName={iconList[state.icon]} style={{ fontSize: "10px" }} />;
+      case FieldType.Icon:{
+        console.log("icon", props?.icon)
+        return <Icon iconName={iconList[icon]} style={{ fontSize: "10px" }} />;
+      }
+       
     }
   };
 
   const nextIcon = () => {
-    setState((prevState) => ({ ...prevState, icon: (prevState.icon + 1) % iconList.length }));
+    console.log("next")
+    console.log(props?.setIcon !== undefined && props?.icon !== -1)
+    if (props?.setIcon !== undefined && props?.icon !== undefined){
+      console.log("iconif")
+      console.log(icon)
+      props.setIcon((props.icon + 1) % iconList.length);
+    }
+
   };
 
 
   
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // nextIcon();
+  // const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   // nextIcon();
    
-    setState((prevState) => {
-        const icon = (prevState.icon + 1) % iconList.length
-        return ({
-            ...prevState,
-            icon,
-            style: `${baseStyle} ${styleByIcon(icon)}`,
-          })
-    }
+  //   setState((prevState) => {
+  //       const icon = (prevState.icon + 1) % iconList.length
+  //       return ({
+  //           ...prevState,
+  //           icon,
+  //           style: `${baseStyle} ${styleByIcon(icon)}`,
+  //         })
+  //   }
  
-  );
-  };
+  // );
+  // };
 
-  const styleByIcon = (icon:number) => {
+  const styleByIcon = (icon?:number) => {
     switch (icon) {
       case 0:
         return ``;
@@ -69,16 +89,17 @@ export function Field(props: IFieldProps) {
         return styles.selectedFail;
       case 3:
         return styles.selectedUnknown;
+      default:
+        return ``
     }
   };
   useEffect(() => {
     initializeIcons();
-    setState((prevState) => ({ ...prevState, content: contentByField(props.type, props.input) }));
-  }, [state.icon]);
+  }, []);
 
   return (
-    <div className={state.style} onClick={(ev) => props.type === FieldType.Icon && handleClick(ev)}>
-      {state.content}
+    <div className={ `${baseStyle} ${styleByIcon(props?.icon)}`} onClick={(ev) => props.type === FieldType.Icon && nextIcon()}>
+      {contentByField(props.type, props.input)}
     </div>
   );
 }

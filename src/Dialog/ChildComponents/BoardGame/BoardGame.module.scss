@@ -71,14 +71,14 @@
 .selectedFail {
     animation-name: fill;
     animation-duration: 1.2s;
-    background-color: green;
+    background-color: red;
     border-radius: 5px;
 }
 
 .selectedUnknown {
     animation-name: fill;
     animation-duration: 1.2s;
-    background-color: green;
+    background-color: yellow;
     border-radius: 5px;
 }
 

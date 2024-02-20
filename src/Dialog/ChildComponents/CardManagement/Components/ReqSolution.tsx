@@ -12,7 +12,7 @@ interface IDropdownOption {
 
 export function ReqSolution(): JSX.Element {
   const { game, userId, setActive } = useContext(GameContext);
-  const allCards = game.AllCards || [];
+  const allCards = game?.AllCards || [];
   
   const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
   const [weapon, setWeapon] = useState<IDropdownOption | undefined>(undefined);
