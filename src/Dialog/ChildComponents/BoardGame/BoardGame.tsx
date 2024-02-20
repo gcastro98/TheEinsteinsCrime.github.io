@@ -10,20 +10,26 @@ import { GameContext } from "../../../Services/DataServices";
 const pivotStyles: IPivotStyles = {
   root: [
     {
+      font: "Teletype",
       backgroundColor: "transparent",
     },
   ],
   link: [
     {
-      color: "white",
+       fontFamily: "Teletype",
+      color: "black",
       marginRight: "1em",
+      fontWeight: 400,
+      fontSize: "large",
+      paddingLeft: "5%",
+      paddingRight: "5%",
       selectors: {
-        ":before": {
-          borderBottom: "blue",
-        },
+        // ":before": {
+        //   borderBottom: "white",
+        // },
         ":hover": {
-          color: "#682721",
-          background: "white",
+          background: "#682721",
+          color: "white",
           borderRadius: "5px",
         },
       },
@@ -31,15 +37,20 @@ const pivotStyles: IPivotStyles = {
   ],
   linkIsSelected: [
     {
-      color: "white",
-      // fontWeight: 800,
-      selectors: {
-        ":hover": {
-          color: "#682721",
-          background: "white",
-          borderRadius: "5px",
-        },
-      },
+      paddingLeft: "5%",
+      paddingRight: "5%",
+      fontFamily: "Teletype",
+      background: "#682721d9",
+      color:"white",
+      borderRadius: "5px",
+      fontWeight: 400,
+      // selectors: {
+      //   ":hover": {
+      //     color: "#682721d9",
+      //     background: "transparent",
+      //     borderRadius: "5px",
+      //   },
+      // },
     },
   ],
   linkContent: undefined,
@@ -59,7 +70,7 @@ export function BoardGame(props?: any): JSX.Element {
   const [weaponBoard, setWeaponBoard] = useState<number[][]>([]);
   const [roomBoard, setRoomBoard] = useState<number[][]>([]);
   // console.log(initialized)
-  initializeIcons()
+  initializeIcons();
 
   useEffect(() => {
     if (!initialized && myCards?.length > 0) {
@@ -85,14 +96,14 @@ export function BoardGame(props?: any): JSX.Element {
   const usersName = users?.map((user) => user?.Name);
   const iconList = Object.values(IconsType);
   const nextIcon = (icon: number) => {
-    console.log("icon", icon, ((icon||0) + 1) % iconList.length)
-    return ((icon||0) + 1) % iconList.length;
-  }
+    console.log("icon", icon, ((icon || 0) + 1) % iconList.length);
+    return ((icon || 0) + 1) % iconList.length;
+  };
   const updateBoard = (board: number[][], rowIndex: number, colIndex: number) => {
     console.log(board[colIndex][rowIndex]);
     const auxBoard = [...board];
     auxBoard[colIndex][rowIndex] = nextIcon(auxBoard[colIndex][rowIndex]);
-    console.log(auxBoard)
+    console.log(auxBoard);
     return auxBoard;
   };
   const styleByIcon = (icon?: number) => {
@@ -121,85 +132,52 @@ export function BoardGame(props?: any): JSX.Element {
       case FieldType.Label:
         return <div className={`${styles.field} ${styles.isLabel}`}>{input || ""}</div>;
       case FieldType.Icon: {
-        //   let icon = 0;
-        //   let handler: () => void;
-        //   if (rowIndex !== undefined && colIndex !== undefined) {
-        //     switch (boardType) {
-        //       case BoardKey.Characters:
-        //         icon = characterBoard[rowIndex][colIndex];
-        //         handler = () => setCharacterBoard((board) => updateBoard(board, rowIndex, colIndex));
-        //         break;
-        //       case BoardKey.Weapons:
-        //         icon = weaponBoard[rowIndex][colIndex];
-        //         handler = () => setWeaponBoard((board) => updateBoard(board, rowIndex, colIndex));
-        //         break;
-
-        //       case BoardKey.Rooms:
-        //         icon = roomBoard[rowIndex][colIndex];
-        //         handler = () => setRoomBoard((board) => updateBoard(board, rowIndex, colIndex));
-        //         break;
-        //     }
-        //   }
-
-        //   return (
-        //     <div
-        //       className={`${styles.field} ${styles.isIcon} ${styleByIcon(props?.icon)}`}
-        //       onClick={(ev) => handler()}
-        //     >
-        //       <Icon iconName={iconList[icon]} style={{ fontSize: "10px" }} />;
-        //     </div>
-        //   );
-        // }
-
         if (rowIndex !== undefined && colIndex !== undefined) {
-          // console.log(rowIndex, colIndex,characterBoard?.[colIndex]?.[rowIndex] )
           switch (boardType) {
             case BoardKey.Characters:
-              console.log(iconList[characterBoard?.[colIndex]?.[rowIndex]])
+              console.log(iconList[characterBoard?.[colIndex]?.[rowIndex]]);
               return (
                 <div
-                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(characterBoard?.[colIndex]?.[rowIndex])}`}
-                  onClick={(ev) => setCharacterBoard((board) => updateBoard(board, rowIndex, colIndex))}
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    characterBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setCharacterBoard(updateBoard(characterBoard, rowIndex, colIndex))}
                 >
                   <Icon
                     iconName={iconList[characterBoard?.[colIndex]?.[rowIndex]]}
-                    style={{ fontSize: "15px" }}
+                    style={{ fontSize: "23px" }}
                   />
-                  
                 </div>
               );
 
             case BoardKey.Weapons:
               return (
                 <div
-                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(weaponBoard?.[colIndex]?.[rowIndex])}`}
-                  onClick={(ev) => setWeaponBoard((board) => updateBoard(board, rowIndex, colIndex))}
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    weaponBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setWeaponBoard(updateBoard(weaponBoard, rowIndex, colIndex))}
                 >
-                  <Icon iconName={iconList[weaponBoard?.[colIndex]?.[rowIndex]]} style={{ fontSize: "10px" }} />
+                  <Icon
+                    iconName={iconList[weaponBoard?.[colIndex]?.[rowIndex]]}
+                    style={{ fontSize: "23px" }}
+                  />
                 </div>
               );
 
             case BoardKey.Rooms:
               return (
                 <div
-                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(roomBoard?.[colIndex]?.[rowIndex])}`}
-                  onClick={(ev) => setRoomBoard((board) => updateBoard(board, rowIndex, colIndex))}
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    roomBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setRoomBoard(updateBoard(roomBoard, rowIndex, colIndex))}
                 >
-                  <Icon iconName={iconList[roomBoard?.[colIndex]?.[rowIndex]]} style={{ fontSize: "10px" }} />
+                  <Icon iconName={iconList[roomBoard?.[colIndex]?.[rowIndex]]} style={{ fontSize: "23px" }} />
                 </div>
               );
           }
         }
-
-        //   return (
-        //     <div
-        //       className={`${styles.field} ${styles.isIcon} ${styleByIcon(props?.icon)}`}
-        //       onClick={(ev) => handler()}
-        //     >
-        //       <Icon iconName={iconList[icon]} style={{ fontSize: "10px" }} />;
-        //     </div>
-        //   );
-        // }
       }
     }
   };

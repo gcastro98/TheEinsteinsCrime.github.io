@@ -3,9 +3,9 @@ import styles from './BoardGame.module.scss';
 
 
 export enum BoardKey {
-  Characters = "Characters",
-  Weapons = "Weapons",
-  Rooms = "Rooms",
+  Characters = "Personajes",
+  Weapons = "Armas",
+  Rooms = "Habitaciones",
 }
 export enum CharactersKey {
   Tesla = "Tesla",
