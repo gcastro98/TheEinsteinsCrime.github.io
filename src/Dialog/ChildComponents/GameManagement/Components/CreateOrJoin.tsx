@@ -10,7 +10,7 @@ export function CreateOrJoinRoom(): JSX.Element {
       
       <span className={styles.label}>¡Introduce un codigo de sala para unirte a una partida!</span>
       <TextField
-      className={styles.textfield}
+        className={styles.textfield}
         value={gameId}
         placeholder="Codigo de sala"
         required

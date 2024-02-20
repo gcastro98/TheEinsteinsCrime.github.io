@@ -7,7 +7,7 @@ import {
   PerspectiveCamera,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useContext, useRef } from "react";
 import { Board } from "./Models/Board/Board";
 import { Arrows } from "./Models/Characters/Arrows";
 import { Davinci } from "./Models/Characters/Pieces/Davinci";
@@ -17,8 +17,16 @@ import { Laboratory } from "./Models/Rooms/Laboratory";
 import { Library } from "./Models/Rooms/Library";
 import { Workshop } from "./Models/Rooms/Workshop";
 import "./GameScene.scss";
+import { GameContext } from "../Services/DataServices";
+import { IPosition, IStatusPlayer } from "../Services/DataModels";
+import * as BackendService from "../Services/BackendServices"
 
 export function GameScene(props: any) {
+  const { game, users, userId } = useContext(GameContext);
+  const setPosition = async (position: IPosition) => {
+    await BackendService.makeMovement(game?.Id, userId, position)
+  }
+
   return (
     <>
       <Canvas
@@ -42,13 +50,14 @@ export function GameScene(props: any) {
         <ambientLight intensity={0.15} />
         <BakeShadows />
         <Suspense>
-          <Class />
+          {/* <Class /> */}
           <Board position={[0, 0, 0]} />
-          <Library />
-          <Laboratory />
-          <Workshop />
-          <Arrows character={Tesla} initialPosition={{ x: 2, y: -13 }} path={"tesla"} characterId={1}/>
-          {/* <Arrows character={Davinci} initialPosition={{ x: 10, y: -10 }} path={"davinci"} /> */}
+          {/* <Library /> */}
+          {/* <Laboratory /> */}
+          {/* <Workshop /> */}
+          {users?.length > 0 && users?.map((user) => {
+            return {...<Arrows user={user} showArrows={user.Id === userId && user.Status === IStatusPlayer.Movement} setPosition={setPosition}/>};
+          })}
         </Suspense>
       </Canvas>
       <Loader />

@@ -1,27 +1,35 @@
 import { Icon, initializeIcons, IPivotStyles, Pivot, PivotItem } from "@fluentui/react";
-import { useEffect, useState } from "react";
-import { CharactersKey, FieldType, PivotKey, RoomsKey, WweaponsKey } from "./EnumsBoardGame";
+import { useContext, useEffect, useState } from "react";
+import { CharactersKey, FieldType, IconsType, BoardKey, RoomsKey, WweaponsKey } from "./EnumsBoardGame";
 
 import styles from "./BoardGame.module.scss";
-import { Field } from "./childComponents/Field";
+// import { Field } from "./childComponents/Field";
+
+import { GameContext } from "../../../Services/DataServices";
 
 const pivotStyles: IPivotStyles = {
   root: [
     {
+      font: "Teletype",
       backgroundColor: "transparent",
     },
   ],
   link: [
     {
-      color: "white",
+       fontFamily: "Teletype",
+      color: "black",
       marginRight: "1em",
+      fontWeight: 400,
+      fontSize: "large",
+      paddingLeft: "5%",
+      paddingRight: "5%",
       selectors: {
-        ":before": {
-          borderBottom: "blue",
-        },
+        // ":before": {
+        //   borderBottom: "white",
+        // },
         ":hover": {
-          color: "#682721",
-          background: "white",
+          background: "#682721",
+          color: "white",
           borderRadius: "5px",
         },
       },
@@ -29,15 +37,20 @@ const pivotStyles: IPivotStyles = {
   ],
   linkIsSelected: [
     {
-      color: "white",
-      // fontWeight: 800,
-      selectors: {
-        ":hover": {
-          color: "#682721",
-          background: "white",
-          borderRadius: "5px",
-        },
-      },
+      paddingLeft: "5%",
+      paddingRight: "5%",
+      fontFamily: "Teletype",
+      background: "#682721d9",
+      color:"white",
+      borderRadius: "5px",
+      fontWeight: 400,
+      // selectors: {
+      //   ":hover": {
+      //     color: "#682721d9",
+      //     background: "transparent",
+      //     borderRadius: "5px",
+      //   },
+      // },
     },
   ],
   linkContent: undefined,
@@ -49,39 +62,152 @@ const pivotStyles: IPivotStyles = {
 };
 
 export function BoardGame(props?: any): JSX.Element {
-  const [selectedKey, setKey] = useState(PivotKey.Characters);
+  const [selectedKey, setKey] = useState(BoardKey.Characters);
+  const { users, game, myCards } = useContext(GameContext);
 
+  const [initialized, setInitialized] = useState(false);
+  const [characterBoard, setCharacterBoard] = useState<number[][]>([]);
+  const [weaponBoard, setWeaponBoard] = useState<number[][]>([]);
+  const [roomBoard, setRoomBoard] = useState<number[][]>([]);
+  // console.log(initialized)
+  initializeIcons();
 
-  //   const users: string[] = props.users || [];
-  const users = ["Maria Antonieta", "Julio Jose Dominguez", "Jacinto2334", "Irene_Rodriguez"];
+  useEffect(() => {
+    if (!initialized && myCards?.length > 0) {
+      setCharacterBoard(
+        Array.from(Array(Object.keys(CharactersKey)?.length), () => {
+          return new Array(users?.length).fill(0);
+        })
+      );
+      setWeaponBoard(
+        Array.from(Array(Object.keys(WweaponsKey)?.length), () => {
+          return new Array(users?.length).fill(0);
+        })
+      );
+      setRoomBoard(
+        Array.from(Array(Object.keys(RoomsKey)?.length), () => {
+          return new Array(users?.length).fill(0);
+        })
+      );
+      setInitialized(true);
+    }
+  }, [myCards, initialized]);
 
-  const getBoardContain = (keys: string[], users: string[]) => {
-    return (
-      <div className={styles.boardColumnContainer}>
-        {printColumn(keys)}
-        {users?.map((user) => printColumn(keys, user))}
-      </div>
-    );
+  const usersName = users?.map((user) => user?.Name);
+  const iconList = Object.values(IconsType);
+  const nextIcon = (icon: number) => {
+    console.log("icon", icon, ((icon || 0) + 1) % iconList.length);
+    return ((icon || 0) + 1) % iconList.length;
+  };
+  const updateBoard = (board: number[][], rowIndex: number, colIndex: number) => {
+    console.log(board[colIndex][rowIndex]);
+    const auxBoard = [...board];
+    auxBoard[colIndex][rowIndex] = nextIcon(auxBoard[colIndex][rowIndex]);
+    console.log(auxBoard);
+    return auxBoard;
+  };
+  const styleByIcon = (icon?: number) => {
+    switch (icon) {
+      case 0:
+        return ``;
+      case 1:
+        return styles.selectedCheck;
+      case 2:
+        return styles.selectedFail;
+      case 3:
+        return styles.selectedUnknown;
+      default:
+        return ``;
+    }
   };
 
-  const printColumn = (keys: string[], header?: string) => {
+  const field = (
+    fieldType: FieldType,
+    input: string,
+    boardType?: BoardKey,
+    rowIndex?: number,
+    colIndex?: number
+  ) => {
+    switch (fieldType) {
+      case FieldType.Label:
+        return <div className={`${styles.field} ${styles.isLabel}`}>{input || ""}</div>;
+      case FieldType.Icon: {
+        if (rowIndex !== undefined && colIndex !== undefined) {
+          switch (boardType) {
+            case BoardKey.Characters:
+              console.log(iconList[characterBoard?.[colIndex]?.[rowIndex]]);
+              return (
+                <div
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    characterBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setCharacterBoard(updateBoard(characterBoard, rowIndex, colIndex))}
+                >
+                  <Icon
+                    iconName={iconList[characterBoard?.[colIndex]?.[rowIndex]]}
+                    style={{ fontSize: "23px" }}
+                  />
+                </div>
+              );
+
+            case BoardKey.Weapons:
+              return (
+                <div
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    weaponBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setWeaponBoard(updateBoard(weaponBoard, rowIndex, colIndex))}
+                >
+                  <Icon
+                    iconName={iconList[weaponBoard?.[colIndex]?.[rowIndex]]}
+                    style={{ fontSize: "23px" }}
+                  />
+                </div>
+              );
+
+            case BoardKey.Rooms:
+              return (
+                <div
+                  className={`${styles.field} ${styles.isIcon} ${styleByIcon(
+                    roomBoard?.[colIndex]?.[rowIndex]
+                  )}`}
+                  onClick={(ev) => setRoomBoard(updateBoard(roomBoard, rowIndex, colIndex))}
+                >
+                  <Icon iconName={iconList[roomBoard?.[colIndex]?.[rowIndex]]} style={{ fontSize: "23px" }} />
+                </div>
+              );
+          }
+        }
+      }
+    }
+  };
+
+  console.log("mycards", myCards, initialized);
+  console.log(characterBoard, weaponBoard, roomBoard);
+
+  const getBoardContain = (boardType: BoardKey, keys: string[]) => {
+    const printColumn = (keys: string[], rowIndex: number, header?: string) => {
+      return (
+        <div className={styles.boardColumn}>
+          {header ? (
+            <>
+              {field(FieldType.Label, header as string)}
+              {keys.map((_, colIndex) => field(FieldType.Icon, "", boardType, rowIndex, colIndex))}
+            </>
+          ) : (
+            <>
+              {field(FieldType.Label, "")}
+              {keys.map((label) => field(FieldType.Label, label as string))}
+            </>
+          )}
+        </div>
+      );
+    };
+
     return (
-      <div className={styles.boardColumn}>
-        {header ? (
-          <>
-            <Field type={FieldType.Label} input={header as string} />
-            {keys.map((label) => (
-              <Field type={FieldType.Icon} input={''} />
-            ))}
-          </>
-        ) : (
-          <>
-            <Field type={FieldType.Empty} input={""} />
-            {keys.map((label) => (
-              <Field type={FieldType.Label} input={label as string} />
-            ))}
-          </>
-        )}
+      <div className={styles.boardColumnContainer}>
+        {printColumn(keys, 0)}
+        {usersName?.map((user, i) => printColumn(keys, i, user))}
       </div>
     );
   };
@@ -89,22 +215,24 @@ export function BoardGame(props?: any): JSX.Element {
   return (
     <div className={styles.boardContainer}>
       <div className={styles.boardPivots}>
-        <Pivot
-          styles={pivotStyles}
-          defaultSelectedKey={selectedKey}
-          className={styles.boardPivots}
-          onLinkClick={(item: any) => setKey(item.key.substring(2) as PivotKey)}
-        >
-          <PivotItem className={styles.pivot} key={PivotKey.Characters} headerText={PivotKey.Characters}>
-            {getBoardContain(Object.keys(CharactersKey), users)}
-          </PivotItem>
-          <PivotItem className={styles.pivot} key={PivotKey.Weapons} headerText={PivotKey.Weapons}>
-            {getBoardContain(Object.keys(WweaponsKey), users)}
-          </PivotItem>
-          <PivotItem className={styles.pivot} key={PivotKey.Rooms} headerText={PivotKey.Rooms}>
-            {getBoardContain(Object.keys(RoomsKey), users)}
-          </PivotItem>
-        </Pivot>
+        {initialized && (
+          <Pivot
+            styles={pivotStyles}
+            defaultSelectedKey={selectedKey}
+            className={styles.boardPivots}
+            onLinkClick={(item: any) => setKey(item.key.substring(2) as BoardKey)}
+          >
+            <PivotItem className={styles.pivot} key={BoardKey.Characters} headerText={BoardKey.Characters}>
+              {getBoardContain(BoardKey.Characters, Object.keys(CharactersKey))}
+            </PivotItem>
+            <PivotItem className={styles.pivot} key={BoardKey.Weapons} headerText={BoardKey.Weapons}>
+              {getBoardContain(BoardKey.Weapons, Object.keys(WweaponsKey))}
+            </PivotItem>
+            <PivotItem className={styles.pivot} key={BoardKey.Rooms} headerText={BoardKey.Rooms}>
+              {getBoardContain(BoardKey.Rooms, Object.keys(RoomsKey))}
+            </PivotItem>
+          </Pivot>
+        )}
       </div>
     </div>
   );

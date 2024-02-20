@@ -18,17 +18,17 @@ export function getUserIdFromLocalStorage(){
     return sessionStorage.getItem(`${gameId}:userId`);
 }
 
-export function generateRandomCards(cards: ICard[], users: IUser[]){
-    cards[getRandomCardByType(cards, "suspect")].userId = "Solution" ;
-    cards[getRandomCardByType(cards, "weapon")].userId = "Solution" ;
-    cards[getRandomCardByType(cards, "room")].userId = "Solution" ;
-    const shuffleCards = shuffle(cards.filter(card => card.userId !== "Solution"));
-    shuffleCards.forEach((card, index) => {
-        cards[card.id].userId = users[index % users.length].Id;
-    }
-    );
-    return cards;
-}
+// export function generateRandomCards(cards: ICard[], users: IUser[]){
+//     cards[getRandomCardByType(cards, "suspect")].userId = "Solution" ;
+//     cards[getRandomCardByType(cards, "weapon")].userId = "Solution" ;
+//     cards[getRandomCardByType(cards, "room")].userId = "Solution" ;
+//     const shuffleCards = shuffle(cards.filter(card => card.userId !== "Solution"));
+//     shuffleCards.forEach((card, index) => {
+//         cards[card.id].userId = users[index % users.length].userId;
+//     }
+//     );
+//     return cards;
+// }
 
 function shuffle(cards: ICard[]){
     return cards.map((card) => ({ card, sort: Math.random()})).sort((a, b) => a.sort - b.sort).map((a) => a.card);

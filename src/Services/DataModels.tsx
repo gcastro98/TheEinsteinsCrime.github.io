@@ -1,71 +1,90 @@
-import { ButtonMode, ButtonType } from "../Menu/NavMenu";
+import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
+import { ButtonMode, ButtonType } from "../Utils/Config";
+import { RefObject } from "react";
 
+export interface IUser {
+  Id: string;
+  Name: string;
+  Position: IPosition;
+  Status: IStatusPlayer;
+}
+export interface IMyUserInfo extends IUser {
+  Cards: ICard[];
+}
 export interface IGame {
-    Id: string;
-    AuthorId: number;
-    OnProgress: Boolean;
-    Characters: ICharacter[];
-    Users: IUser[];
-    ActiveRequest?: IRequest;
-    Requests: IRequest[];
-    Cards: ICard[];
-    ActivePlayer: number;
+  Id: string;
+  OnProgress: boolean;
+  Users?: IUser[];
+  AllCards?: ICard[];
+  ActivePlayer?: number;
+  ActiveRequest?: IRequest;
+  Dice?: number[];
+  Private?: IPrivateGame;
+}
+export interface IPrivateGame {
+  Cards: ICard[];
 }
 
 export interface IPosition {
-    positionX: number;
-    positionY: number;
-    rotation?: number;
-    roomId?: string; 
-  }
-  
-
-export interface IUser {
-    Name: string;
-    Id: number;
-    Connected: boolean;
+  positionX: number;
+  positionY: number;
+  rotation?: number;
+  roomId?: string;
 }
 
-export interface ICharacter {
-    Name: string;
-    id: number;
-    userId: number;
-    position: IPosition;
+export interface IActivePlayer {
+  userId: number;
+  dice: number[];
+  // throwedDice: boolean;
 }
 
-export interface ICard{
-    name: string;
-    type: "Suspect" | "Weapon" | "Room";
-    id: number;
-    userId: number | "Solution";
+
+export enum IStatusPlayer {
+  WaitingTurn,
+  ThrowingDice,
+  Movement,
+  PreparingRequest,
+  ShowingRequest,
+  NothingToResponse,
+  WaitingResponse,
+  MarkingAsReaded,
+  ShowingCard,
+}
+
+
+export interface ICard {
+  name: string;
+  type: "Suspect" | "Weapon" | "Room";
+  id: number;
+  userId: number | string;
 }
 
 export interface IRequest {
-    roomId: number;
-    suspectId: number;
-    weaponId: number;
-    userId: number;
-    response?: IResponse;
-    readed?: boolean;
+  roomId?: number;
+  suspectId?: number;
+  weaponId?: number;
+  userId?: string;
+  response?: IResponse;
+  readed?: boolean;
 }
 
 export interface IResponse {
-    cardId: number;
-    userId: number;
-    readed: boolean;
+  cardId?: number;
+  userId?: string;
 }
 
 export interface IGameContext {
-    game: IGame;
-    setGame: (game: IGame) => void;
-    mode: ButtonMode;
-    userId: number;
-    setUserId: (userId: number) => void;
-    active: ButtonType;
-    setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
+  game: IGame;
+  mode: ButtonMode;
+  userId: string;
+  myCards: ICard[];
+  active: ButtonType;
+  users: IUser[];
+  loaded: boolean;
+  setUserId: (id: string) => void;
+  setMyCards: (cards: ICard[]) => void;
+  setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
+  isYourTurn: boolean;
 }
 
-export interface IGameManagement {
-    
-}
 

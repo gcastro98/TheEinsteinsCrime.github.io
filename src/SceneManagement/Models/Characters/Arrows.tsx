@@ -6,24 +6,34 @@ Command: npx gltfjsx@6.1.4 .\Arrows.glb
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { selectPath } from "../../../Utils/Utils";
-import { GameContext, useDataByPath, usePosition } from "../../../Services/DataServices";
-import { off, onValue, ref } from "firebase/database";
-import DataBase from "../../../Services/DataBase";
-import {IPosition} from "../../../Services/DataModels";
+import { GameContext } from "../../../Services/DataServices";
+import { IPosition, IUser } from "../../../Services/DataModels";
+import { piecesByName } from "../../Utils/Utils";
+export interface IArrowsProps {
+  user: IUser;
+  showArrows: boolean;
+  setPosition: (position: IPosition) => void;
+}
 
-export function Arrows(props: any) {
-  const { game, setGame, userId, active, setActive } = useContext(GameContext);
+
+export function Arrows(props: IArrowsProps) {
+  const { game, userId, active, setActive, myCards, users } = useContext(GameContext);
+  // const { result, setResult, dice, throwDice, getRandomValue, resetValues } = diceManagement;
   const { nodes, materials } = useGLTF(`${selectPath()}/characters/Arrows.glb`) as any;
-  // const [position, setPosition] = useDataByPath<IPosition>(props.path, { positionX: 0, positionY: 0 });
-  
-  const [position, setPosition] = usePosition(props.characterId);
+  // const [position, setPosition] = usePosition(game?.Id, props.characterId);
   const [showArrows, setShowArrows] = useState(false);
-  
- 
+
+  const pieces = piecesByName("Tesla");
+  let position = props.user.Position;
+  // useEffect(() => {
+  //   setShowArrows(userId === props.characterId && result > 0 && game?.ActivePlayer === userId);
+  // }, [result, game?.ActivePlayer, props.characterId, userId]);
+
   const handleMove = (dx: number, dy: number) => {
-    const newPos: IPosition = { positionX: position.positionX + dx, positionY: position.positionY + dy };
-    setPosition(newPos);
+    const newPos: IPosition = { positionX: position?.positionX + dx, positionY: position?.positionY + dy };
+    props.setPosition(newPos);
   };
+  
   const [rotationZ, setRotationZ] = useState(0);
 
   const nextX = () => {
@@ -49,45 +59,45 @@ export function Arrows(props: any) {
 
   return (
     <group position={[position.positionX, 0.4, position.positionY]}>
-      <group visible={showArrows}>
-      <mesh
-        visible={position.positionX < XlimitUp}
-        geometry={nodes.right.geometry}
-        material={materials.arrow}
-        position={[1.15, 0.6, -0.46]}
-        rotation={[Math.PI / 2, 0, Math.PI / 2]}
-        scale={0.12}
-        onClick={() => nextX()}
-      />
-      <mesh
-        visible={position.positionX > XlimitLess}
-        geometry={nodes.left.geometry}
-        material={materials.arrow}
-        position={[-0.14, 0.6, -0.46]}
-        rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
-        scale={0.12}
-        onClick={() => backX()}
-      />
-      <mesh
-        visible={position.positionY < YlimitUp}
-        geometry={nodes.back.geometry}
-        material={materials.arrow}
-        position={[0.5, 0.6, 0.18]}
-        rotation={[Math.PI / 2, 0, Math.PI]}
-        scale={0.12}
-        onClick={() => backY()}
-      />
-      <mesh
-        visible={position.positionY > YlimitLess}
-        geometry={nodes.front.geometry}
-        material={materials.arrow}
-        position={[0.5, 0.6, -1.11]}
-        rotation={[-Math.PI / 2, 0, Math.PI]}
-        scale={0.12}
-        onClick={() => nextY()}
-      />
+      <group visible={props.showArrows}>
+        <mesh
+          visible={position.positionX < XlimitUp}
+          geometry={nodes.right.geometry}
+          material={materials.arrow}
+          position={[1.15, 0.6, -0.46]}
+          rotation={[Math.PI / 2, 0, Math.PI / 2]}
+          scale={0.12}
+          onClick={() => nextX()}
+        />
+        <mesh
+          visible={position.positionX > XlimitLess}
+          geometry={nodes.left.geometry}
+          material={materials.arrow}
+          position={[-0.14, 0.6, -0.46]}
+          rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+          scale={0.12}
+          onClick={() => backX()}
+        />
+        <mesh
+          visible={position.positionY < YlimitUp}
+          geometry={nodes.back.geometry}
+          material={materials.arrow}
+          position={[0.5, 0.6, 0.18]}
+          rotation={[Math.PI / 2, 0, Math.PI]}
+          scale={0.12}
+          onClick={() => backY()}
+        />
+        <mesh
+          visible={position.positionY > YlimitLess}
+          geometry={nodes.front.geometry}
+          material={materials.arrow}
+          position={[0.5, 0.6, -1.11]}
+          rotation={[-Math.PI / 2, 0, Math.PI]}
+          scale={0.12}
+          onClick={() => nextY()}
+        />
       </group>
-      {props?.character({ rotationZ })}
+      {pieces({ rotationZ })}
     </group>
   );
 }

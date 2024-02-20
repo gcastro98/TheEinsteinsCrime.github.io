@@ -2,10 +2,10 @@
 import styles from './BoardGame.module.scss';
 
 
-export enum PivotKey {
-  Characters = "Characters",
-  Weapons = "Weapons",
-  Rooms = "Rooms",
+export enum BoardKey {
+  Characters = "Personajes",
+  Weapons = "Armas",
+  Rooms = "Habitaciones",
 }
 export enum CharactersKey {
   Tesla = "Tesla",
