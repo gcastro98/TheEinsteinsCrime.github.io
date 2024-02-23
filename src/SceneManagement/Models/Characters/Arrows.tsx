@@ -17,7 +17,7 @@ export interface IArrowsProps {
 
 
 export function Arrows(props: IArrowsProps) {
-  const { game, userId, active, setActive, myCards, users } = useContext(GameContext);
+  const { game, userId, dialog, setDialog, myCards, users } = useContext(GameContext);
   // const { result, setResult, dice, throwDice, getRandomValue, resetValues } = diceManagement;
   const { nodes, materials } = useGLTF(`${selectPath()}/characters/Arrows.glb`) as any;
   // const [position, setPosition] = usePosition(game?.Id, props.characterId);

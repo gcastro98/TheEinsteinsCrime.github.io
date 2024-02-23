@@ -5,7 +5,7 @@ import "../Model/Card.css";
 import * as BackendService from "../../../../Services/BackendServices"
 import { ICard } from "../../../../Services/DataModels";
 
-export function Show() {
+export function ShowMyCards() {
 
   const { game, myCards, userId,  setMyCards} = useContext(GameContext);
 

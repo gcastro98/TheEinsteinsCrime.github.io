@@ -1,5 +1,5 @@
 import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
-import { ButtonMode, ButtonType } from "../Utils/Config";
+import { ButtonMode, DialogComponent } from "../Utils/Config";
 import { RefObject } from "react";
 
 export interface IUser {
@@ -35,7 +35,6 @@ export interface IPosition {
 export interface IActivePlayer {
   userId: number;
   dice: number[];
-  // throwedDice: boolean;
 }
 
 
@@ -49,6 +48,8 @@ export enum IStatusPlayer {
   WaitingResponse,
   MarkingAsReaded,
   ShowingCard,
+  Disabled,
+  Winner
 }
 
 
@@ -78,13 +79,14 @@ export interface IGameContext {
   mode: ButtonMode;
   userId: string;
   myCards: ICard[];
-  active: ButtonType;
+  dialog: DialogComponent;
   users: IUser[];
   loaded: boolean;
   setUserId: (id: string) => void;
   setMyCards: (cards: ICard[]) => void;
-  setActive: React.Dispatch<React.SetStateAction<ButtonType>>;
+  setDialog: (dialog: DialogComponent, props?: any) => void;
   isYourTurn: boolean;
+  props?: any;  
 }
 
 

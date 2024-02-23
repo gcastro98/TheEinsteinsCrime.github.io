@@ -4,14 +4,14 @@ import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { IRequest } from "../../../../Services/DataModels";
 import styles from "../CardManagement.module.scss";
 import * as BackendService from "../../../../Services/BackendServices";
-import { ButtonType } from "../../../../Utils/Config";
+import { DialogComponent } from "../../../../Utils/Config";
 interface IDropdownOption {
   key: string;
   text: string;
 }
 
 export function Request(): JSX.Element {
-  const { game, userId, setActive } = useContext(GameContext);
+  const { game, userId, setDialog: setActive } = useContext(GameContext);
   const allCards = game && game?.AllCards && game?.AllCards?.length > 0 ? game?.AllCards : [];
   
   const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
@@ -22,7 +22,7 @@ export function Request(): JSX.Element {
     setSuspect(undefined);
     setWeapon(undefined);
     setRoom(undefined);
-    setActive(ButtonType.None)
+    setActive(DialogComponent.None)
   };
 
   const createRequest = async () => {

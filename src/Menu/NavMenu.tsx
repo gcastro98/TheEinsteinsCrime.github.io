@@ -2,13 +2,13 @@ import { Stylesheet } from "@fluentui/react";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./NavMenu.module.scss";
 import { GameContext } from "../Services/DataServices";
-import { ButtonMode, ButtonProps, ButtonType, config } from "../Utils/Config";
+import { ButtonMode, ButtonProps, DialogComponent, config } from "../Utils/Config";
 
 type NavTopMenuProps = {
   loading: number;
-  activeButton: ButtonType;
+  activeButton: DialogComponent;
   mode?: ButtonMode;
-  onClick: (type: ButtonType) => void;
+  onClick: (type: DialogComponent) => void;
   isYourTurn: boolean;
 };
 
@@ -16,7 +16,7 @@ export function NavMenu(props: NavTopMenuProps) {
   // const { isYourTurn } = useContext(GameContext);
   const [isLoading, setLoading] = useState(true);
   const [buttons, setButtons]: [ButtonProps[], any] = useState(
-    config.buttons?.filter((button: ButtonProps) => button.mode === props.mode) || []
+    config.dialogComponents?.filter((button: ButtonProps) => button.mode === props.mode) || []
   );
   useEffect(() => {
     if (props.loading >= 100) {
@@ -24,7 +24,7 @@ export function NavMenu(props: NavTopMenuProps) {
     }
     if (props.mode) {
       setButtons(
-        config.buttons?.filter(
+        config.dialogComponents?.filter(
           (button: ButtonProps) => button.mode === props.mode && button?.hidden === undefined
         )
       );
@@ -49,9 +49,9 @@ export function NavMenu(props: NavTopMenuProps) {
                     props.activeButton === button.type && styles.navButtonSelected
                   }`}
                   onClick={() =>
-                    button.type !== ButtonType.None &&
+                    button.type !== DialogComponent.None &&
                     (props.activeButton === button.type
-                      ? props.onClick(ButtonType.None)
+                      ? props.onClick(DialogComponent.None)
                       : props.onClick(button.type))
                   }
                 >

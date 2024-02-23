@@ -1,0 +1,33 @@
+[debug] [2024-02-20T23:10:08.046Z] ----------------------------------------------------------------------
+[debug] [2024-02-20T23:10:08.048Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2024-02-20T23:10:08.049Z] CLI Version:   12.9.1
+[debug] [2024-02-20T23:10:08.049Z] Platform:      win32
+[debug] [2024-02-20T23:10:08.049Z] Node Version:  v16.13.2
+[debug] [2024-02-20T23:10:08.050Z] Time:          Wed Feb 21 2024 00:10:08 GMT+0100 (hora estándar de Europa central)
+[debug] [2024-02-20T23:10:08.050Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-20T23:10:08.163Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-20T23:10:08.163Z] > authorizing via signed-in user (si.guillecastro@gmail.com)
+[debug] [2024-02-20T23:10:08.163Z] [iam] checking project theeinsteinscrime for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-02-20T23:10:08.165Z] > refreshing access token with scopes: []
+[debug] [2024-02-20T23:10:08.166Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-02-20T23:10:08.167Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-20T23:10:08.281Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2024-02-20T23:10:08.282Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-20T23:10:08.282Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/theeinsteinscrime:testIamPermissions [none]
+[debug] [2024-02-20T23:10:08.282Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/theeinsteinscrime:testIamPermissions x-goog-quota-user=projects/theeinsteinscrime
+[debug] [2024-02-20T23:10:08.282Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theeinsteinscrime:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-02-20T23:10:08.899Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/theeinsteinscrime:testIamPermissions 401
+[debug] [2024-02-20T23:10:08.899Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theeinsteinscrime:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"method":"google.cloudresourcemanager.v1.Projects.TestIamPermissions","service":"cloudresourcemanager.googleapis.com"}}]}}
+[debug] [2024-02-20T23:10:08.900Z] [iam] error while checking permissions, command may fail: FirebaseError: HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2024-02-20T23:10:08.900Z] > refreshing access token with scopes: []
+[debug] [2024-02-20T23:10:08.901Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-02-20T23:10:08.901Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-20T23:10:08.973Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2024-02-20T23:10:08.973Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-20T23:10:08.974Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/theeinsteinscrime [none]
+[debug] [2024-02-20T23:10:09.047Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/theeinsteinscrime 401
+[debug] [2024-02-20T23:10:09.048Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/theeinsteinscrime {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2024-02-20T23:10:09.048Z] HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[error] 
+[error] Error: Assertion failed: resolving hosting target of a site with no site name or target name. This should have caused an error earlier

@@ -2,17 +2,22 @@
 export interface IConfig {
   logoPathLoading: string;
   logoPath: string;
-  buttons: ButtonProps[];
+  dialogComponents: ButtonProps[];
 }
 
 export interface ButtonProps {
   name: string;
   mode?: ButtonMode;
-  type: ButtonType;
+  type: DialogComponent;
   hidden?: boolean | "OnlyTurn";
 }
 
-export enum ButtonType {
+export interface IDialogConfigProps {
+  type: DialogComponent;
+  props?: any;
+}
+
+export enum DialogComponent {
   None = "None",
   Home = "Inicio",
   Settings = "Ajustes",
@@ -24,7 +29,8 @@ export enum ButtonType {
   Exit = "Exit",
   Request = "Request",
   Solution = "Solution",
-  Waiting = "Waiting"
+  Waiting = "Waiting",
+  CardsByUser = "CardsByUser"
 }
 
 export enum ButtonMode {
@@ -35,16 +41,17 @@ export enum ButtonMode {
 export const config: IConfig = {
   logoPathLoading: "TheEinsteinsCrime_logo_recortado.png",
   logoPath: "TheEinsteinsCrime_logo_recortado_beige_sinFondo.png",
-  buttons: [
-    { name: "Inicio", type: ButtonType.Home, mode: ButtonMode.StartScreen },
-    { name: "Ajustes", type: ButtonType.Settings, mode: ButtonMode.StartScreen },
-    { name: "Crear sala", type: ButtonType.Create, mode: ButtonMode.StartScreen },
-    { name: "Unirse a sala", type: ButtonType.Join, mode: ButtonMode.StartScreen },
-    { name: "Tablero", type: ButtonType.Board, mode: ButtonMode.GameScreen },
-    { name: "Tarjetas", type: ButtonType.Cards, mode: ButtonMode.GameScreen },
-    { name: "Peticiones", type: ButtonType.Request, mode: ButtonMode.GameScreen, hidden: true },
-    { name: "Solucion", type: ButtonType.Solution, mode: ButtonMode.GameScreen, hidden: "OnlyTurn" },
-    { name: "Salir", type: ButtonType.Exit, mode: ButtonMode.GameScreen },
-    { name: "Sala de espera", type: ButtonType.Waiting,mode: ButtonMode.GameScreen, hidden: true }
+  dialogComponents: [
+    { name: "Inicio", type: DialogComponent.Home, mode: ButtonMode.StartScreen },
+    { name: "Ajustes", type: DialogComponent.Settings, mode: ButtonMode.StartScreen },
+    { name: "Crear sala", type: DialogComponent.Create, mode: ButtonMode.StartScreen },
+    { name: "Unirse a sala", type: DialogComponent.Join, mode: ButtonMode.StartScreen },
+    { name: "Tablero", type: DialogComponent.Board, mode: ButtonMode.GameScreen },
+    { name: "Tarjetas", type: DialogComponent.Cards, mode: ButtonMode.GameScreen },
+    { name: "Peticiones", type: DialogComponent.Request, mode: ButtonMode.GameScreen, hidden: true },
+    { name: "Solucion", type: DialogComponent.Solution, mode: ButtonMode.GameScreen, hidden: true },
+    { name: "Cartas del usuario eliminado", type: DialogComponent.CardsByUser, mode: ButtonMode.GameScreen, hidden: true },
+    { name: "Salir", type: DialogComponent.Exit, mode: ButtonMode.GameScreen },
+    { name: "Sala de espera", type: DialogComponent.Waiting,mode: ButtonMode.GameScreen, hidden: true }
   ],
 };

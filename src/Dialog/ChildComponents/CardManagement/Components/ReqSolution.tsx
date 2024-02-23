@@ -3,7 +3,7 @@ import { GameContext } from "../../../../Services/DataServices";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { IRequest } from "../../../../Services/DataModels";
 import styles from "../CardManagement.module.scss";
-import { ButtonType } from "../../../../Utils/Config";
+import { DialogComponent } from "../../../../Utils/Config";
 import * as BackendService from "../../../../Services/BackendServices";
 interface IDropdownOption {
   key: string;
@@ -11,7 +11,7 @@ interface IDropdownOption {
 }
 
 export function ReqSolution(): JSX.Element {
-  const { game, userId, setActive } = useContext(GameContext);
+  const { game, userId, setDialog: setActive } = useContext(GameContext);
   const allCards = game?.AllCards || [];
   
   const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
@@ -22,7 +22,7 @@ export function ReqSolution(): JSX.Element {
     setSuspect(undefined);
     setWeapon(undefined);
     setRoom(undefined);
-    setActive(ButtonType.None);
+    setActive(DialogComponent.None);
   };
 
   const checkSolution = async () => {

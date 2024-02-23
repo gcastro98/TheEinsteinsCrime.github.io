@@ -1,11 +1,11 @@
 import { createContext } from "react";
 import { BoardGame } from "../Dialog/ChildComponents/BoardGame/BoardGame";
-import { Show } from "../Dialog/ChildComponents/CardManagement/Components/Show";
+import { ShowMyCards } from "../Dialog/ChildComponents/CardManagement/Components/Show";
 import { CreateOrJoinRoom } from "../Dialog/ChildComponents/GameManagement/Components/CreateOrJoin";
 import { Join } from "../Dialog/ChildComponents/GameManagement/Components/Join";
 
 import { Request } from "../Dialog/ChildComponents/CardManagement/Components/Request";
-import { ButtonType } from "./Config";
+import { DialogComponent } from "./Config";
 
 export function selectPath() {
   return `./models`;
@@ -13,19 +13,19 @@ export function selectPath() {
 
 export const REDUCE_SCALE_DOOR = 0.55;
 
-export function switchComponentsByActiveButton(type: ButtonType): () => JSX.Element {
+export function switchComponentsByActiveButton(type: DialogComponent): () => JSX.Element {
   switch (type) {
-    case ButtonType.None:
+    case DialogComponent.None:
       return () => <></>;
-    case ButtonType.Create:
+    case DialogComponent.Create:
       return CreateOrJoinRoom;
-    case ButtonType.Join:
+    case DialogComponent.Join:
       return Join;
-    case ButtonType.Cards:
-      return Show;
-    case ButtonType.Board:
+    case DialogComponent.Cards:
+      return ShowMyCards;
+    case DialogComponent.Board:
       return BoardGame;
-    case ButtonType.Request:
+    case DialogComponent.Request:
       return Request;
     default:
       return () => <></>;

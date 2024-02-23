@@ -4,7 +4,7 @@ import { GameContext, POC, getDataByPath, useDataByPath } from "../Services/Data
 // import { RequestManagement } from "./ChildComponents/ShowRequest";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { ICard, IRequest, IStatusPlayer, IUser } from "../Services/DataModels";
-import { ButtonType } from "../Utils/Config";
+import { DialogComponent } from "../Utils/Config";
 import { DiceInfo } from "./ChildComponents/DiceInfo/DiceInfo";
 // import { ReactDiceRef } from "react-dice-complete";
 import * as BackendService from "../Services/BackendServices";
@@ -16,7 +16,15 @@ export interface IRequestWithCards {
 }
 
 export function GameInfo() {
-  const { game, userId, active, setActive, myCards, users, loaded } = useContext(GameContext);
+  const {
+    game,
+    userId,
+    dialog: active,
+    setDialog: setActive,
+    myCards,
+    users,
+    loaded,
+  } = useContext(GameContext);
   const gameId = game?.Id;
   const hideDice =
     users?.findIndex(
@@ -31,7 +39,7 @@ export function GameInfo() {
   //   `/games/${gameId}/ActiveRequest`,
   //   {}
   // );
-  
+
   const activeRequest = game?.ActiveRequest;
 
   const throwDice = async () => await BackendService.throwDice(gameId);
@@ -56,22 +64,22 @@ export function GameInfo() {
 
   const responseCardName = () => {
     const cardId = activeRequest?.response?.cardId;
-    if (cardId && game?.AllCards){
-      return game?.AllCards.find(card => card?.id === cardId)?.name
+    if (cardId && game?.AllCards) {
+      return game?.AllCards.find((card) => card?.id === cardId)?.name;
     }
-  }
+  };
 
   const responseCardUser = () => {
     const userId = activeRequest?.response?.userId;
-    if (userId && users){
-      return users.find(user => user?.Id === userId)?.Name
+    if (userId && users) {
+      return users.find((user) => user?.Id === userId)?.Name;
     }
-  }
+  };
   const showMessage = (message: string) => {
     return <div className={styles.message}>{message}</div>;
   };
 
-  const showMessageByAction = (action: IStatusPlayer): JSX.Element => {
+  const showMessageByAction = (action: IStatusPlayer, userId?: string): JSX.Element => {
     switch (action) {
       case IStatusPlayer.WaitingTurn: // No es tu turno, no hay acciones activas
         return showMessage(`Está buscando pistas...`);
@@ -92,6 +100,20 @@ export function GameInfo() {
         return showMessage(`Mostrando carta...`);
       case IStatusPlayer.NothingToResponse: // Naide te ha podido responder, debes marcarla como leido para continuar
         return showMessage(`No tiene nada que decir...`);
+      case IStatusPlayer.Disabled:
+        return (
+          <div className={styles.footer}>
+            {showMessage(`Ha perdido`)}
+            <PrimaryButton
+              text="Ver sus cartas"
+              onClick={async () => {
+                setActive(DialogComponent.CardsByUser, userId);
+              }}
+            />
+          </div>
+        );
+        case IStatusPlayer.Winner:
+          return showMessage('¡Enhorabuena!¡Has ganado!')
       default:
         return showMessageByAction(IStatusPlayer.WaitingTurn);
     }
@@ -105,30 +127,29 @@ export function GameInfo() {
             <PrimaryButton
               text="Lanzar dados"
               onClick={async () => {
-                setActive(ButtonType.None)
+                setActive(DialogComponent.None);
                 await throwDice();
               }}
             />
             <PrimaryButton
-            text="Solucionar"
-            onClick={async () => {
-              setActive(ButtonType.Solution)
-            }}
-          />
+              text="Solucionar"
+              onClick={async () => {
+                setActive(DialogComponent.Solution);
+              }}
+            />
           </div>
-          
-          
-     
         );
       case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
         return (
           <div className={styles.footer}>
-          <PrimaryButton
-            text="Hacer pregunta"
-            onClick={() => {
-              setActive(active === ButtonType.Request ? ButtonType.None : ButtonType.Request);
-            }}
-          />
+            <PrimaryButton
+              text="Hacer pregunta"
+              onClick={() => {
+                setActive(
+                  active === DialogComponent.Request ? DialogComponent.None : DialogComponent.Request
+                );
+              }}
+            />
           </div>
         );
 
@@ -198,7 +219,7 @@ export function GameInfo() {
           users.map((user, i) => {
             const isActivePlayer = game?.ActivePlayer === i;
             const isYourUser = userId === user.Id;
-            console.log(isYourUser)
+            console.log(isYourUser);
             return (
               <div className={styles.userSection}>
                 <div className={styles.userName}>
@@ -207,7 +228,7 @@ export function GameInfo() {
                   </div>
                   <span className={styles.name}>{user.Name}</span>
                 </div>
-                {isYourUser ? showOptionsInYourTurn(user.Status) : showMessageByAction(user.Status)}
+                {isYourUser ? showOptionsInYourTurn(user.Status) : showMessageByAction(user.Status, user.Id)}
               </div>
             );
           })}

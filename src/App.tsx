@@ -4,7 +4,7 @@ import { BoardGame } from "./Dialog/ChildComponents/BoardGame/BoardGame";
 import { DialogBoard } from "./Dialog/Dialog";
 import NavMenu from "./Menu/NavMenu";
 import { GameScene } from "./SceneManagement/GameScene";
-import { ButtonMode, ButtonType, config } from "./Utils/Config";
+import { ButtonMode, DialogComponent, IDialogConfigProps, config,  } from "./Utils/Config";
 import { getGameIdFromPath, switchComponentsByActiveButton } from "./Utils/Utils";
 import { GameContext } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
@@ -13,6 +13,7 @@ import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/
 import { GameInfo } from "./GameInfo/GameInfo";
 import { DiceInfo } from "./GameInfo/ChildComponents/DiceInfo/DiceInfo";
 import * as BackendService from "./Services/BackendServices";
+import { IDialogContentProps } from "@fluentui/react";
 
 const mockGame: IGame = {
   Id: 'initialData',
@@ -41,7 +42,14 @@ function App() {
   
 
   //Management menu
-  const [activeButton, setActive] = useState<ButtonType>(ButtonType.None);
+  const [dialogOptions, setDialogOption] = useState<IDialogConfigProps>({type: DialogComponent.None});
+
+  const setDialog = (type: DialogComponent, props?: any) => {
+    setDialogOption({type, props})
+  }
+  const type = dialogOptions?.type
+  const props = dialogOptions?.props
+  
   const [mode, setMode] = useState(ButtonMode.StartScreen);
 
   //Consts
@@ -52,7 +60,7 @@ function App() {
   const ActivePlayer = game?.ActivePlayer;
   const isYourTurn = ActivePlayer ? Users?.[ActivePlayer]?.Id === userId : false;
 
-  console.log(myCards, userId);
+ 
   const loadMyData = useCallback(async () => {
     if (game?.OnProgress && (!loaded))
       try {
@@ -62,7 +70,7 @@ function App() {
           const cards: ICard[] = await BackendService.getMyCards(gameId, userId.toString());
           setUserId(userIdSaved);
           setMyCards(cards);
-          setActive(ButtonType.None)
+          setDialog(DialogComponent.None)
           if(cards?.length > 0 && userIdSaved !== ''){
             setLoaded(true)
           }
@@ -81,7 +89,7 @@ function App() {
       setMode(ButtonMode.GameScreen);
       checkGame(gameId);
       if (game && game?.OnProgress === false){
-        setActive(ButtonType.Waiting)
+        setDialog(DialogComponent.Waiting)
       }
     }
   }, []);
@@ -92,8 +100,8 @@ function App() {
   //   }
   // },[game?.OnProgress])
 
-  console.log(game, IsWaitingRoom, activeButton)
-
+  console.log(game, IsWaitingRoom, type)
+  
   return (
     <>
       <GameContext.Provider
@@ -101,26 +109,27 @@ function App() {
           game,
           mode,
           userId,
-          active: activeButton,
-          setActive,
+          dialog: type,
+          setDialog,
           myCards,
           setMyCards,
           users: Users || [],
           setUserId,
           loaded: !loading,
-          isYourTurn
+          isYourTurn,
+          props
         }}
       >
         <NavMenu
           loading={IsWaitingRoom ? 0 : progress}
-          onClick={(type) => setActive(type)}
-          activeButton={activeButton}
+          onClick={(type) => setDialog(type)}
+          activeButton={type}
           mode={mode}
           isYourTurn={isYourTurn}
         />
         <DialogBoard
           // component={IsWaitingRoom ? WaitingRoom : switchComponentsByActiveButton(activeButton)}
-          hidden={activeButton === ButtonType.None && !IsWaitingRoom}
+          hidden={type === DialogComponent.None && !IsWaitingRoom}
         />
         <GameInfo />
 
