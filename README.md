@@ -32,3 +32,4 @@
 - (front) Move the camera with the user movement
 - (model) Include animations
 - (model) Fix the sketchfab using single materials to improve the weigth
+- (Front & Back) Add functionality "Play again" and "Disconnect"
