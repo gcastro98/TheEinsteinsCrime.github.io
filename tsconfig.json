@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/SceneManagement/Models/Board/Board.tsx"  ]
 }

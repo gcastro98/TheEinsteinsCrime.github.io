@@ -1,14 +1,4 @@
-import { Davinci } from "../Models/Characters/Pieces/Davinci";
-import { Tesla } from "../Models/Characters/Pieces/Tesla";
+import { Piece } from "../Models/Characters/Pieces/Piece";
 
-export const piecesByName = (type: string): (props: any) => JSX.Element => {
-    switch (type) {
-        case "Tesla":
-            return (props: any) => Tesla(props);
-        case "Davinci":
-            return (props: any) => Davinci(props); 
-        default:
-            return (props: any) => Tesla(props);;
-    }
-
-}
+export const SCENE_LIGHT_INTENSITY = 0.15
+export const REDUCE_SCALE_DOOR = 0.55;

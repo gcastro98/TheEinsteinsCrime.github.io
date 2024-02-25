@@ -1,22 +1,38 @@
 import { Pivot, PivotItem, PrimaryButton, TextField } from "@fluentui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { generateRandomId } from "../../Utils";
 import styles from "../GameManagement.module.scss";
+import { GameContext } from "../../../../Services/DataServices";
 
 export function CreateOrJoinRoom(): JSX.Element {
-  const [gameId, setGameId] = useState<string>("");
+  const { startManually} = useContext(GameContext)
+  const [gameGUID, setGUID] = useState<string>()
+  const createGame = (gameId?: string)  =>{
+    if (!gameId) {
+      gameId = generateRandomId();
+    }
+    let searchParams = new URLSearchParams();
+    searchParams.set("game", gameId);
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    window.history.pushState({path: newurl}, '', newurl);
+    console.log(gameId)
+    startManually(gameId)
+    // window.location.search = searchParams.toString()
+    // window.location.assign(`${window.location.href}?game=${gameId}`);
+    
+  }
   return (
     <div>
       
       <span className={styles.label}>¡Introduce un codigo de sala para unirte a una partida!</span>
       <TextField
         className={styles.textfield}
-        value={gameId}
+        value={gameGUID}
         placeholder="Codigo de sala"
         required
-        onChange={(ev, gameId) => setGameId(gameId as string)}
+        onChange={(ev, gameId) => setGUID(gameGUID as string)}
       />
-      <PrimaryButton className={styles.button} onClick={() => createGame(gameId)}>Unirse a partida</PrimaryButton>
+      <PrimaryButton className={styles.button} onClick={() => createGame(gameGUID)}>Unirse a partida</PrimaryButton>
       <hr />
       <span className={styles.label}>¡O crea una partida y comparte el codigo con tus amigos!</span>
       <PrimaryButton className={styles.button} onClick={() => createGame()}>Crear partida</PrimaryButton>
@@ -24,11 +40,6 @@ export function CreateOrJoinRoom(): JSX.Element {
   );
 }
 
-function createGame(gameId?: string) {
-  if (!gameId) {
-    gameId = generateRandomId();
-  }
-  window.location.assign(`${window.location.href}game:${gameId}`);
-}
+
 
 

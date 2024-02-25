@@ -140,7 +140,9 @@ export async function markAsReaded(gameId: string){
       }
 }
 
-export async function makeMovement(gameId: string, userId: string, position: IPosition){
+
+
+export async function makeMovement(gameId: string, userId: string, movement: string | number){
   try {
     const options = {
       method: "POST",
@@ -148,7 +150,7 @@ export async function makeMovement(gameId: string, userId: string, position: IPo
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        position: position,
+        move: movement,
         userId: userId
       }),
     };

@@ -42,10 +42,10 @@ export const config: IConfig = {
   logoPathLoading: "TheEinsteinsCrime_logo_recortado.png",
   logoPath: "TheEinsteinsCrime_logo_recortado_beige_sinFondo.png",
   dialogComponents: [
-    { name: "Inicio", type: DialogComponent.Home, mode: ButtonMode.StartScreen },
-    { name: "Ajustes", type: DialogComponent.Settings, mode: ButtonMode.StartScreen },
+    { name: "Inicio", type: DialogComponent.Home, mode: ButtonMode.StartScreen,  hidden: true },
+    { name: "Ajustes", type: DialogComponent.Settings, mode: ButtonMode.StartScreen,  hidden: true },
     { name: "Crear sala", type: DialogComponent.Create, mode: ButtonMode.StartScreen },
-    { name: "Unirse a sala", type: DialogComponent.Join, mode: ButtonMode.StartScreen },
+    { name: "Unirse a sala", type: DialogComponent.Join, mode: ButtonMode.StartScreen ,  hidden: true},
     { name: "Tablero", type: DialogComponent.Board, mode: ButtonMode.GameScreen },
     { name: "Tarjetas", type: DialogComponent.Cards, mode: ButtonMode.GameScreen },
     { name: "Peticiones", type: DialogComponent.Request, mode: ButtonMode.GameScreen, hidden: true },
@@ -55,3 +55,4 @@ export const config: IConfig = {
     { name: "Sala de espera", type: DialogComponent.Waiting,mode: ButtonMode.GameScreen, hidden: true }
   ],
 };
+

@@ -8,3 +8,4 @@ export const ledOn: string;
 export const ledOff: string;
 export const ledBox: string;
 export const message: string;
+export const textfield: string;

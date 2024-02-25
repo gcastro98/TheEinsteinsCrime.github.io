@@ -1,23 +1,23 @@
 import { Loader, useProgress } from "@react-three/drei";
-import React, { Suspense, createContext, useCallback, useEffect, useRef, useState } from "react";
+import React, { Suspense, createContext, useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { BoardGame } from "./Dialog/ChildComponents/BoardGame/BoardGame";
 import { DialogBoard } from "./Dialog/Dialog";
 import NavMenu from "./Menu/NavMenu";
 import { GameScene } from "./SceneManagement/GameScene";
 import { ButtonMode, DialogComponent, IDialogConfigProps, config,  } from "./Utils/Config";
-import { getGameIdFromPath, switchComponentsByActiveButton } from "./Utils/Utils";
-import { GameContext } from "./Services/DataServices";
+import { getGameIdFromPath } from "./Utils/Utils";
+import { GameContext, gameReference, useGame } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
-import { ICard, IGame, IGameContext, IUser } from "./Services/DataModels";
+import { ICard, IGame, IGameContext, IStatusGame, IUser } from "./Services/DataModels";
 import { WaitingRoom } from "./Dialog/ChildComponents/GameManagement/Components/WaitingRoom";
 import { GameInfo } from "./GameInfo/GameInfo";
 import { DiceInfo } from "./GameInfo/ChildComponents/DiceInfo/DiceInfo";
 import * as BackendService from "./Services/BackendServices";
 import { IDialogContentProps } from "@fluentui/react";
-
+import { DatabaseReference, get, off, onValue, ref, set } from "firebase/database";
 const mockGame: IGame = {
   Id: 'initialData',
-  OnProgress: false,
+  OnProgress: IStatusGame.NotStarted,
   AllCards: [],
   ActivePlayer: -1,
   Private: undefined,
@@ -27,10 +27,26 @@ const mockGame: IGame = {
 
 function App() {
   //Global Info
-  const gameId = getGameIdFromPath() || "initialData";
-  const [game, checkGame] = useDataByPath<IGame>(`games/${gameId}`,mockGame, (gameId) =>
-    BackendService.checkGameReference(gameId)
-  );
+  const  [gameId, setGameId] =useState<string>( getGameIdFromPath() || "initialData");
+  // const [reference, setGameRef] = useState<DatabaseReference>(gameReference(gameId))
+  // console.log(gameId, reference)
+  // // const gameId = gameRef.current;
+  // // const setGameId = (id: string) => gameRef.current = id;
+  // const setGameId = (gameId: string) => {
+  //   setId(gameId);
+  //   setGameRef(gameReference(gameId))
+  // } 
+  // let [gameRef, game, checkGame] = useGame<IGame>(reference, mockGame, (gameId) =>
+  //   BackendService.checkGameReference(gameId)
+  // );
+  // console.log("GAME", game)
+  // const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+//  const gameId = gameRef.current;
+//  const setGameId = (id: string) => gameRef.current = id;
+  // const gameRef = useRef( getGameIdFromPath() || "initialData")
+  
+  const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
+    BackendService.checkGameReference(gameId))
 
 
   //States
@@ -38,7 +54,7 @@ function App() {
   console.log(userId);
   const [myCards, setMyCards] = useState<ICard[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false)
-  const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === false;
+  const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === IStatusGame.NotStarted;
   
 
   //Management menu
@@ -62,7 +78,7 @@ function App() {
 
  
   const loadMyData = useCallback(async () => {
-    if (game?.OnProgress && (!loaded))
+    if (game?.OnProgress && game?.OnProgress !== "Not started" && game?.Id !== "initialData" && (!loaded))
       try {
         const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
         console.log(userIdSaved)
@@ -80,25 +96,34 @@ function App() {
       }
   }, [game?.OnProgress, gameId, myCards?.length, userId]);
 
+  const initData = useCallback(() => {
+    if (gameId !== "initialData" && !loaded) {
+      
+      setMode(ButtonMode.GameScreen);
+      checkGame(gameId);
+      if (IsWaitingRoom){
+        setDialog(DialogComponent.Waiting)
+      }
+    }
+  }, [])
+
+  const StartManually = (gameId: string) => {
+    console.log(gameId)
+    setGameId(gameId)
+    setMode(ButtonMode.GameScreen);
+    checkGame(gameId);
+    console.log(game)
+
+    setDialog(DialogComponent.Waiting)
+  }
+
   useEffect(() => {
     loadMyData();
   }, [game?.OnProgress, loadMyData]);
 
   useEffect(() => {
-    if (gameId !== "initialData" && !loaded) {
-      setMode(ButtonMode.GameScreen);
-      checkGame(gameId);
-      if (game && game?.OnProgress === false){
-        setDialog(DialogComponent.Waiting)
-      }
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if(game && game?.OnProgress && activeButton === ButtonType.Waiting){
-  //     setActive(ButtonType.None)
-  //   }
-  // },[game?.OnProgress])
+    initData()
+  }, [gameId]);
 
   console.log(game, IsWaitingRoom, type)
   
@@ -111,13 +136,14 @@ function App() {
           userId,
           dialog: type,
           setDialog,
-          myCards,
+          myCards: myCards || [],
           setMyCards,
           users: Users || [],
           setUserId,
           loaded: !loading,
           isYourTurn,
-          props
+          props,
+          startManually: (gameId: string ) => StartManually(gameId)
         }}
       >
         <NavMenu

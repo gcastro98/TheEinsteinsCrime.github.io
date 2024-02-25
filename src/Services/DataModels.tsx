@@ -4,16 +4,16 @@ import { RefObject } from "react";
 
 export interface IUser {
   Id: string;
+  Ind: number;
   Name: string;
   Position: IPosition;
   Status: IStatusPlayer;
+  PendingMovements: number;
 }
-export interface IMyUserInfo extends IUser {
-  Cards: ICard[];
-}
+
 export interface IGame {
   Id: string;
-  OnProgress: boolean;
+  OnProgress: IStatusGame;
   Users?: IUser[];
   AllCards?: ICard[];
   ActivePlayer?: number;
@@ -29,12 +29,15 @@ export interface IPosition {
   positionX: number;
   positionY: number;
   rotation?: number;
-  roomId?: string;
+  roomId?: number;
+  availableMovements?: IAvailableMovements;
 }
 
-export interface IActivePlayer {
-  userId: number;
-  dice: number[];
+export interface IAvailableMovements {
+  U: string | number;
+  R: string | number;
+  D: string | number;
+  L: string | number;
 }
 
 
@@ -50,6 +53,11 @@ export enum IStatusPlayer {
   ShowingCard,
   Disabled,
   Winner
+}
+export enum IStatusGame {
+  NotStarted = "Not started",
+  InProgress = "In progress",
+  Finished = "Finished"
 }
 
 
@@ -85,6 +93,7 @@ export interface IGameContext {
   setUserId: (id: string) => void;
   setMyCards: (cards: ICard[]) => void;
   setDialog: (dialog: DialogComponent, props?: any) => void;
+  startManually: (gameId: string) => void;
   isYourTurn: boolean;
   props?: any;  
 }

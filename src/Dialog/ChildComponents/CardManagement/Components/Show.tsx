@@ -9,19 +9,7 @@ export function ShowMyCards() {
 
   const { game, myCards, userId,  setMyCards} = useContext(GameContext);
 
-
-  // const loadMyCards = useCallback(async () => {
-  //   if((!myCards?.length || myCards?.length === 0) && game?.OnProgress === true && userId){
-  //     const cards: ICard[] = await BackendService.getMyCards(game?.Id, userId.toString());
-  //     setMyCards(cards);
-  // }
-  // }, [])
-
-  // useEffect( () => { 
-  //   loadMyCards()
-  //    },[userId])
-
   return (
-    <div className="cardList">{myCards.map((card: any) => Card(card))}</div>
+    <div className="cardList">{myCards?.length > 0 && myCards?.map((card: any) => Card(card))}</div>
   );
 }

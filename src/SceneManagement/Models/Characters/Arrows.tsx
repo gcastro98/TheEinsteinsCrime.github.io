@@ -7,12 +7,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { selectPath } from "../../../Utils/Utils";
 import { GameContext } from "../../../Services/DataServices";
-import { IPosition, IUser } from "../../../Services/DataModels";
-import { piecesByName } from "../../Utils/Utils";
+import { IAvailableMovements, IPosition, IStatusPlayer, IUser } from "../../../Services/DataModels";
+import { Piece} from "./Pieces/Piece";
 export interface IArrowsProps {
   user: IUser;
   showArrows: boolean;
-  setPosition: (position: IPosition) => void;
+  setMove: (move: string | number) => void;
 }
 
 
@@ -23,81 +23,93 @@ export function Arrows(props: IArrowsProps) {
   // const [position, setPosition] = usePosition(game?.Id, props.characterId);
   const [showArrows, setShowArrows] = useState(false);
 
-  const pieces = piecesByName("Tesla");
   let position = props.user.Position;
   // useEffect(() => {
   //   setShowArrows(userId === props.characterId && result > 0 && game?.ActivePlayer === userId);
   // }, [result, game?.ActivePlayer, props.characterId, userId]);
 
-  const handleMove = (dx: number, dy: number) => {
-    const newPos: IPosition = { positionX: position?.positionX + dx, positionY: position?.positionY + dy };
-    props.setPosition(newPos);
-  };
+  // const handleMove = (dx: number, dy: number) => {
+  //   const newPos: IPosition = { positionX: position?.positionX + dx, positionY: position?.positionY + dy };
+  //   props.setMove(newPos);
+  // };
   
-  const [rotationZ, setRotationZ] = useState(0);
+  const handleMove = (move: string | number) => props.setMove(move);
 
-  const nextX = () => {
-    handleMove(1, 0);
-    setRotationZ(Math.PI / 2);
-  };
-  const nextY = () => {
-    handleMove(0, -1);
-    setRotationZ(Math.PI);
-  };
-  const backX = () => {
-    handleMove(-1, 0);
-    setRotationZ(-Math.PI / 2);
-  };
-  const backY = () => {
-    handleMove(0, 1);
-    setRotationZ(0);
-  };
-  const XlimitUp = 25;
-  const XlimitLess = 0;
-  const YlimitUp = 0;
-  const YlimitLess = -25;
 
+  // const [rotationZ, setRotationZ] = useState(0);
+
+  // const nextX = () => {
+  //   handleMove(1, 0);
+  //   setRotationZ(Math.PI / 2);
+  // };
+  // const nextY = () => {
+  //   handleMove(0, -1);
+  //   setRotationZ(Math.PI);
+  // };
+  // const backX = () => {
+  //   handleMove(-1, 0);
+  //   setRotationZ(-Math.PI / 2);
+  // };
+  // const backY = () => {
+  //   handleMove(0, 1);
+  //   setRotationZ(0);
+  // // };
+  // const XlimitUp = 25;
+  // const XlimitLess = 0;
+  // const YlimitUp = 0;
+  // const YlimitLess = -25;
+
+  console.log(props?.user?.Status === IStatusPlayer.Movement && props?.user?.Position?.availableMovements)
+  const {U, R, D, L}: IAvailableMovements = props?.user?.Position?.availableMovements || {U: "N", R: "N", D: "N", L: "N"}
   return (
     <group position={[position.positionX, 0.4, position.positionY]}>
-      <group visible={props.showArrows}>
+      <group 
+      visible={props?.showArrows}
+      >
         <mesh
-          visible={position.positionX < XlimitUp}
+          // visible={position.positionX < XlimitUp}
+          visible={D !== undefined && D !== 'N' ? true : false}
           geometry={nodes.right.geometry}
           material={materials.arrow}
           position={[1.15, 0.6, -0.46]}
           rotation={[Math.PI / 2, 0, Math.PI / 2]}
           scale={0.12}
-          onClick={() => nextX()}
+          onClick={() => handleMove("D")}
         />
         <mesh
-          visible={position.positionX > XlimitLess}
+          // visible={position.positionX > XlimitLess}
+          visible={U !== undefined && U !== 'N' ?  true : false}
           geometry={nodes.left.geometry}
           material={materials.arrow}
           position={[-0.14, 0.6, -0.46]}
           rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
           scale={0.12}
-          onClick={() => backX()}
+          onClick={() =>handleMove("U")}
         />
         <mesh
-          visible={position.positionY < YlimitUp}
+          // visible={position.positionY < YlimitUp}
+          
+          visible={R !== undefined && R !== 'N' ?  true : false}
+          // visible={false}
           geometry={nodes.back.geometry}
           material={materials.arrow}
           position={[0.5, 0.6, 0.18]}
           rotation={[Math.PI / 2, 0, Math.PI]}
           scale={0.12}
-          onClick={() => backY()}
+          onClick={() => handleMove("R")}
         />
         <mesh
-          visible={position.positionY > YlimitLess}
+          // visible={position.positionY > YlimitLess}
+          visible={L !== undefined && L !== 'N' ?  true : false}
           geometry={nodes.front.geometry}
           material={materials.arrow}
           position={[0.5, 0.6, -1.11]}
           rotation={[-Math.PI / 2, 0, Math.PI]}
           scale={0.12}
-          onClick={() => nextY()}
+          onClick={() =>handleMove("L")}
         />
       </group>
-      {pieces({ rotationZ })}
+      <Piece userIndex={props?.user?.Ind}/>
     </group>
   );
 }

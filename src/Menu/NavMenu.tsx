@@ -33,10 +33,13 @@ export function NavMenu(props: NavTopMenuProps) {
 
   return (
     <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : ""}`}>
+    {/* // <nav className={`${styles.navMenu} ${styles.navMenuLoading}`}> */}
       <ul className={styles.navListButton}>
         <img
           src={isLoading ? config.logoPathLoading : config.logoPath}
+          // src={config.logoPathLoading}
           alt="The Einstein's Crime"
+          // className={styles.navMenuLogoLoading}
           className={isLoading ? styles.navMenuLogoLoading : styles.navMenuLogo}
         />
         {!isLoading &&

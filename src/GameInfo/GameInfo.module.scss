@@ -61,12 +61,14 @@
 }
 
 .footer {
-  margin: 10px 10px 10px 10px;
+  margin: 5px 5px;
   display: flex;
   flex-direction: row;
   color: blue !important;
   flex-wrap: wrap;
   justify-content: left;
+  
+
   
   
 
@@ -75,11 +77,12 @@
     background-color: transparent;
     font-family: 'Teletype';
     font-size: 1em;
-    padding: 1.2em;
+    padding: 1.2em ;
     color: rgba(104, 39, 33, 0.85);
-  box-shadow:inset 0px 0px 0px 4px rgba(104, 39, 33, 0.85);
-  width: 15em;
-  margin-bottom: 0.5em;
+    box-shadow:inset 0px 0px 0px 4px rgba(104, 39, 33, 0.85);
+    width: 15em;
+    margin: 5px 0;
+  
   }
 
   button:hover {
@@ -118,10 +121,16 @@
 }
 
 .message {
-  margin-top: 0.5em ;
+  color: black;
+  // margin-top: 0.5em ;
+  // margin: 0.5em ;
 }
 
-
+.textfield {
+  display: flex;
+  margin: 1em 0em;
+  width: 80%;
+}
 // LED USER TURN
 .ledBox {
   padding: 0.1em;

@@ -23,6 +23,6 @@ export function ShowCardsByUser() {
        },[props])
   
     return (
-      <div className="cardList">{myCards.map((card: any) => Card(card))}</div>
+      <div className="cardList">{cards?.map((card: any) => Card(card))}</div>
     );
   }

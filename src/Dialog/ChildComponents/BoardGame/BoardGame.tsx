@@ -92,8 +92,8 @@ export function BoardGame(props?: any): JSX.Element {
       setInitialized(true);
     }
   }, [myCards, initialized]);
-
-  const usersName = users?.map((user) => user?.Name);
+console.log(users)
+  const usersName = users?.map((user) => user?.Name) ||[];
   const iconList = Object.values(IconsType);
   const nextIcon = (icon: number) => {
     console.log("icon", icon, ((icon || 0) + 1) % iconList.length);

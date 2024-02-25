@@ -79,47 +79,56 @@ export function GameInfo() {
     return <div className={styles.message}>{message}</div>;
   };
 
-  const showMessageByAction = (action: IStatusPlayer, userId?: string): JSX.Element => {
-    switch (action) {
-      case IStatusPlayer.WaitingTurn: // No es tu turno, no hay acciones activas
-        return showMessage(`Está buscando pistas...`);
-      case IStatusPlayer.ThrowingDice: // Es tu turno, no has lanzado los dados
-        return showMessage(`Lanzando dados...`);
-      case IStatusPlayer.Movement: // Es tu turno, has lanzado los dados
-        return showMessage(`Moviendo ficha...`);
-      case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
-        return showMessage(`Preparando la pregunta...`);
-      case IStatusPlayer.ShowingRequest: // Es tu turno, te has desplazado y has hecho una pregunta
-        const requestCards = completeCards();
-        return showMessage(
-          `Supone que ha sido ${requestCards.suspect?.name} con ${requestCards.weapon?.name} en ${requestCards.room?.name}`
-        );
-      case IStatusPlayer.WaitingResponse: // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
-        return showMessage(`Seleccionando respuesta...`);
-      case IStatusPlayer.ShowingCard: // Has hecho una pregunta y te han respondido, debes marcarla como leido para continuar
-        return showMessage(`Mostrando carta...`);
-      case IStatusPlayer.NothingToResponse: // Naide te ha podido responder, debes marcarla como leido para continuar
-        return showMessage(`No tiene nada que decir...`);
-      case IStatusPlayer.Disabled:
-        return (
-          <div className={styles.footer}>
-            {showMessage(`Ha perdido`)}
-            <PrimaryButton
-              text="Ver sus cartas"
-              onClick={async () => {
-                setActive(DialogComponent.CardsByUser, userId);
-              }}
-            />
-          </div>
-        );
-        case IStatusPlayer.Winner:
-          return showMessage('¡Enhorabuena!¡Has ganado!')
-      default:
-        return showMessageByAction(IStatusPlayer.WaitingTurn);
-    }
+  const showMessageByAction = (action: IStatusPlayer, user?: IUser): JSX.Element => {
+    return (
+      <div className={styles.footer}>
+        {((action: IStatusPlayer) => {
+          switch (action) {
+            case IStatusPlayer.WaitingTurn: // No es tu turno, no hay acciones activas
+              return showMessage(`Está buscando pistas...`);
+            case IStatusPlayer.ThrowingDice: // Es tu turno, no has lanzado los dados
+              return showMessage(`Lanzando dados...`);
+            case IStatusPlayer.Movement: // Es tu turno, has lanzado los dados
+              return showMessage(
+                `Moviendo ficha... (${user?.PendingMovements as number} movimientos restantes)`
+              );
+            case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
+              return showMessage(`Preparando la pregunta...`);
+            case IStatusPlayer.ShowingRequest: // Es tu turno, te has desplazado y has hecho una pregunta
+              const requestCards = completeCards();
+              return showMessage(
+                `Supone que ha sido ${requestCards.suspect?.name} con ${requestCards.weapon?.name} en ${requestCards.room?.name}`
+              );
+            case IStatusPlayer.WaitingResponse: // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
+              return showMessage(`Seleccionando respuesta...`);
+            case IStatusPlayer.ShowingCard: // Has hecho una pregunta y te han respondido, debes marcarla como leido para continuar
+              return showMessage(`Mostrando carta...`);
+            case IStatusPlayer.NothingToResponse: // Naide te ha podido responder, debes marcarla como leido para continuar
+              return showMessage(`No tiene nada que decir...`);
+            case IStatusPlayer.Disabled:
+              return (
+                <>
+                  {showMessage(`Ha perdido`)}
+                  <PrimaryButton
+
+                    text="Ver sus cartas"
+                    onClick={async () => {
+                      setActive(DialogComponent.CardsByUser, user?.Id);
+                    }}
+                  />
+                  </>
+              );
+            case IStatusPlayer.Winner:
+              return showMessage("¡Enhorabuena!¡Has ganado!");
+            default:
+              return showMessageByAction(IStatusPlayer.WaitingTurn);
+          }
+        })(action)}
+      </div>
+    );
   };
 
-  const showOptionsInYourTurn = (action: IStatusPlayer): JSX.Element => {
+  const showOptionsInYourTurn = (action: IStatusPlayer, user: IUser): JSX.Element => {
     switch (action) {
       case IStatusPlayer.ThrowingDice: // Es tu turno, no has lanzado los dados
         return (
@@ -154,12 +163,6 @@ export function GameInfo() {
         );
 
       case IStatusPlayer.WaitingResponse: // Es tu turno de responder, se ha hecho una pregunta y tienes alguna de las tarjetas
-        const options: ICard[] = myCards.filter((myCard: ICard) =>
-          [activeRequest?.roomId, activeRequest?.suspectId, activeRequest?.weaponId].some(
-            (id) => id === myCard?.id
-          )
-        );
-
         return (
           <div className={styles.footer}>
             {responseState.button ? (
@@ -172,6 +175,7 @@ export function GameInfo() {
             ) : (
               <div className={styles.footer}>
                 <Dropdown
+                className={styles.textfield}
                   options={myCards
                     .filter((myCard) =>
                       [activeRequest?.roomId, activeRequest?.suspectId, activeRequest?.weaponId].some(
@@ -208,7 +212,7 @@ export function GameInfo() {
           </div>
         );
       default:
-        return showMessageByAction(action);
+        return showMessageByAction(action, user);
     }
   };
 
@@ -216,7 +220,7 @@ export function GameInfo() {
     <div hidden={!(loaded && game?.OnProgress)}>
       <div className={styles.Notification}>
         {users?.length > 0 &&
-          users.map((user, i) => {
+          users?.map((user, i) => {
             const isActivePlayer = game?.ActivePlayer === i;
             const isYourUser = userId === user.Id;
             console.log(isYourUser);
@@ -228,7 +232,9 @@ export function GameInfo() {
                   </div>
                   <span className={styles.name}>{user.Name}</span>
                 </div>
-                {isYourUser ? showOptionsInYourTurn(user.Status) : showMessageByAction(user.Status, user.Id)}
+                {isYourUser
+                  ? showOptionsInYourTurn(user.Status, user)
+                  : showMessageByAction(user.Status, user)}
               </div>
             );
           })}
