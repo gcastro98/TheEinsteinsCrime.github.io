@@ -27,24 +27,7 @@ const mockGame: IGame = {
 
 function App() {
   //Global Info
-  const  [gameId, setGameId] =useState<string>( getGameIdFromPath() || "initialData");
-  // const [reference, setGameRef] = useState<DatabaseReference>(gameReference(gameId))
-  // console.log(gameId, reference)
-  // // const gameId = gameRef.current;
-  // // const setGameId = (id: string) => gameRef.current = id;
-  // const setGameId = (gameId: string) => {
-  //   setId(gameId);
-  //   setGameRef(gameReference(gameId))
-  // } 
-  // let [gameRef, game, checkGame] = useGame<IGame>(reference, mockGame, (gameId) =>
-  //   BackendService.checkGameReference(gameId)
-  // );
-  // console.log("GAME", game)
-  // const [_, forceUpdate] = useReducer((x) => x + 1, 0);
-//  const gameId = gameRef.current;
-//  const setGameId = (id: string) => gameRef.current = id;
-  // const gameRef = useRef( getGameIdFromPath() || "initialData")
-  
+  const  [gameId, setGameId] =useState<string>( getGameIdFromPath() || "initialData"); 
   const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
     BackendService.checkGameReference(gameId))
 

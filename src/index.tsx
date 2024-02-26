@@ -5,8 +5,10 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { initializeIcons } from "@fluentui/react";
 import "./Fonts/TELETYPE1945-1985.ttf";
+import { reducer } from "./Services/Redux/reducer";
+import { createStore } from "redux";
 initializeIcons();
-
+let store = createStore(reducer)
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
