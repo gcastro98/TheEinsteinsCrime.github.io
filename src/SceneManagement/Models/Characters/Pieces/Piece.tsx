@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Tesla.glb
 
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { selectPath } from "../../../../Utils/Utils";
+import { selectPath } from "../../../../Common/Utils";
 
 export interface IPieceProp{
   userIndex: number

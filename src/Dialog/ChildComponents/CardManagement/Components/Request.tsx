@@ -4,8 +4,9 @@ import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { IRequest } from "../../../../Services/DataModels";
 import styles from "../CardManagement.module.scss";
 import * as BackendService from "../../../../Services/BackendServices";
-import { DialogComponent } from "../../../../Utils/Config";
-import { ALL_CARDS } from "../../../../Utils/cards";
+import { DialogComponent } from "../../../../Common/Config";
+import { ALL_CARDS } from "../../../../Common/cards";
+import commonStyles from "../../../../Common/Utils.module.scss"
 interface IDropdownOption {
   key: string;
   text: string;
@@ -74,7 +75,7 @@ export function Request(): JSX.Element {
       <span>en</span><br/>
       <span className={styles.label}><b>{roomId && roomId >= 0 && ALL_CARDS[roomId].name }</b></span>
       <PrimaryButton
-        className={styles.button}
+        className={commonStyles.CommonButton}
         text="Enviar"
         onClick={createRequest}
         disabled={!suspect  || !weapon}

@@ -2,7 +2,7 @@ import { Stylesheet } from "@fluentui/react";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./NavMenu.module.scss";
 import { GameContext } from "../Services/DataServices";
-import { ButtonMode, ButtonProps, DialogComponent, config } from "../Utils/Config";
+import { ButtonMode, ButtonProps, DialogComponent, config } from "../Common/Config";
 
 type NavTopMenuProps = {
   loading: number;
@@ -32,17 +32,17 @@ export function NavMenu(props: NavTopMenuProps) {
   }, [props.loading, props.mode]);
 
   return (
-    <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : ""}`}>
-    {/* // <nav className={`${styles.navMenu} ${styles.navMenuLoading}`}> */}
+    // <nav className={`${styles.navMenu} ${isLoading ? styles.navMenuLoading : ""}`}>
+     <nav className={`${styles.navMenu} ${styles.navMenuLoading}`}> 
       <ul className={styles.navListButton}>
         <img
-          src={isLoading ? config.logoPathLoading : config.logoPath}
-          // src={config.logoPathLoading}
+          // src={isLoading ? config.logoPathLoading : config.logoPath}
+          src={config.logoPathLoading}
           alt="The Einstein's Crime"
           // className={styles.navMenuLogoLoading}
           className={isLoading ? styles.navMenuLogoLoading : styles.navMenuLogo}
         />
-        {!isLoading &&
+        {/* {!isLoading &&
           buttons.map((button) => {
             return (
               (!button?.hidden) && (
@@ -62,7 +62,7 @@ export function NavMenu(props: NavTopMenuProps) {
                 </li>
               )
             );
-          })}
+          })} */}
       </ul>
     </nav>
   );

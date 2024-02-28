@@ -1,7 +1,7 @@
 
 import React, { useRef, useState } from 'react'
 import { useAnimations, useGLTF, Html } from '@react-three/drei'
-import {  selectPath } from '../../../Utils/Utils'
+import {  selectPath } from '../../../Common/Utils'
 import '../../GameScene.scss'
 import { SCENE_LIGHT_INTENSITY, REDUCE_SCALE_DOOR} from '../../Utils/Utils'
 export function Workshop(props: any) {

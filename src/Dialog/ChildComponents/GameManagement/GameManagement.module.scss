@@ -45,3 +45,21 @@
   display: flex;
   margin: 0.5em 0em;
 }
+.letter {
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.leeterFooter {
+  position: fixed;
+  bottom: 0;
+  align-content: center;
+  margin-top: 1em;
+}
+
+.leeterDateAndSign {
+  display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5em;
+}

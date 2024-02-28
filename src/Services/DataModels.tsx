@@ -1,5 +1,5 @@
 import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
-import { ButtonMode, DialogComponent } from "../Utils/Config";
+import { ButtonMode, DialogComponent } from "../Common/Config";
 import { RefObject } from "react";
 
 export interface IUser {
@@ -90,8 +90,7 @@ export interface IGameContext {
   dialog: DialogComponent;
   users: IUser[];
   loaded: boolean;
-  setUserId: (id: string) => void;
-  setMyCards: (cards: ICard[]) => void;
+  updateContext: (val: any) => void;
   setDialog: (dialog: DialogComponent, props?: any) => void;
   startManually: (gameId: string) => void;
   isYourTurn: boolean;

@@ -7,3 +7,6 @@ export const playerList: string;
 export const inputNameSection: string;
 export const userName: string;
 export const buttonStartGame: string;
+export const letter: string;
+export const letterFooter: string;
+export const leeterDateAndSign: string;

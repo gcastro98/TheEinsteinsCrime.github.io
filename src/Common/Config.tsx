@@ -30,7 +30,8 @@ export enum DialogComponent {
   Request = "Request",
   Solution = "Solution",
   Waiting = "Waiting",
-  CardsByUser = "CardsByUser"
+  CardsByUser = "CardsByUser",
+  Landing = "Landing"
 }
 
 export enum ButtonMode {
@@ -52,7 +53,8 @@ export const config: IConfig = {
     { name: "Solucion", type: DialogComponent.Solution, mode: ButtonMode.GameScreen, hidden: true },
     { name: "Cartas del usuario eliminado", type: DialogComponent.CardsByUser, mode: ButtonMode.GameScreen, hidden: true },
     { name: "Salir", type: DialogComponent.Exit, mode: ButtonMode.GameScreen },
-    { name: "Sala de espera", type: DialogComponent.Waiting,mode: ButtonMode.GameScreen, hidden: true }
+    { name: "Sala de espera", type: DialogComponent.Waiting,mode: ButtonMode.GameScreen, hidden: true },
+    { name: "Landing", type: DialogComponent.Landing,mode: ButtonMode.StartScreen, hidden: true }
   ],
 };
 

@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styles from "./GameInfo.module.scss";
-import { GameContext, POC, getDataByPath, useDataByPath } from "../Services/DataServices";
+import { GameContext } from "../Services/DataServices";
 // import { RequestManagement } from "./ChildComponents/ShowRequest";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
-import { ICard, IRequest, IStatusPlayer, IUser } from "../Services/DataModels";
-import { DialogComponent } from "../Utils/Config";
+import { ICard, IStatusPlayer, IUser } from "../Services/DataModels";
+import { DialogComponent } from "../Common/Config";
 import { DiceInfo } from "./ChildComponents/DiceInfo/DiceInfo";
 // import { ReactDiceRef } from "react-dice-complete";
 import * as BackendService from "../Services/BackendServices";

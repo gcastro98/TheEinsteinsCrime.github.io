@@ -7,7 +7,7 @@ import { ICard } from "../../../../Services/DataModels";
 
 export function ShowMyCards() {
 
-  const { game, myCards, userId,  setMyCards} = useContext(GameContext);
+  const { myCards} = useContext(GameContext);
 
   return (
     <div className="cardList">{myCards?.length > 0 && myCards?.map((card: any) => Card(card))}</div>

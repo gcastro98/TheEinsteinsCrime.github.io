@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Arrows.glb
 
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { selectPath } from "../../../Utils/Utils";
+import { selectPath } from "../../../Common/Utils";
 import { GameContext } from "../../../Services/DataServices";
 import { IAvailableMovements, IPosition, IStatusPlayer, IUser } from "../../../Services/DataModels";
 import { Piece} from "./Pieces/Piece";

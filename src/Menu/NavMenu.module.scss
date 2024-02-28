@@ -29,10 +29,11 @@
 
 
 .navMenuLogo {
-  max-height: 3em;
+  max-height: 6em;
   width: auto;
-  margin-right: 1em;
+  // margin-right: 1em;
   justify-content: left;
+  margin-top: 1.5em;
   background:transparent !important;
   // color: black !important;
   // mix-blend-mode:  difference;
@@ -41,7 +42,7 @@
 
 .navMenuLogoLoading {
   margin-top: 2em;
-  max-height: 7em;
+  max-height: 8em;
   width: auto;
   justify-content: left;
   background:transparent !important;

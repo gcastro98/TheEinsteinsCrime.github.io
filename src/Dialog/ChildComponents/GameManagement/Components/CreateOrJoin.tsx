@@ -13,12 +13,9 @@ export function CreateOrJoinRoom(): JSX.Element {
     }
     let searchParams = new URLSearchParams();
     searchParams.set("game", gameId);
-    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
-    window.history.pushState({path: newurl}, '', newurl);
-    console.log(gameId)
+    let url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    window.history.pushState({path: url}, '', url);
     startManually(gameId)
-    // window.location.search = searchParams.toString()
-    // window.location.assign(`${window.location.href}?game=${gameId}`);
     
   }
   return (

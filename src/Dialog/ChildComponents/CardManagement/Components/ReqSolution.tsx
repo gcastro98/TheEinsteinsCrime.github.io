@@ -3,7 +3,7 @@ import { GameContext } from "../../../../Services/DataServices";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
 import { IRequest } from "../../../../Services/DataModels";
 import styles from "../CardManagement.module.scss";
-import { DialogComponent } from "../../../../Utils/Config";
+import { DialogComponent } from "../../../../Common/Config";
 import * as BackendService from "../../../../Services/BackendServices";
 interface IDropdownOption {
   key: string;

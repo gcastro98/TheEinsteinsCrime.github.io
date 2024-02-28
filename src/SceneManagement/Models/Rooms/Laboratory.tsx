@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 .\Laboratory.glb
 
 import React, { useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
-import {  selectPath } from '../../../Utils/Utils'
+import {  selectPath } from '../../../Common/Utils'
 import { SCENE_LIGHT_INTENSITY, REDUCE_SCALE_DOOR} from '../../Utils/Utils'
 export function Laboratory(props: any) {
   const group = useRef()

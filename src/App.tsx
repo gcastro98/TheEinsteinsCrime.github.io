@@ -4,8 +4,8 @@ import { BoardGame } from "./Dialog/ChildComponents/BoardGame/BoardGame";
 import { DialogBoard } from "./Dialog/Dialog";
 import NavMenu from "./Menu/NavMenu";
 import { GameScene } from "./SceneManagement/GameScene";
-import { ButtonMode, DialogComponent, IDialogConfigProps, config,  } from "./Utils/Config";
-import { getGameIdFromPath } from "./Utils/Utils";
+import { ButtonMode, DialogComponent, IDialogConfigProps, config,  } from "./Common/Config";
+import { getGameIdFromPath } from "./Common/Utils";
 import { GameContext, gameReference, useGame } from "./Services/DataServices";
 import { useDataByPath } from "./Services/DataServices";
 import { ICard, IGame, IGameContext, IStatusGame, IUser } from "./Services/DataModels";
@@ -27,7 +27,7 @@ const mockGame: IGame = {
 
 function App() {
   //Global Info
-  const  [gameId, setGameId] =useState<string>( getGameIdFromPath() || "initialData");
+  // const  [gameId, setGameId] =useState<string>( getGameIdFromPath() || "initialData");
   // const [reference, setGameRef] = useState<DatabaseReference>(gameReference(gameId))
   // console.log(gameId, reference)
   // // const gameId = gameRef.current;
@@ -45,28 +45,51 @@ function App() {
 //  const setGameId = (id: string) => gameRef.current = id;
   // const gameRef = useRef( getGameIdFromPath() || "initialData")
   
+
+
+  //States
+  const [state, setState] = useState({
+    gameId: getGameIdFromPath() || "initialData",
+    userId: '',
+    myCards: [],
+    loaded: false,
+    dialogOptions: {type: getGameIdFromPath() !== '' ? DialogComponent.None : DialogComponent.Landing, props: undefined},
+    mode: ButtonMode.StartScreen
+  })
+
+  const updateContext = (val: any) => {
+    console.log(val)
+    setState(prev => {return {...prev, ...val}});
+  }
+
+  const setDialog = (type: DialogComponent, props?: any) => {
+    updateContext({dialogOptions: {type, props}});
+    
+  }
+
+  const {gameId, userId, myCards, loaded, dialogOptions, mode} = state;
   const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
     BackendService.checkGameReference(gameId))
 
 
-  //States
-  const [userId, setUserId] = useState<string>("");
-  console.log(userId);
-  const [myCards, setMyCards] = useState<ICard[]>([]);
-  const [loaded, setLoaded] = useState<boolean>(false)
+  // const [userId, setUserId] = useState<string>("");
+  // console.log(userId);
+  // const [myCards, setMyCards] = useState<ICard[]>([]);
+  // const [loaded, setLoaded] = useState<boolean>(false)
   const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === IStatusGame.NotStarted;
   
 
   //Management menu
-  const [dialogOptions, setDialogOption] = useState<IDialogConfigProps>({type: DialogComponent.None});
+  // const [dialogOptions, setDialogOption] = useState<IDialogConfigProps>({type: DialogComponent.None});
 
-  const setDialog = (type: DialogComponent, props?: any) => {
-    setDialogOption({type, props})
-  }
-  const type = dialogOptions?.type
-  const props = dialogOptions?.props
+  // const setDialog = (type: DialogComponent, props?: any) => {
+  //   updateContext({dialogOptions: {type, props}});
+    
+  // }
+  // const type = dialogOptions?.type
+  // const props = dialogOptions?.props
   
-  const [mode, setMode] = useState(ButtonMode.StartScreen);
+  // const [mode, setMode] = useState(ButtonMode.StartScreen);
 
   //Consts
   // const { progress } = useProgress();
@@ -75,31 +98,38 @@ function App() {
   const Users = game?.Users || [];
   const ActivePlayer = game?.ActivePlayer;
   const isYourTurn = ActivePlayer ? Users?.[ActivePlayer]?.Id === userId : false;
+  console.log(myCards)
+ console.log(state, game)
 
- 
   const loadMyData = useCallback(async () => {
-    if (game?.OnProgress && game?.OnProgress !== "Not started" && game?.Id !== "initialData" && (!loaded))
+    console.log("hola")
+    if (game?.OnProgress === IStatusGame.InProgress && (!loaded))
+    console.log("hola")
       try {
         const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
         console.log(userIdSaved)
         if (userIdSaved && userIdSaved !== '') {
-          const cards: ICard[] = await BackendService.getMyCards(gameId, userId.toString());
-          setUserId(userIdSaved);
-          setMyCards(cards);
-          setDialog(DialogComponent.None)
-          if(cards?.length > 0 && userIdSaved !== ''){
-            setLoaded(true)
+          console.log("loadMyData")
+          const myCards: ICard[] = await BackendService.getMyCards(gameId, userIdSaved.toString());
+          console.log(myCards)
+          updateContext({
+            userId: userIdSaved,
+            myCards,
+            dialogOptions: {type: DialogComponent.None}
+          })
+
+          if(myCards?.length > 0 && userId !== ''){
+            updateContext({loaded: true})
           }
         }
       } catch (ex) {
         console.error(ex);
       }
-  }, [game?.OnProgress, gameId, myCards?.length, userId]);
+  },[game?.OnProgress]);
 
   const initData = useCallback(() => {
     if (gameId !== "initialData" && !loaded) {
-      
-      setMode(ButtonMode.GameScreen);
+      updateContext({mode: ButtonMode.GameScreen})
       checkGame(gameId);
       if (IsWaitingRoom){
         setDialog(DialogComponent.Waiting)
@@ -109,23 +139,23 @@ function App() {
 
   const StartManually = (gameId: string) => {
     console.log(gameId)
-    setGameId(gameId)
-    setMode(ButtonMode.GameScreen);
     checkGame(gameId);
+    updateContext({gameId, mode: ButtonMode.GameScreen, dialogOptions: {type: DialogComponent.Waiting}})
+   
+    
     console.log(game)
 
-    setDialog(DialogComponent.Waiting)
   }
 
   useEffect(() => {
-    loadMyData();
-  }, [game?.OnProgress, loadMyData]);
+    void loadMyData();
+  }, [game?.OnProgress]);
 
   useEffect(() => {
     initData()
   }, [gameId]);
 
-  console.log(game, IsWaitingRoom, type)
+  
   
   return (
     <>
@@ -134,32 +164,30 @@ function App() {
           game,
           mode,
           userId,
-          dialog: type,
+          dialog: dialogOptions?.type,
+          props: dialogOptions?.props,
           setDialog,
-          myCards: myCards || [],
-          setMyCards,
-          users: Users || [],
-          setUserId,
+          myCards ,
+          updateContext,
+          users: Users ,
           loaded: !loading,
           isYourTurn,
-          props,
           startManually: (gameId: string ) => StartManually(gameId)
         }}
       >
         <NavMenu
           loading={IsWaitingRoom ? 0 : progress}
           onClick={(type) => setDialog(type)}
-          activeButton={type}
+          activeButton={dialogOptions?.type}
           mode={mode}
           isYourTurn={isYourTurn}
         />
         <DialogBoard
           // component={IsWaitingRoom ? WaitingRoom : switchComponentsByActiveButton(activeButton)}
-          hidden={type === DialogComponent.None && !IsWaitingRoom}
+          hidden={dialogOptions?.type === DialogComponent.None && !IsWaitingRoom}
         />
         <GameInfo />
-
-        <GameScene />
+        {/* <GameScene />  */}
       </GameContext.Provider>
     </>
   );

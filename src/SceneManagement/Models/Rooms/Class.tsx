@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.4 Room_class.gltf
 
 import React, { useEffect, useRef } from 'react'
 import { useAnimations, useGLTF } from '@react-three/drei'
-import {  selectPath } from '../../../Utils/Utils'
+import {  selectPath } from '../../../Common/Utils'
 import { REDUCE_SCALE_DOOR, SCENE_LIGHT_INTENSITY} from '../../Utils/Utils'
 
 export function Class(props: any) {

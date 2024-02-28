@@ -5,7 +5,7 @@ import { ICard, IGame, IGameContext, IPosition, IRequest, IResponse, IUser } fro
 import { ReactDiceRef } from "react-dice-complete";
 import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
 import * as BackendService from "./BackendServices";
-import { getGameIdFromPath } from "../Utils/Utils";
+import { getGameIdFromPath } from "../Common/Utils";
 
 //#region GameReference General Functions
 /* tslint:disable */
