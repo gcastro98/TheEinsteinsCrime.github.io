@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Teletype"; 
   src: local("Teletype"),
-    url("./Fonts/JMH Typewriter.otf") format("truetype");
+    url("./Common/Fonts/JMH Typewriter.otf") format("truetype");
 }
 body,
 canvas {

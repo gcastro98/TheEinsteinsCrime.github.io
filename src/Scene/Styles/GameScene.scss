@@ -1,0 +1,19 @@
+canvas {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #2114db;
+  }
+
+.tooltip {
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(104,39,33,0.85);
+    border-radius: 5px;
+    padding:1em;
+    color: white;
+    max-height: 70%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+   
+}

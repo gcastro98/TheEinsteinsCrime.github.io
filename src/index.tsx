@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { initializeIcons } from "@fluentui/react";
-import "./Fonts/TELETYPE1945-1985.ttf";
 initializeIcons();
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
