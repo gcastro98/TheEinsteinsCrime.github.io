@@ -1,7 +1,8 @@
 import { ICard, IGame, IPosition, IRequest, IUser } from "./DataModels";
 
 // const backendUri = "https://the-einsteins-crime-backend.glitch.me/api/games";
-const backendUri = "http://localhost:3000/api/games"
+
+const backendUri = "http://localhost:3000/api/games";
 
 export async function getGame(gameId: string) {
   try {
@@ -69,9 +70,9 @@ export async function addUserToGame(gameId: string, name: string): Promise<any> 
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({"username": name}),
+      body: JSON.stringify({ username: name }),
     };
-    return await fetch(`${backendUri}/${gameId}/addUserToGame`, options).then(body => body.json());
+    return await fetch(`${backendUri}/${gameId}/addUserToGame`, options).then((body) => body.json());
   } catch (ex) {
     console.error("Error", ex);
   }
@@ -129,20 +130,18 @@ export async function setResponse(gameId: string, body: any) {
   }
 }
 
-export async function markAsReaded(gameId: string){
-    try {
-        const options = {
-          method: "POST"
-        };
-        await fetch(`${backendUri}/${gameId}/markAsReaded`, options);
-      } catch (ex) {
-        console.error("Error");
-      }
+export async function markAsReaded(gameId: string) {
+  try {
+    const options = {
+      method: "POST",
+    };
+    await fetch(`${backendUri}/${gameId}/markAsReaded`, options);
+  } catch (ex) {
+    console.error("Error");
+  }
 }
 
-
-
-export async function makeMovement(gameId: string, userId: string, movement: string | number){
+export async function makeMovement(gameId: string, userId: string, movement: string | number) {
   try {
     const options = {
       method: "POST",
@@ -151,7 +150,7 @@ export async function makeMovement(gameId: string, userId: string, movement: str
       },
       body: JSON.stringify({
         move: movement,
-        userId: userId
+        userId: userId,
       }),
     };
     await fetch(`${backendUri}/${gameId}/makeMovement`, options);
@@ -169,7 +168,7 @@ export async function checkSolution(gameId: string, request: IRequest): Promise<
       },
       body: JSON.stringify(request),
     };
-    return await fetch(`${backendUri}/${gameId}/checkSolution`, options).then(body => body.json());
+    return await fetch(`${backendUri}/${gameId}/checkSolution`, options).then((body) => body.json());
   } catch (ex) {
     console.error("Error");
   }

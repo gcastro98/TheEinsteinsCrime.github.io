@@ -1,45 +1,13 @@
-import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
 import { ButtonMode, DialogComponent } from "../Common/Config";
+import { DieContainerRef } from "react-dice-complete/dist/DiceContainer";
+
 import { RefObject } from "react";
 
-export interface IUser {
-  Id: string;
-  Ind: number;
-  Name: string;
-  Position: IPosition;
-  Status: IStatusPlayer;
-  PendingMovements: number;
+export enum IStatusGame {
+  NotStarted = "Not started",
+  InProgress = "In progress",
+  Finished = "Finished",
 }
-
-export interface IGame {
-  Id: string;
-  OnProgress: IStatusGame;
-  Users?: IUser[];
-  AllCards?: ICard[];
-  ActivePlayer?: number;
-  ActiveRequest?: IRequest;
-  Dice?: number[];
-  Private?: IPrivateGame;
-}
-export interface IPrivateGame {
-  Cards: ICard[];
-}
-
-export interface IPosition {
-  positionX: number;
-  positionY: number;
-  rotation?: number;
-  roomId?: number;
-  availableMovements?: IAvailableMovements;
-}
-
-export interface IAvailableMovements {
-  U: string | number;
-  R: string | number;
-  D: string | number;
-  L: string | number;
-}
-
 
 export enum IStatusPlayer {
   WaitingTurn,
@@ -52,20 +20,39 @@ export enum IStatusPlayer {
   MarkingAsReaded,
   ShowingCard,
   Disabled,
-  Winner
-}
-export enum IStatusGame {
-  NotStarted = "Not started",
-  InProgress = "In progress",
-  Finished = "Finished"
+  Winner,
 }
 
+export interface IPrivateGame {
+  Cards: ICard[];
+}
+
+export interface IResponse {
+  cardId?: number;
+  userId?: string;
+}
 
 export interface ICard {
   name: string;
   type: "Suspect" | "Weapon" | "Room";
   id: number;
   userId: number | string;
+}
+
+export interface IAvailableMovements {
+  U: string | number;
+  R: string | number;
+  D: string | number;
+  L: string | number;
+}
+
+export interface IUser {
+  Id: string;
+  Ind: number;
+  Name: string;
+  Position: IPosition;
+  Status: IStatusPlayer;
+  PendingMovements: number;
 }
 
 export interface IRequest {
@@ -77,9 +64,23 @@ export interface IRequest {
   readed?: boolean;
 }
 
-export interface IResponse {
-  cardId?: number;
-  userId?: string;
+export interface IPosition {
+  positionX: number;
+  positionY: number;
+  rotation?: number;
+  roomId?: number;
+  availableMovements?: IAvailableMovements;
+}
+
+export interface IGame {
+  Id: string;
+  OnProgress: IStatusGame;
+  Users?: IUser[];
+  AllCards?: ICard[];
+  ActivePlayer?: number;
+  ActiveRequest?: IRequest;
+  Dice?: number[];
+  Private?: IPrivateGame;
 }
 
 export interface IGameContext {
@@ -94,7 +95,5 @@ export interface IGameContext {
   setDialog: (dialog: DialogComponent, props?: any) => void;
   startManually: (gameId: string) => void;
   isYourTurn: boolean;
-  props?: any;  
+  props?: any;
 }
-
-
