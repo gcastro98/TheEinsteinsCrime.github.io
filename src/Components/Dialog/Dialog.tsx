@@ -2,20 +2,26 @@ import "./Dialog.scss";
 import { useContext } from "react";
 import { BoardGame } from "./BoardGame/BoardGame";
 import { Request } from "./CardManagement/Request";
+import { Landing } from "./GameManagement/Landing";
 import { ShowMyCards } from "./CardManagement/Show";
 import { WaitingRoom } from "./GameManagement/WaitingRoom";
 import { ReqSolution } from "./CardManagement/ReqSolution";
 import { GameContext } from "../../Interfaces/IGameContext";
 import { ShowCardsByUser } from "./CardManagement/ShowCardsByUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
-import { Landing } from "./GameManagement/Landing";
+
+import { IStatusGame } from "../../Firebase/Models/IGame";
 
 export function DialogBoard(props: any) {
-  const { dialog, setDialog } = useContext(GameContext);
+  const { dialog, setDialog, loaded, game } = useContext(GameContext);
   const close = () => setDialog(DialogComponent.None);
   return (
-    <div className="Dialog" hidden={props.hidden}>
-      <span className="CloseButton" onClick={close}>
+    <div className="Dialog" hidden={!dialog || dialog === DialogComponent.None}>
+      <span
+        className="CloseButton"
+        onClick={close}
+        hidden={!(loaded && game?.OnProgress === IStatusGame.InProgress)}
+      >
         X
       </span>
       <div hidden={dialog !== DialogComponent.Cards}>{ShowMyCards()}</div>

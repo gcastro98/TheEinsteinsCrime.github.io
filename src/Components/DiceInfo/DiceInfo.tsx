@@ -29,11 +29,11 @@ export function DiceInfo(): any {
   useEffect(() => {
     prevStatusRef.current = users?.findIndex((user) => user.Status === IStatusPlayer.ThrowingDice) >= 0;
   });
+  const hidden = !(loaded && game?.OnProgress === IStatusGame.InProgress) ? {display: "none"} : {}
   console.log("hiddenDice", !(loaded && game?.OnProgress === IStatusGame.InProgress))
   return (
     <div className={styles.GameInfo} 
-hidden={true}
-    //  hidden={!(loaded && game?.OnProgress === IStatusGame.InProgress)}
+    style={hidden}
     >
       <ReactDice
         numDice={2}

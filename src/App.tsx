@@ -65,9 +65,9 @@ function App() {
   };
 
   /** Callbacks */
-  console.log("Loadmydata condition", (gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded))
+  console.log("Loadmydata condition", gameId !== "initialData", game?.OnProgress === IStatusGame.InProgress,  !loaded)
   const loadMyData = useCallback(async () => {
-    if (gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded) {
+    if (gameId && gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded) {
       try {
         const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
         if (userIdSaved && userIdSaved !== "") {
@@ -89,13 +89,13 @@ function App() {
   }, [game?.OnProgress, loaded, gameId]);
 
   const initData = useCallback(() => {
-    if (gameId !== "initialData" && !loaded) {
+    if (gameId && gameId !== "initialData" && !loaded) {
       checkGame(gameId);
       if (IsWaitingRoom) {
         setDialog(DialogComponent.Waiting);
       }
     }
-  }, []);
+  }, [gameId, loaded]);
 
   /** Effects */
 
@@ -105,10 +105,10 @@ function App() {
 
   useEffect(() => {
     initData();
-  }, [gameId]);
+  }, [gameId, loaded]);
 
   /** Render */
-console.log(state)
+console.log(state, game)
   return (
     <>
       <GameContext.Provider

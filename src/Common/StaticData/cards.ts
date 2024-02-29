@@ -1,4 +1,6 @@
-export const ALL_CARDS = [
+import { ICard } from "../../Firebase/Models/ICard";
+
+export const ALL_CARDS: ICard[] = [
   {
     name: "Sala de maquinas",
     type: "Room",

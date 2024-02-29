@@ -4,6 +4,7 @@ import { generateRandomId } from "../../../Common/Utils/Utils";
 import { GameContext } from "../../../Interfaces/IGameContext";
 import { useContext, useState } from "react";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
 
 export const Landing = (): JSX.Element => {
   const { startManually } = useContext(GameContext);
@@ -55,7 +56,7 @@ export const Landing = (): JSX.Element => {
         // className={`${stylesButton.footer} ${styles.letterFooter}`}
         style={{ justifyContent: "center", padding: "10px" }}
       >
-        <PrimaryButton text="Crear partida" onClick={() => createGame()} />
+        <CustomButton text="Crear partida" onClick={() => createGame()} />
       </div>
     </div>
   );

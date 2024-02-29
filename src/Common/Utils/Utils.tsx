@@ -14,25 +14,21 @@ export function getGameIdFromPath(): string {
 }
 
 
-export function getGameIdFromUrl(url: string){
-    if (url.includes("game")) {
-        return url.split("game:")[1];
-    }
-}
+// export function getGameIdFromUrl(url: string){
+//     if (url.includes("game")) {
+//         return url.split("game=")[1];
+//     }
+// }
 
 export function saveUserIdOnLocalStorage(userId:string){
-    const gameId = getGameIdFromUrl(window.location.href);
+    const gameId = getGameIdFromPath();
     sessionStorage.setItem(`${gameId}:userId`, `${userId}`);
 }
 
-
 export function getUserIdFromLocalStorage(){
-    const gameId = getGameIdFromUrl(window.location.href);
+    const gameId = getGameIdFromPath();
     return sessionStorage.getItem(`${gameId}:userId`);
 }
-
-
-
 
 export function generateRandomId(): string {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {

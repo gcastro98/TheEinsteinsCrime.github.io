@@ -14,7 +14,7 @@ export async function getGame(gameId: string) {
     };
     return await fetch(`${backendUri}/${gameId}/getGame`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to get Game: Exception: ", ex);
   }
 }
 
@@ -25,7 +25,7 @@ export async function checkGameReference(gameId: string): Promise<void> {
     };
     await fetch(`${backendUri}/${gameId}/checkGameReference`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to check GameReference. Exception: ", ex, ", Attached:", {gameId});
   }
 }
 
@@ -36,7 +36,7 @@ export async function startGame(gameId: string): Promise<void> {
     };
     await fetch(`${backendUri}/${gameId}/startGame`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to start Game. Exception: ", ex, ", Attached:", gameId);
   }
 }
 
@@ -48,7 +48,7 @@ export async function checkResponse(gameId: string, body: any) {
     };
     await fetch(`${backendUri}/${gameId}/checkResponse`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to check response. Exception: ", ex, ", Attached:", gameId, body);
   }
 }
 
@@ -61,7 +61,7 @@ export async function getMyCards(gameId: string, userId: string): Promise<ICard[
       response.json()
     );
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to get my cards. Exception: ", ex, ", Attached:", gameId, userId);
   }
   return [];
 }
@@ -77,7 +77,7 @@ export async function addUserToGame(gameId: string, name: string): Promise<any> 
     };
     return await fetch(`${backendUri}/${gameId}/addUserToGame`, options).then((body) => body.json());
   } catch (ex) {
-    console.error("Error", ex);
+    console.error("(API service) Error to add User To Game. Exception: ", ex, ", Attached:", gameId, name);
   }
 }
 
@@ -88,20 +88,20 @@ export async function throwDice(gameId: string): Promise<void> {
     };
     await fetch(`${backendUri}/${gameId}/throwDice`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to throw dice. Exception: ", ex, ", Attached:", gameId);
   }
 }
 
-export async function nextTurn(gameId: string) {
-  try {
-    const options = {
-      method: "POST",
-    };
-    await fetch(`${backendUri}/${gameId}/nextTurn`, options);
-  } catch (ex) {
-    console.error("Error");
-  }
-}
+// export async function nextTurn(gameId: string) {
+//   try {
+//     const options = {
+//       method: "POST",
+//     };
+//     await fetch(`${backendUri}/${gameId}/nextTurn`, options);
+//   } catch (ex) {
+//     console.error("Error");
+//   }
+// }
 
 export async function createRequest(gameId: string, body: any) {
   try {
@@ -114,7 +114,7 @@ export async function createRequest(gameId: string, body: any) {
     };
     await fetch(`${backendUri}/${gameId}/createRequest`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to create request. Exception: ", ex, ", Attached:", gameId, body);
   }
 }
 
@@ -129,7 +129,7 @@ export async function setResponse(gameId: string, body: any) {
     };
     await fetch(`${backendUri}/${gameId}/setResponse`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to set response. Exception: ", ex, ", Attached:", gameId, body);
   }
 }
 
@@ -140,7 +140,7 @@ export async function markAsReaded(gameId: string) {
     };
     await fetch(`${backendUri}/${gameId}/markAsReaded`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to mark as readed. Exception: ", ex, ", Attached:", gameId);
   }
 }
 
@@ -158,7 +158,7 @@ export async function makeMovement(gameId: string, userId: string, movement: str
     };
     await fetch(`${backendUri}/${gameId}/makeMovement`, options);
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to make movement. Exception: ", ex, ", Attached:", gameId, userId, movement);
   }
 }
 
@@ -173,7 +173,7 @@ export async function checkSolution(gameId: string, request: IRequest): Promise<
     };
     return await fetch(`${backendUri}/${gameId}/checkSolution`, options).then((body) => body.json());
   } catch (ex) {
-    console.error("Error");
+    console.error("(API service) Error to check solution. Exception: ", ex, ", Attached:", gameId, request);
   }
   return false;
 }
