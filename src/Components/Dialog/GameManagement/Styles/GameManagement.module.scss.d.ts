@@ -10,3 +10,7 @@ export const buttonStartGame: string;
 export const letter: string;
 export const letterFooter: string;
 export const leeterDateAndSign: string;
+export const inputnameDiv: string;
+export const footer: string;
+export const spinner: string;
+export const cardList: string;

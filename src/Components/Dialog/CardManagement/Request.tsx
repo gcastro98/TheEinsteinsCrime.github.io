@@ -7,6 +7,7 @@ import * as BackendService from "../../../API/BackendServices";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 import { ALL_CARDS } from "../../../Common/StaticData/cards";
 import commonStyles from "../../../Common/Styles/Utils.module.scss"
+import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
 interface IDropdownOption {
   key: string;
   text: string;
@@ -73,7 +74,7 @@ export function Request(): JSX.Element {
       />
       <span>en</span><br/>
       <span className={styles.label}><b>{roomId && roomId >= 0 && ALL_CARDS[roomId].name }</b></span>
-      <PrimaryButton
+      <CustomButton
         className={commonStyles.CommonButton}
         text="Enviar"
         onClick={createRequest}

@@ -18,5 +18,6 @@ export enum DialogComponent {
   Solution = "Solution",
   Waiting = "Waiting",
   CardsByUser = "CardsByUser",
-  Landing = "Landing"
+  Landing = "Landing",
+  EndGame = "EndGame"
 }

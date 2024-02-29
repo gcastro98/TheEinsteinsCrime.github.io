@@ -5,12 +5,13 @@ import { Request } from "./CardManagement/Request";
 import { Landing } from "./GameManagement/Landing";
 import { ShowMyCards } from "./CardManagement/Show";
 import { WaitingRoom } from "./GameManagement/WaitingRoom";
-import { ReqSolution } from "./CardManagement/ReqSolution";
+import { Solution } from "./CardManagement/Solution";
 import { GameContext } from "../../Interfaces/IGameContext";
 import { ShowCardsByUser } from "./CardManagement/ShowCardsByUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
 
 import { IStatusGame } from "../../Firebase/Models/IGame";
+import { EndGame } from "./GameManagement/EndGame";
 
 export function DialogBoard(props: any) {
   const { dialog, setDialog, loaded, game } = useContext(GameContext);
@@ -28,9 +29,10 @@ export function DialogBoard(props: any) {
       <div hidden={dialog !== DialogComponent.Board}> {BoardGame()}</div>
       <div hidden={dialog !== DialogComponent.Request}> {Request()}</div>
       <div hidden={dialog !== DialogComponent.Waiting}>{WaitingRoom()}</div>
-      <div hidden={dialog !== DialogComponent.Solution}> {ReqSolution()}</div>
+      <div hidden={dialog !== DialogComponent.Solution}> {Solution()}</div>
       <div hidden={dialog !== DialogComponent.CardsByUser}> {ShowCardsByUser()}</div>
       <div hidden={dialog !== DialogComponent.Landing}>{Landing()}</div>
+      <div hidden={dialog !== DialogComponent.EndGame}> {EndGame()}</div>
     </div>
   );
 }

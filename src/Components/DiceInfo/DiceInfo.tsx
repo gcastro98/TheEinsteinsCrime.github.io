@@ -8,6 +8,7 @@ import { DialogComponent } from "../../Interfaces/IDialogComponent";
 
 import { IStatusPlayer } from "../../Firebase/Models/IUser";
 import { IStatusGame } from "../../Firebase/Models/IGame";
+import { CustomButton } from "../../Common/Utils/CustomButton/CustomButton";
 
 export function DiceInfo(): any {
   const { game, loaded } = useContext(GameContext);
@@ -47,13 +48,13 @@ export function DiceInfo(): any {
         outline
       />
       <div className={sylesButton.footer}>
-        <PrimaryButton
+        <CustomButton
           text="Ver cartas"
           onClick={async () => {
             setDialog(DialogComponent.Cards);
           }}
         />
-        <PrimaryButton
+        <CustomButton
           text="Abrir tablero"
           onClick={async () => {
             setDialog(DialogComponent.Board);

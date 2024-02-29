@@ -1,36 +1,94 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
-import { IStatusPlayer } from "../../../Firebase/Models/IUser";
-import { Dialog, PrimaryButton } from "@fluentui/react";
+import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { IRequest } from "../../../Firebase/Models/IRequest";
+import styles from "./Styles/CardManagement.module.scss";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
-import { ALL_CARDS } from "../../../Common/StaticData/cards";
-import { Card } from "./Model/Card";
+import * as BackendService from "../../../API/BackendServices";
 import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
+interface IDropdownOption {
+  key: string;
+  text: string;
+}
 
-export function Solution() {
-  const { game, userId, setDialog, users, dialog } = useContext(GameContext);
-  const winner = users?.find((user) => user.Status === IStatusPlayer.Winner);
-  if (dialog !== DialogComponent.Solution && winner !== undefined) {
-    setDialog(DialogComponent.Solution);
-  }
-  const youAreTheWinner = winner?.Id === userId;
-  const cardsIndex =
-    (game?.ActiveRequest && [
-      game?.ActiveRequest?.suspectId,
-      game?.ActiveRequest.weaponId,
-      game?.ActiveRequest.roomId,
-    ]) ||
-    [];
+export function Solution(): JSX.Element {
+  const { game, userId, setDialog: setActive } = useContext(GameContext);
+  const allCards = game?.AllCards || [];
+  
+  const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
+  const [weapon, setWeapon] = useState<IDropdownOption | undefined>(undefined);
+  const [room, setRoom] = useState<IDropdownOption | undefined>(undefined);
+
+  const reset = () => {
+    setSuspect(undefined);
+    setWeapon(undefined);
+    setRoom(undefined);
+    setActive(DialogComponent.None);
+  };
+
+  const checkSolution = async () => {
+    try {
+      const request: IRequest = {
+        roomId: parseInt(room?.key as string),
+        suspectId: parseInt(suspect?.key as string),
+        weaponId: parseInt(weapon?.key as string),
+        userId: userId,
+        readed: false,
+        response: undefined,
+      };
+      const solution = await BackendService.checkSolution(game?.Id, request);
+      console.log(solution)
+      reset();
+    } catch (ex) {
+      console.error("Error requesting solution. Exception: ", ex);
+    }
+  };
 
   return (
     <div>
-      <h2>{youAreTheWinner ? "Enhorabuena, ¡Has ganado!" : "Lastima, la siguiente vez ira mejor"}</h2>
-      <div className="cardList">
-        {cardsIndex?.length > 0 && cardsIndex.map((index: any) => Card(ALL_CARDS[index]))}
-      </div>
-
-      <CustomButton text="Jugar de nuevo" />
-      <CustomButton text="Salir" />
+      <h2>Solución</h2>
+      <span>Ha sido </span>
+      <Dropdown
+        className={styles.textfield}
+        options={allCards
+          .filter((x) => x.type === "Suspect")
+          .map((x) => {
+            return { key: x.id, text: x.name };
+          })}
+        onChange={(e, option) => setSuspect(option as IDropdownOption)}
+        placeholder="Select a Suspect"
+        selectedKey={suspect?.key}
+      />
+      <span>con</span>
+      <Dropdown
+        className={styles.textfield}
+        options={allCards
+          .filter((x) => x.type === "Weapon")
+          .map((x) => {
+            return { key: x.id, text: x.name };
+          })}
+        onChange={(e, option) => setWeapon(option as IDropdownOption)}
+        placeholder="Select a Weapon"
+        selectedKey={weapon?.key}
+      />
+      <span>en</span>
+      <Dropdown
+        className={styles.textfield}
+        options={allCards
+          .filter((x) => x.type === "Room")
+          .map((x) => {
+            return { key: x.id, text: x.name };
+          })}
+        onChange={(e, option) => setRoom(option as IDropdownOption)}
+        placeholder="Select a Room"
+        selectedKey={room?.key}
+      />
+      <CustomButton
+        className={styles.button}
+        text="Enviar"
+        onClick={checkSolution}
+        disabled={!suspect || !room || !weapon}
+      />
     </div>
   );
 }

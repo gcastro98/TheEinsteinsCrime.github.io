@@ -7,6 +7,7 @@ import * as BackendService from "../../API/BackendServices";
 import { IStatusPlayer, IUser } from "../../Firebase/Models/IUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
 import { IStatusGame } from "../../Firebase/Models/IGame";
+import { CustomButton } from "../../Common/Utils/CustomButton/CustomButton";
 
 export function GameInfo() {
   const {
@@ -96,7 +97,7 @@ export function GameInfo() {
               return (
                 <>
                   {showMessage(`Ha perdido`)}
-                  <PrimaryButton
+                  <CustomButton
                     text="Ver sus cartas"
                     onClick={async () => {
                       setActive(DialogComponent.CardsByUser, user?.Id);
@@ -119,14 +120,14 @@ export function GameInfo() {
       case IStatusPlayer.ThrowingDice: // Es tu turno, no has lanzado los dados
         return (
           <div className={styles.footer}>
-            <PrimaryButton
+            <CustomButton
               text="Lanzar dados"
               onClick={async () => {
                 setActive(DialogComponent.None);
                 await throwDice();
               }}
             />
-            <PrimaryButton
+            <CustomButton
               text="Solucionar"
               onClick={async () => {
                 setActive(DialogComponent.Solution);
@@ -137,7 +138,7 @@ export function GameInfo() {
       case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
         return (
           <div className={styles.footer}>
-            <PrimaryButton
+            <CustomButton
               text="Hacer pregunta"
               onClick={() => {
                 setActive(
@@ -152,7 +153,7 @@ export function GameInfo() {
         return (
           <div className={styles.footer}>
             {responseState.button ? (
-              <PrimaryButton
+              <CustomButton
                 text="Enseñar carta"
                 onClick={() => {
                   setResponseState({ ...responseState, button: true });
@@ -173,7 +174,7 @@ export function GameInfo() {
                     setResponseState({ ...responseState, cardId: option?.key as number });
                   }}
                 />
-                <PrimaryButton
+                <CustomButton
                   text="Enviar respuesta"
                   onClick={() => {
                     createActiveResponse(responseState.cardId);
@@ -189,7 +190,7 @@ export function GameInfo() {
             {activeRequest?.response?.cardId !== -1
               ? showMessage(`${responseCardUser()} te ha enseñado la carta de ${responseCardName()}`)
               : showMessage("No hay nada que enseñarte")}
-            <PrimaryButton
+            <CustomButton
               text="Marcar como leído"
               onClick={() => {
                 markActiveResponseAsReaded();

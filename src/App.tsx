@@ -13,6 +13,7 @@ import { IStatusGame, mockGame } from "./Firebase/Models/IGame";
 import { DialogComponent } from "./Interfaces/IDialogComponent";
 
 import { GameScene } from "./Scene/GameScene";
+import { Dialog } from "@fluentui/react";
 
 function App() {
 
@@ -66,7 +67,7 @@ function App() {
 
   /** Callbacks */
   console.log("Loadmydata condition", gameId !== "initialData", game?.OnProgress === IStatusGame.InProgress,  !loaded)
-  const loadMyData = useCallback(async () => {
+  const loadMyData = async () => {
     if (gameId && gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded) {
       try {
         const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
@@ -86,28 +87,38 @@ function App() {
         console.error("Error to load user information: Exception", ex);
       }
     }
-  }, [game?.OnProgress, loaded, gameId]);
+  };
 
-  const initData = useCallback(() => {
+  const initData = () => {
     if (gameId && gameId !== "initialData" && !loaded) {
       checkGame(gameId);
       if (IsWaitingRoom) {
         setDialog(DialogComponent.Waiting);
       }
     }
-  }, [gameId, loaded]);
+  };
 
   /** Effects */
 
   useEffect(() => {
-    loadMyData();
+    void loadMyData();
   }, [game?.OnProgress, loaded, gameId]);
 
   useEffect(() => {
-    initData();
+    void initData();
   }, [gameId, loaded]);
 
+  useEffect(() => {
+    if (game?.OnProgress === IStatusGame.Finished && dialogOptions.type !== DialogComponent.EndGame){
+      setDialog(DialogComponent.EndGame)
+    }
+  }, [game?.OnProgress])
+
+  /**Pruebas  */
+ 
+
   /** Render */
+
 console.log(state, game)
   return (
     <>
