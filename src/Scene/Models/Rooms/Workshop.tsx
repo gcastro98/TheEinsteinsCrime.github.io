@@ -7,7 +7,6 @@ import { SCENE_LIGHT_INTENSITY, REDUCE_SCALE_DOOR} from '../Modifiers'
 export function Workshop(props: any) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Workshop.glb`) as any;
-  const { actions } = useAnimations(animations, group)
   return (
     <group {...props} dispose={null}>
       <group position={[1.87, 0.51, -5.12]} rotation={[-Math.PI / 2, 0, 0.8]} scale={0.09}>
@@ -108,11 +107,11 @@ export function Workshop(props: any) {
           <mesh geometry={nodes.Mesh33_FrontColor1_0.geometry} material={materials.FrontColor1} />
           <mesh geometry={nodes.Mesh54_FrontColor1_0.geometry} material={materials.FrontColor1} />
           <mesh geometry={nodes.Mesh58_QFT_COLOR_QUAD_0.geometry} material={materials.QFT_COLOR_QUAD} />
-          <mesh geometry={nodes.Mesh58_QFT_COLOR_TRI_0.geometry} material={materials.QFT_COLOR_TRI} />
+          <mesh geometry={nodes.Mesh58_QFT_COLOR_TRI_0.geometry} material={materials.QFT_COLOR_QUAD} />
         </group>
       </group>
       <group position={[1.9, 0.51, -2.09]} rotation={[-Math.PI / 2, 0, -2.59]} scale={[0.21, 0.23, 0.28]}>
-        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01 * REDUCE_SCALE_DOOR}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <mesh geometry={nodes.Cube__0.geometry} material={materials['Scene_-_Root']} position={[0, 102.98, 0]} />
           <mesh geometry={nodes.Cube_1__0.geometry} material={materials['Scene_-_Root']} position={[0, 403.94, 0]} />
           <mesh geometry={nodes.Cube_1_3__0.geometry} material={materials['Scene_-_Root']} position={[175.04, 366.08, 0]} rotation={[0, Math.PI / 2, 0]} />
@@ -134,17 +133,17 @@ export function Workshop(props: any) {
           <mesh geometry={nodes.QuilFeather_Combined_QuilFinalOpacity_Textures_0.geometry} material={materials.QuilFinalOpacity_Textures} position={[-3.1, 6.99, -1.08]} rotation={[-0.66, -0.13, -0.35]} />
         </group>
       </group>
-      <group position={[8.9, 0.51, -4.46]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[8.9, 0.51, -4.46]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01*REDUCE_SCALE_DOOR}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
             <mesh geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.02]} scale={[1, 0.92, 1]} />
           </group>
         </group>
       </group>
-      <group position={[6.46, 0.51, -6.9]} rotation={[-Math.PI / 2, 0, 0]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[6.46, 0.51, -6.9]} rotation={[-Math.PI / 2, 0, 0]} scale={0.01*REDUCE_SCALE_DOOR}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0.001']} position={[0, 0.07, 0]} scale={[1, 0.71, 1]} />
+            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, 0]} scale={[1, 0.71, 1]} />
           </group>
         </group>
       </group>
@@ -158,7 +157,7 @@ export function Workshop(props: any) {
       </group>
       <group position={[9.18, 2.78, -5.44]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.023']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.025']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -166,7 +165,7 @@ export function Workshop(props: any) {
       </group>
       <group position={[7.46, 2.77, -7.18]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.027']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.025']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -174,7 +173,7 @@ export function Workshop(props: any) {
       </group>
       <group position={[5.48, 2.78, -7.18]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.026']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.025']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />

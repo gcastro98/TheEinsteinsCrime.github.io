@@ -12,7 +12,6 @@ export function Library(props: any) {
   const group = useRef()
   const [show, setShow] = useState(false);
   const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Library.glb`) as any
-  const { actions } = useAnimations(animations, group);
   return (
     <group {...props} dispose={null}>
       <group position={[1.75, 0.69, -24.88]} rotation={[-Math.PI / 2, 0, 0]} scale={1.08}>
@@ -55,14 +54,14 @@ export function Library(props: any) {
       <group position={[3.17, 0.7, -22.83]} rotation={[-Math.PI / 2, 0, -1.57]} scale={1.08}>
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.03}>
           <group scale={0.39}>
-            <mesh geometry={nodes.sofa_geo_Leather_mat_0002.geometry} material={materials['Leather_mat.001']} />
-            <mesh geometry={nodes.sofa_geo_Leather_mat_0003.geometry} material={materials['Leather_mat.001']} />
+            <mesh geometry={nodes.sofa_geo_Leather_mat_0002.geometry} material={materials.Leather_mat} />
+            <mesh geometry={nodes.sofa_geo_Leather_mat_0003.geometry} material={materials.Leather_mat} />
           </group>
-          <mesh geometry={nodes.legs_geo4_wood_mat_0001.geometry} material={materials['wood_mat.001']} scale={0.39} />
+          <mesh geometry={nodes.legs_geo4_wood_mat_0001.geometry} material={materials.wood_mat} scale={0.39} />
         </group>
       </group>
       <group position={[3.82, 1.89, -25.77]} rotation={[-Math.PI / 2, 0, -1.57]} scale={1.13}>
-        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
             <mesh geometry={nodes.Bookcase_1_low_Bookcase001_0001.geometry} material={materials['Bookcase.002']} />
             <mesh geometry={nodes.Books_low_Books002_0001.geometry} material={materials['Books.001']} />
@@ -73,7 +72,7 @@ export function Library(props: any) {
         </group>
       </group>
       <group position={[4.99, 0.42, -23.2]} rotation={[-Math.PI / 2, 0, 0]} scale={1.2}>
-        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group rotation={[-Math.PI / 2, 0, 0]}>
             <group rotation={[0, 0, 0.19]}>
               <mesh geometry={nodes.ARMCHAIR_TEXSET_A_0.geometry} material={materials.TEXSET_A} position={[-268.23, -131.02, 24.18]} rotation={[0, 0, 2.94]} />
@@ -90,13 +89,13 @@ export function Library(props: any) {
         </group>
       </group>
       <group position={[5.85, 1.89, -25.78]} rotation={[-Math.PI / 2, 0, -1.57]} scale={[1.08, 1.17, 1.13]}>
-        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-            <mesh geometry={nodes.Bookcase_1_low_Bookcase001_0003.geometry} material={materials['Bookcase.004']} />
-            <mesh geometry={nodes.Books_low_Books002_0003.geometry} material={materials['Books.004']} />
-            <mesh geometry={nodes.Draw_1_low_Bookcase001_0003.geometry} material={materials['Bookcase.004']} position={[0.03, 0, 0]} />
-            <mesh geometry={nodes.Draw_2_low_Bookcase001_0003.geometry} material={materials['Bookcase.004']} position={[0.02, 0, 0]} />
-            <mesh geometry={nodes.Draw_3_low_Bookcase001_0003.geometry} material={materials['Bookcase.004']} position={[0.01, 0, 0]} />
+            <mesh geometry={nodes.Bookcase_1_low_Bookcase001_0003.geometry} material={materials['Bookcase.002']} />
+            <mesh geometry={nodes.Books_low_Books002_0003.geometry} material={materials['Books.001']} />
+            <mesh geometry={nodes.Draw_1_low_Bookcase001_0003.geometry} material={materials['Bookcase.002']} position={[0.03, 0, 0]} />
+            <mesh geometry={nodes.Draw_2_low_Bookcase001_0003.geometry} material={materials['Bookcase.002']} position={[0.02, 0, 0]} />
+            <mesh geometry={nodes.Draw_3_low_Bookcase001_0003.geometry} material={materials['Bookcase.002']} position={[0.01, 0, 0]} />
           </group>
         </group>
       </group>
@@ -106,7 +105,7 @@ export function Library(props: any) {
         </group>
       </group>
       <group position={[4.68, 0.71, -23.29]} rotation={[-Math.PI / 2, 0, 1.33]} scale={0.98}>
-        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <mesh geometry={nodes.victorian_chair_cloth_cloth_0.geometry} material={materials.cloth} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
           <mesh geometry={nodes.victorian_chair_wood_wood_0.geometry} material={materials.wood} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         </group>
@@ -114,15 +113,15 @@ export function Library(props: any) {
       <group position={[3.38, 0.58, -22.73]} rotation={[-Math.PI / 2, 0, 0]} scale={0}>
         <mesh geometry={nodes.Object_2004.geometry} material={materials['material_0.002']} position={[-1375.26, -745.17, 355.98]} />
       </group>
-      <group position={[8.01, 0.52, -21.48]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[8.01, 0.52, -21.48]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
         <group scale={100}>
           <mesh geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.06, -0.02]} scale={[1, 0.74, 1]} />
         </group>
       </group>
-      <group position={[4.6, 0.6, -20.08]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[4.6, 0.6, -20.08]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0.001']} position={[-0.02, 0.07, -0.13]} scale={[1, 0.64, 1]} />
+            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[-0.02, 0.07, -0.13]} scale={[1, 0.64, 1]} />
           </group>
         </group>
       </group>
@@ -136,7 +135,7 @@ export function Library(props: any) {
       </group>
       <group position={[5.58, 2.88, -19.8]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.001']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.003']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -144,7 +143,7 @@ export function Library(props: any) {
       </group>
       <group position={[8.3, 2.87, -20.48]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.004']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.003']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -152,21 +151,13 @@ export function Library(props: any) {
       </group>
       <group position={[8.3, 2.88, -22.46]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.002']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.003']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
         </group>
       </group>
-      <group position={[3.98, 0.55, -23.09]} rotation={[0, Math.PI / 2, 0]} scale={[3, 1, 4]}
-      onPointerOver={(ev) => (ev.stopPropagation(), !show && setShow(true))} onPointerOut={(ev) => (ev.stopPropagation(), setShow(false))}>
-       <Html  distanceFactor={20} style={{background:"transparent", borderRadius:"10px"}} onPointerOver={(ev) => (ev.stopPropagation(),!show && setShow(true))} onPointerOut={(ev) => (ev.stopPropagation(), setShow(false))}>
-      <div hidden={!show} className={
-          "tooltip"} >
-        Biblioteca
-        </div>
-      
-      </Html>
+      <group position={[3.98, 0.55, -23.09]} rotation={[0, Math.PI / 2, 0]} scale={[3, 1, 4]}>
         <mesh geometry={nodes.Plane001.geometry} material={materials.Floor} />
         <mesh geometry={nodes.Plane001_1.geometry} material={materials.OutsideWall} />
         <mesh geometry={nodes.Plane001_2.geometry} material={materials.MiddleWall} />

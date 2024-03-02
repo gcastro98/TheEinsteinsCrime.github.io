@@ -40,15 +40,14 @@ export function GameScene() {
           // minPolarAngle={Math.PI / 6}
           // maxPolarAngle={Math.PI - Math.PI / 6}
         />
-        <ambientLight intensity={0.05} />
+        <ambientLight intensity={0.25} />
         <BakeShadows />
-        <Suspense>
+        <Suspense >
           <Class />
           <Board position={[0, 0, 0]} />
           <Library />
           <Laboratory />
           <Workshop />
-
           <TimeMachine />
           <Observatory />
           {users?.length > 0 &&
@@ -65,7 +64,7 @@ export function GameScene() {
             })}
         </Suspense>
       </Canvas>
-      <Loader />
+     
     </>
   );
 }

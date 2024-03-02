@@ -10,7 +10,7 @@ import { SCENE_LIGHT_INTENSITY, REDUCE_SCALE_DOOR} from '../Modifiers'
 export function Laboratory(props: any) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Laboratory.glb`) as any;
-  const { actions } = useAnimations(animations, group)
+  
 
   return (
     <group {...props} dispose={null}>
@@ -43,7 +43,7 @@ export function Laboratory(props: any) {
         <mesh geometry={nodes.Object_110.geometry} material={materials['white.006']} position={[9.46, 9.3, 6]} scale={[2.77, 2.77, 1.29]} />
         <mesh geometry={nodes.Object_78.geometry} material={materials.metallic_2} position={[7.43, 1.4, 32.58]} rotation={[-Math.PI, -0.01, -Math.PI]} scale={2.83} />
         <mesh geometry={nodes.Object_48.geometry} material={materials.metallic} position={[7.02, 17.93, 11.79]} scale={[1.46, 2.77, 2.54]} />
-        <mesh geometry={nodes.Object_108.geometry} material={materials['white.005']} position={[8.04, 9.3, 18.98]} rotation={[0, 0.69, 0]} scale={[1.76, 0.97, 2.51]} />
+        <mesh geometry={nodes.Object_108.geometry} material={materials.white} position={[8.04, 9.3, 18.98]} rotation={[0, 0.69, 0]} scale={[1.76, 0.97, 2.51]} />
         <mesh geometry={nodes.Object_50.geometry} material={materials.metallic_2} position={[6.88, 17.93, 5.54]} scale={[1.82, 2.77, 0.46]} />
         <mesh geometry={nodes.Object_52.geometry} material={materials.metallic_2} position={[6.88, 17.93, 6.64]} scale={[1.82, 2.77, 0.46]} />
         <mesh geometry={nodes.Object_80.geometry} material={materials.metallic_2} position={[14.17, 1.41, 43.54]} rotation={[-Math.PI, -0.01, -Math.PI]} scale={1.97} />
@@ -59,14 +59,14 @@ export function Laboratory(props: any) {
         <mesh geometry={nodes.Object_128.geometry} material={materials.gray} position={[8.04, 9.3, 18.98]} rotation={[0, 0.69, 0]} scale={[1.76, 0.97, 2.51]} />
         <mesh geometry={nodes.Object_88.geometry} material={materials.light_yellow} position={[7.43, 1.4, 32.58]} rotation={[-Math.PI, -0.01, -Math.PI]} scale={2.83} />
         <mesh geometry={nodes.Object_64.geometry} material={materials.light_blue} position={[7.02, 17.93, 11.79]} scale={[1.46, 2.77, 2.54]} />
-        <mesh geometry={nodes.Object_160.geometry} material={materials['gray.002']} position={[8.94, 7.89, 13.44]} scale={[4.44, 4.44, 8.79]} />
+        <mesh geometry={nodes.Object_160.geometry} material={materials['white.004']} position={[8.94, 7.89, 13.44]} scale={[4.44, 4.44, 8.79]} />
         <mesh geometry={nodes.Object_92.geometry} material={materials.black} position={[9.74, 1.67, 42.51]} rotation={[-Math.PI, -0.01, -Math.PI]} scale={2.77} />
         <mesh geometry={nodes.Object_94.geometry} material={materials.black} position={[9, 1.67, 43.14]} rotation={[-Math.PI, -0.01, -Math.PI]} scale={2.77} />
         <mesh geometry={nodes.Object_130.geometry} material={materials.black} position={[6.68, 9.62, 4.98]} scale={2.77} />
         <mesh geometry={nodes.Object_132.geometry} material={materials.black} position={[10.31, 9.45, 14.08]} scale={2.77} />
         <mesh geometry={nodes.Object_134.geometry} material={materials.black} position={[6.39, 12.06, 8.95]} scale={2.77} />
       </group>
-      <group position={[21.53, 0.51, -16.01]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[21.53, 0.51, -16.01]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
             <mesh geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.64, 1]} />
@@ -83,7 +83,7 @@ export function Laboratory(props: any) {
       </group>
       <group position={[20.6, 2.78, -16.21]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.011']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -91,7 +91,7 @@ export function Laboratory(props: any) {
       </group>
       <group position={[17.87, 2.77, -14.51]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.014']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
@@ -99,16 +99,16 @@ export function Laboratory(props: any) {
       </group>
       <group position={[17.87, 2.78, -12.53]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
         <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.013']} position={[-0.07, 0, 0]} />
+          <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
         </group>
         <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
           <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
         </group>
       </group>
-      <group position={[18.15, 0.51, -13.52]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 * REDUCE_SCALE_DOOR}>
+      <group position={[18.15, 0.51, -13.52]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0.001']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
+            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
           </group>
         </group>
       </group>

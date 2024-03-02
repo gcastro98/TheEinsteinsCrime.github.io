@@ -12,11 +12,11 @@ import { SCENE_LIGHT_INTENSITY, REDUCE_SCALE_DOOR} from '../Modifiers'
 export function Observatory(props: any) {
   const group = useRef()
   const [show, setShow] = useState(false);
-  const { nodes, materials, animations } = useGLTF(`${selectPath()}/rooms/Observatory.glb`) as any
+  const { nodes, materials } = useGLTF(`${selectPath()}/rooms/Observatory.glb`) as any
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Class">
-        <group name="DoorGroup" position={[18.34, 0.53, -5.98]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 * REDUCE_SCALE_DOOR}>
+        <group name="DoorGroup" position={[18.34, 0.53, -5.98]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx" rotation={[Math.PI / 2, 0, 0]}>
             <group name="Object_2001">
               <group name="RootNode001">
@@ -28,8 +28,6 @@ export function Observatory(props: any) {
                 <group name="Cube001" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                   <mesh name="Cube001__0" geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.64, 1]} />
                 </group>
-                <group name="Cube003" position={[0, 100, 9.27]} rotation={[-Math.PI / 2, 0, 0]} scale={[10, 100, 100]} />
-                <group name="Cube004" position={[0, 100, -9.44]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={[10, 100, 100]} />
               </group>
             </group>
           </group>
@@ -47,7 +45,7 @@ export function Observatory(props: any) {
         <group name="LampRight" position={[17.4, 2.81, -6.17]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
           <group name="Collada_visual_scene_group" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
             <group name="Cylinder028">
-              <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materials['Material.011']} position={[-0.07, 0, 0]} />
+              <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
             </group>
           </group>
           <group name="LightRight" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
@@ -57,7 +55,7 @@ export function Observatory(props: any) {
         <group name="LampLeft001" position={[14.67, 2.8, -4.48]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
           <group name="Collada_visual_scene_group003" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
             <group name="Cylinder003">
-              <mesh name="defaultMaterial003" geometry={nodes.defaultMaterial003.geometry} material={materials['Material.014']} position={[-0.07, 0, 0]} />
+              <mesh name="defaultMaterial003" geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
             </group>
           </group>
           <group name="LightLeft001" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
@@ -67,7 +65,7 @@ export function Observatory(props: any) {
         <group name="LampRight001" position={[14.67, 2.81, -2.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
           <group name="Collada_visual_scene_group002" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
             <group name="Cylinder002">
-              <mesh name="defaultMaterial002" geometry={nodes.defaultMaterial002.geometry} material={materials['Material.013']} position={[-0.07, 0, 0]} />
+              <mesh name="defaultMaterial002" geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
             </group>
           </group>
           <group name="LightRight001" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
@@ -77,7 +75,7 @@ export function Observatory(props: any) {
         <group name="LampLeft002" position={[23.3, 2.91, -1.48]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
           <group name="Collada_visual_scene_group004" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
             <group name="Cylinder004">
-              <mesh name="defaultMaterial004" geometry={nodes.defaultMaterial004.geometry} material={materials['Material.014']} position={[-0.07, 0, 0]} />
+              <mesh name="defaultMaterial004" geometry={nodes.defaultMaterial004.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
             </group>
           </group>
           <group name="LightLeft002" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
@@ -87,30 +85,30 @@ export function Observatory(props: any) {
         <group name="LampRight002" position={[23.3, 2.92, -3.46]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
           <group name="Collada_visual_scene_group005" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
             <group name="Cylinder005">
-              <mesh name="defaultMaterial005" geometry={nodes.defaultMaterial005.geometry} material={materials['Material.013']} position={[-0.07, 0, 0]} />
+              <mesh name="defaultMaterial005" geometry={nodes.defaultMaterial005.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
             </group>
           </group>
           <group name="LightRight002" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
             <pointLight name="LightRight002_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
           </group>
         </group>
-        <group name="DoorGroup001" position={[14.95, 0.53, -3.48]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 * REDUCE_SCALE_DOOR}>
+        <group name="DoorGroup001" position={[14.95, 0.53, -3.48]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx001" rotation={[Math.PI / 2, 0, 0]}>
             <group name="Object_2002">
               <group name="RootNode002">
                 <group name="Cube007" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0001" geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0.001']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
+                  <mesh name="Cube001__0001" geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
                 </group>
               </group>
             </group>
           </group>
         </group>
-        <group name="DoorGroup002" position={[23.08, 0.53, -2.5]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 * REDUCE_SCALE_DOOR}>
+        <group name="DoorGroup002" position={[23.08, 0.53, -2.5]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
           <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx002" rotation={[Math.PI / 2, 0, 0]}>
             <group name="Object_2003">
               <group name="RootNode003">
                 <group name="Cube005" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0002" geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0.001']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
+                  <mesh name="Cube001__0002" geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
                 </group>
               </group>
             </group>

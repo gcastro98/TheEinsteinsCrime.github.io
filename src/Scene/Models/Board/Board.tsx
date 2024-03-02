@@ -47,7 +47,7 @@ export function Board(props: any) {
         </group>
       </group>
       <group position={[13.53, 1.12, -13.39]}>
-        <pointLight intensity={0.5} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        <pointLight intensity={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
       <group position={[13, 0.28, -13]} scale={[13, 0.2, 13]}>
         <mesh geometry={nodes.Cube.geometry} material={materials.ChessBoard} />
@@ -55,11 +55,11 @@ export function Board(props: any) {
       </group>
       <mesh geometry={nodes.FenceBottom.geometry} material={materials['Material.002']} position={[14.33, 0.49, -0.02]} rotation={[0, -Math.PI / 2, 0]} scale={[0.21, 0.5, 0.48]} />
       <mesh geometry={nodes.FenceTop.geometry} material={materials['Material.004']} position={[9.13, 0.49, -25.97]} rotation={[0, Math.PI / 2, 0]} scale={[0.21, 0.5, 0.48]} />
-      <mesh geometry={nodes.FenceRight.geometry} material={materials['Material.005']} position={[23.58, 0.49, -0.07]} rotation={[0, Math.PI / 2, 0]} scale={[0.21, 0.5, 0.48]} />
-      <mesh geometry={nodes.FenceLeft.geometry} material={materials['Material.001']} position={[0.08, 0.48, -9.24]} scale={[0.21, 0.5, 0.47]} />
-      <mesh geometry={nodes.FenceRight001.geometry} material={materials['Material.003']} position={[25.92, 0.49, -8.82]} scale={[0.21, 0.5, 0.48]} />
-      <mesh geometry={nodes.FenceLeft001.geometry} material={materials['Material.006']} position={[0.02, 0.5, -19.37]} scale={[0.21, 0.5, 0.47]} />
-      <mesh geometry={nodes.FenceLeft002.geometry} material={materials['Material.007']} position={[25.92, 0.52, -18.27]} scale={[0.21, 0.5, 0.47]} />
+      <mesh geometry={nodes.FenceRight.geometry} material={materials['Material.002']} position={[23.58, 0.49, -0.07]} rotation={[0, Math.PI / 2, 0]} scale={[0.21, 0.5, 0.48]} />
+      <mesh geometry={nodes.FenceLeft.geometry} material={materials['Material.002']} position={[0.08, 0.48, -9.24]} scale={[0.21, 0.5, 0.47]} />
+      <mesh geometry={nodes.FenceLeft002.geometry} material={materials['Material.002']} position={[25.92, 0.52, -18.27]} scale={[0.21, 0.5, 0.47]} />
+      <mesh geometry={nodes.FenceRight001.geometry} material={materials['Material.002']} position={[25.92, 0.49, -8.82]} scale={[0.21, 0.5, 0.48]} />
+      <mesh geometry={nodes.FenceLeft001.geometry} material={materials['Material.002']} position={[0.02, 0.5, -19.37]} scale={[0.21, 0.5, 0.47]} />
     </group>
   )
 }
