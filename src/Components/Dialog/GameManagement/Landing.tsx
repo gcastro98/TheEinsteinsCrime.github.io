@@ -4,7 +4,8 @@ import { generateRandomId } from "../../../Common/Utils/Utils";
 import { GameContext } from "../../../Interfaces/IGameContext";
 import { useContext, useState } from "react";
 import { Dropdown, PrimaryButton } from "@fluentui/react";
-import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
+import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
+import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 
 export const Landing = (): JSX.Element => {
   const { startManually } = useContext(GameContext);
@@ -26,6 +27,9 @@ export const Landing = (): JSX.Element => {
     startManually(gameId);
   };
   return (
+    <div>
+<DialogHeader label="Bienvenido" />
+
     <div className={styles.letter}>
       <span className={styles.leeterDateAndSign}>
         <i>Viernes, 13 de Marzo de 1942</i>
@@ -58,6 +62,7 @@ export const Landing = (): JSX.Element => {
       >
         <CustomButton text="Crear partida" onClick={() => createGame()} />
       </div>
+    </div>
     </div>
   );
 };

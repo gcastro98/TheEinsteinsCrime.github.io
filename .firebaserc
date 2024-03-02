@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "theeinsteinscrime"
-  }
+  },
+  "targets": {
+    "theeinsteinscrime": {
+      "hosting": {
+        "theeinsteinscrime": [
+          "theeinsteinscrime"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

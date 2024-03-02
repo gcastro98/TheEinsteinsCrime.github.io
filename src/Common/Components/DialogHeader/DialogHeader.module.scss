@@ -1,0 +1,22 @@
+.dialogHeader {
+  position: relative;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 15%;
+  height: 60px;
+  ç: 100%;
+  margin-top: -2em;
+  margin-bottom: 2em;
+  /* font-style: italic;*/
+}
+
+.dialogLabel {
+  font-weight: 600;
+  font-size: 2em;
+  /* color: rgba(104, 39, 33, 0.85); */
+  border-color: black;
+  border: 5px solid;
+  padding: 5px 43px;
+}

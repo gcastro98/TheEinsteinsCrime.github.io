@@ -92,18 +92,18 @@
     border-radius: 5px;
 }
 
-@keyframes fill {
-    from {
-        background-color: white;
-        background-image: radial-gradient(circle at center, white 0%, white 50%, green 50%, green 100%);
-        background-size: 200%;
-        background-position: center;
-    }
+// @keyframes fill {
+//     from {
+//         background-color: white;
+//         background-image: radial-gradient(circle at center, white 0%, white 50%, green 50%, green 100%);
+//         background-size: 200%;
+//         background-position: center;
+//     }
 
-    to {
-        background-color: green;
-        background-image: none;
-        background-size: auto;
-        background-position: center;
-    }
-}
+//     to {
+//         background-color: green;
+//         background-image: none;
+//         background-size: auto;
+//         background-position: center;
+//     }
+// }

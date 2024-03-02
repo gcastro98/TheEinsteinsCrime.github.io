@@ -33,11 +33,11 @@ function App() {
   const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
     BackendService.checkGameReference(gameId)
   );
-  const { progress } = useProgress();
+  // const { progress } = useProgress();
 
   /** Declare consts */
 
-  // const progress = 100;
+  const progress = 100;
   const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === IStatusGame.NotStarted;
   const loading = IsWaitingRoom || progress < 100;
   const Users = game?.Users || [];
@@ -66,7 +66,6 @@ function App() {
   };
 
   /** Callbacks */
-  console.log("Loadmydata condition", gameId !== "initialData", game?.OnProgress === IStatusGame.InProgress,  !loaded)
   const loadMyData = async () => {
     if (gameId && gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded) {
       try {
@@ -119,7 +118,6 @@ function App() {
 
   /** Render */
 
-console.log(state, game)
   return (
     <>
       <GameContext.Provider

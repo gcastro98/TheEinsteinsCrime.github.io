@@ -8,7 +8,7 @@ import { DialogComponent } from "../../Interfaces/IDialogComponent";
 
 import { IStatusPlayer } from "../../Firebase/Models/IUser";
 import { IStatusGame } from "../../Firebase/Models/IGame";
-import { CustomButton } from "../../Common/Utils/CustomButton/CustomButton";
+import { CustomButton } from "../../Common/Components/CustomButton/CustomButton";
 
 export function DiceInfo(): any {
   const { game, loaded } = useContext(GameContext);
@@ -21,7 +21,6 @@ export function DiceInfo(): any {
 
   useEffect(() => {
     if (throwDice) {
-      console.log("lanza", prevStatusRef.current, throwDice);
       ref.current?.rollAll(dice);
     }
   }, [dice, throwDice, prevStatusRef]);
@@ -31,7 +30,6 @@ export function DiceInfo(): any {
     prevStatusRef.current = users?.findIndex((user) => user.Status === IStatusPlayer.ThrowingDice) >= 0;
   });
   const hidden = !(loaded && game?.OnProgress === IStatusGame.InProgress) ? {display: "none"} : {}
-  console.log("hiddenDice", !(loaded && game?.OnProgress === IStatusGame.InProgress))
   return (
     <div className={styles.GameInfo} 
     style={hidden}

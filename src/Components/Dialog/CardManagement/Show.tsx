@@ -1,14 +1,19 @@
-import {  useContext } from "react";
+import { useContext } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
-import { Card } from "./Model/Card";
-import "./Model/Card.css";
-
+import "../../../Common/Components/Carrousel/Model/Card.css";
+import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
+import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 
 export function ShowMyCards() {
-
-  const { myCards} = useContext(GameContext);
+  const { myCards } = useContext(GameContext);
+  
+  const ids = myCards?.map((cards) => cards?.id);
+  const label = "Mis Cartas";
 
   return (
-    <div className="cardList">{myCards?.length > 0 && myCards?.map((card: any) => Card(card))}</div>
+    <div>
+      <DialogHeader label={label} />
+      <Carrousel indexArr={ids} />
+    </div>
   );
 }

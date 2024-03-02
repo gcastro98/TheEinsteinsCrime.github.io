@@ -5,7 +5,13 @@ import { IRequest } from "../../../Firebase/Models/IRequest";
 import styles from "./Styles/CardManagement.module.scss";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 import * as BackendService from "../../../API/BackendServices";
-import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
+import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
+import { ALL_CARDS, ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
+import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
+import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
+import { ICard } from "../../../Firebase/Models/ICard";
+import { mockGame } from "../../../Firebase/Models/IGame";
+import { ICardsState, MockCardState } from "./Interfaces/ICardsState";
 interface IDropdownOption {
   key: string;
   text: string;
@@ -13,82 +19,85 @@ interface IDropdownOption {
 
 export function Solution(): JSX.Element {
   const { game, userId, setDialog: setActive } = useContext(GameContext);
-  const allCards = game?.AllCards || [];
-  
-  const [suspect, setSuspect] = useState<IDropdownOption | undefined>(undefined);
-  const [weapon, setWeapon] = useState<IDropdownOption | undefined>(undefined);
-  const [room, setRoom] = useState<IDropdownOption | undefined>(undefined);
+
+  const [state, setState] = useState<ICardsState>(MockCardState);
+  const updateState = (val: any) =>
+    setState((prev) => {
+      return { ...prev, ...val };
+    });
+  const { suspect, weapon, room, loading } = state;
 
   const reset = () => {
-    setSuspect(undefined);
-    setWeapon(undefined);
-    setRoom(undefined);
-    setActive(DialogComponent.None);
+    updateState(MockCardState);
   };
 
   const checkSolution = async () => {
     try {
-      const request: IRequest = {
-        roomId: parseInt(room?.key as string),
-        suspectId: parseInt(suspect?.key as string),
-        weaponId: parseInt(weapon?.key as string),
-        userId: userId,
-        readed: false,
-        response: undefined,
-      };
-      const solution = await BackendService.checkSolution(game?.Id, request);
-      console.log(solution)
-      reset();
+      if (+suspect > 0 && +weapon > 0 && +room > 0) {
+        updateState({ loading: true });
+        const request: IRequest = {
+          roomId: parseInt(room),
+          suspectId: parseInt(suspect),
+          weaponId: parseInt(weapon),
+          userId: userId,
+          readed: false,
+          response: undefined,
+        };
+        const solution = await BackendService.checkSolution(game?.Id, request);
+        reset();
+      }
     } catch (ex) {
       console.error("Error requesting solution. Exception: ", ex);
     }
   };
 
+  const carrouselWithOutEmpties = [suspect, weapon, room].filter(n => n !== '')
+
   return (
     <div>
-      <h2>Solución</h2>
-      <span>Ha sido </span>
-      <Dropdown
-        className={styles.textfield}
-        options={allCards
-          .filter((x) => x.type === "Suspect")
-          .map((x) => {
-            return { key: x.id, text: x.name };
-          })}
-        onChange={(e, option) => setSuspect(option as IDropdownOption)}
-        placeholder="Select a Suspect"
-        selectedKey={suspect?.key}
-      />
-      <span>con</span>
-      <Dropdown
-        className={styles.textfield}
-        options={allCards
-          .filter((x) => x.type === "Weapon")
-          .map((x) => {
-            return { key: x.id, text: x.name };
-          })}
-        onChange={(e, option) => setWeapon(option as IDropdownOption)}
-        placeholder="Select a Weapon"
-        selectedKey={weapon?.key}
-      />
-      <span>en</span>
-      <Dropdown
-        className={styles.textfield}
-        options={allCards
-          .filter((x) => x.type === "Room")
-          .map((x) => {
-            return { key: x.id, text: x.name };
-          })}
-        onChange={(e, option) => setRoom(option as IDropdownOption)}
-        placeholder="Select a Room"
-        selectedKey={room?.key}
-      />
-      <CustomButton
-        className={styles.button}
-        text="Enviar"
-        onClick={checkSolution}
-        disabled={!suspect || !room || !weapon}
-      />
+      <DialogHeader label={"Solución"} />
+      <Carrousel indexArr={carrouselWithOutEmpties.map(n => +n)} />
+      <div className={styles.footer}>
+        <div className={styles.footerSection}>
+          <Dropdown
+            className={styles.textfield}
+            options={SUSPECT_OPTIONS}
+            label={"Sospechoso"}
+            onChange={(e, option) => updateState({ suspect: option?.key as string })}
+            placeholder="Seleccione un sospechoso"
+            selectedKey={suspect}
+          />
+        </div>
+        <div className={styles.footerSection}>
+          <Dropdown
+            className={styles.textfield}
+            options={WEAPON_OPTIONS}
+            label={"Arma"}
+            onChange={(e, option) => updateState({ weapon: option?.key as string })}
+            placeholder="Seleccione un arma del crimen"
+            selectedKey={weapon}
+          />
+        </div>
+        <div className={styles.footerSection}>
+          <Dropdown
+            className={styles.textfield}
+            options={ROOM_OPTIONS}
+            onChange={(e, option) => updateState({ room: option?.key as string })}
+            placeholder="Seleccione una habitacion"
+            label={"Habitación"}
+            selectedKey={room}
+          />
+        </div>
+        <div className={styles.footerSection} >
+          <CustomButton
+            className={styles.button}
+            style={{marginTop: "2em"}}
+            text="Comprobar"
+            onClick={checkSolution}
+            disabled={!(+suspect > 0 && +weapon > 0 && +room > 0 && !loading)}
+          />
+        </div>
+      </div>
     </div>
   );
 }

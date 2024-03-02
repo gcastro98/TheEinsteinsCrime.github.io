@@ -60,7 +60,6 @@ export function Arrows(props: IArrowsProps) {
   // const YlimitUp = 0;
   // const YlimitLess = -25;
 
-  console.log(props?.user?.Status === IStatusPlayer.Movement && props?.user?.Position?.availableMovements)
   const {U, R, D, L}: IAvailableMovements = props?.user?.Position?.availableMovements || {U: "N", R: "N", D: "N", L: "N"}
   return (
     <group position={[position.positionX, 0.4, position.positionY]}>

@@ -37,7 +37,6 @@ export function POC<T>(path: string, setFunction: (input: T) => Promise<void>) {
     const reference = ref(DataBase, path);
 
     const callback = (snapshot: any) => {
-      console.log("snapshot", snapshot.val());
       setFunction(snapshot.val());
     };
 

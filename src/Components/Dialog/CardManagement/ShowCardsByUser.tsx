@@ -1,15 +1,17 @@
-import { Card } from "./Model/Card";
 import { ICard } from "../../../Firebase/Models/ICard";
 import * as BackendService from "../../../API/BackendServices";
 import { GameContext } from "../../../Interfaces/IGameContext";
+import { DialogComponent } from "../../../Interfaces/IDialogComponent";
+import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
+
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { DialogComponent } from "../../../Interfaces/IDialogComponent";
+import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 
 export function ShowCardsByUser() {
   const { game, props, dialog, loaded } = useContext(GameContext);
   const [cardState, setCardsStates] = useState({
-    cards: [],
+    cardsIds: [],
     cardsPrepared: false,
   });
   const updateCardsStates = (val: any) =>
@@ -20,7 +22,8 @@ export function ShowCardsByUser() {
     if (loaded) {
       if (dialog === DialogComponent.CardsByUser && props?.userId !== "" && cardState.cardsPrepared) {
         const cards: ICard[] = await BackendService.getMyCards(game?.Id, props?.userId.toString());
-        updateCardsStates({ cards, cardsPrepared: true });
+        const cardsIds = cards?.map((card) => card?.id);
+        updateCardsStates({ cardsIds, cardsPrepared: true });
       }
     }
   }, []);
@@ -34,8 +37,9 @@ export function ShowCardsByUser() {
   }, [props]);
 
   return (
-    <div className="cardList">
-      {cardState?.cards && cardState?.cards?.length > 0 && cardState?.cards?.map((card: any) => Card(card))}
+    <div>
+      <DialogHeader label={"Cartas de Prueba"} />
+      <Carrousel indexArr={cardState?.cardsIds} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
 import styles from "./Styles/GameManagement.module.scss";
 import * as BackendService from "../../../API/BackendServices";
-import { CustomButton } from "../../../Common/Utils/CustomButton/CustomButton";
+import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
 export function WaitingRoom() {
   const { game, users, userId, updateContext } = useContext(GameContext);
   const [name, setName] = useState<string>("");

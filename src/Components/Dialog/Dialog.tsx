@@ -11,7 +11,7 @@ import { ShowCardsByUser } from "./CardManagement/ShowCardsByUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
 
 import { IStatusGame } from "../../Firebase/Models/IGame";
-import { EndGame } from "./GameManagement/EndGame";
+import { EndGame } from "./CardManagement/EndGame";
 
 export function DialogBoard(props: any) {
   const { dialog, setDialog, loaded, game } = useContext(GameContext);

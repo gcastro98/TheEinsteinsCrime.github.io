@@ -1,0 +1,14 @@
+.cardList {
+  height: 40%;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: space-between;
+    justify-content: left;
+    align-items: left;
+    max-width: 100%;
+    overflow-x: hidden;
+    max-height: 60%;
+}
+

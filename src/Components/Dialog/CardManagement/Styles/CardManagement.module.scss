@@ -1,3 +1,5 @@
+
+
 .label {
   display: flex;
   margin: 1em 0em 2em 0em;
@@ -44,4 +46,25 @@
 .userName {
   display: flex;
   margin: 0.5em 0em;
+}
+
+.footer {
+  display: flex;
+  position: absolute !important;
+  flex-direction: row;
+  position: relative;
+  bottom: 10%;
+  width: 80%;
+  margin-left: revert-layer;
+  padding: 5px 0px;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+
+}
+
+.footerSection {
+ width: 20%;
 }

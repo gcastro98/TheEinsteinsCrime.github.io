@@ -7,7 +7,7 @@ import * as BackendService from "../../API/BackendServices";
 import { IStatusPlayer, IUser } from "../../Firebase/Models/IUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
 import { IStatusGame } from "../../Firebase/Models/IGame";
-import { CustomButton } from "../../Common/Utils/CustomButton/CustomButton";
+import { CustomButton } from "../../Common/Components/CustomButton/CustomButton";
 
 export function GameInfo() {
   const {

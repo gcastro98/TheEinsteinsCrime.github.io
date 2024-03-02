@@ -7,3 +7,5 @@ export const playerList: string;
 export const inputNameSection: string;
 export const userName: string;
 export const buttonStartGame: string;
+export const footer: string;
+export const footerSection: string;
