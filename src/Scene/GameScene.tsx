@@ -31,7 +31,7 @@ export function GameScene() {
         
       >
         <color attach="background" args={["#202030"]} />
-        <fog attach="fog" args={["#202030", 1, 45]} />
+        {/* <fog attach="fog" args={["#202030", 1, 45]} /> */}
         <Environment
           files="assets/environment.hdr"
           background={true}
