@@ -28,41 +28,53 @@ export const Landing = (): JSX.Element => {
   };
   return (
     <div>
-<DialogHeader label="Bienvenido" />
+      <DialogHeader label="Bienvenido" />
 
-    <div className={styles.letter}>
-      <span className={styles.leeterDateAndSign}>
-        <i>Viernes, 13 de Marzo de 1942</i>
+      <div className={styles.letter}>
+        <span className={styles.leeterDateAndSign}>
+          <i>Viernes, 13 de Marzo de 1942</i>
+          <br />
+          <br />
+        </span>
+        <p>
+          A quien le interese,
+          <br /> <br />
+          En la penumbra de mi estudio, estas palabras se deslizan de mi pluma con la pesadez del destino.
+          ¿Quién podrá ser el destinatario de este testimonio tardío? ¿Acaso alguien lo leerá alguna vez? He
+          traspasado los límites de lo imaginable, he desentrañado el misterio del tiempo. Durante años, entre
+          el velo de la cordura y la locura, entre el genio y la oscuridad, he labrado mi camino hacia lo
+          desconocido.
+          <br /> <br />
+          El mundo desconoce aún el peso de mi hallazgo. Mi mente, etiquetada de genialidad y de demencia por
+          igual, ha encontrado la llave que abre las puertas del pasado y del futuro. ¿Qué importan los
+          halagos y las condenas de la sociedad cuando uno se encuentra en el umbral de la eternidad? Este
+          logro, este descubrimiento, eclipsará cualquier otro acto de la humanidad. Incluso más que la
+          inminente creación de la bomba, esa arma de destrucción que los americanos forjan en sus
+          laboratorios secretos.
+          <br />
+          <br />
+          El Premio Nobel palidecerá ante la magnitud de mi obra. Este será el tesoro que cambiará el curso de
+          la historia, que desdibujará las líneas del tiempo. Sin embargo, en mi soledad reflexiva, he llegado
+          a comprender la amenaza latente que yace en este poder. Un poder que podría desequilibrar los
+          pilares mismos de nuestra existencia.
+          <br />
+          <br />
+          No soy quien para tomar esta decisión en solitario. He decidido convocar a aquellos cuyas mentes
+          brillan con la misma intensidad que la mía. A pesar de los riesgos, a pesar de las sombras que
+          acechan en la oscuridad del tiempo, los invitaré a una cena. Una cena donde, entre el murmullo de
+          las conspiraciones y el tintineo de las copas, decidiremos el destino de esta hazaña sin
+          precedentes. Después de todo, ¿qué es una noche entre visionarios cuando uno ha creado una máquina
+          del tiempo?
+        </p>
         <br />
-        <br />
-      </span>
-      <p>
-        No se si alguien leera estas palabras... pero lo hice. Después de años de trabajo e investigacion
-        consegui encontrar la clave. Tildado de genio y de loco, la mente del siglo y el cientifico
-        excentrico, pero yo lo encontré, un metodo seguro. Bueno, "seguro".
-        <br /> <br />
-        Este descubrimiento sera mas trascendente que cualquier otro realizado por el hombre, mas incluso que
-        la bomba en la que estan trabajando estos americanos. Este será el descubrimiento del premio nobel.
-        ¡De todos ellos! El descubrimiento que cambiará el curso de la historia. Quizas un descubrimiento
-        demasiado extraordinario para ser gestionado por el hombre, demasiado peligroso...
-        <br />
-        <br />
-        Lo he meditado y no es una decision que pueda tomar solo. He decidido hacer uso de este invento y
-        reunir a algunas de las mentes mas importantes, aun con los riesgos que eso conlleva, en una cena en
-        la que conjuntamente decidamos que hacer con esta proeza.
-        <br />
-        <br />
-        Al fin y al cabo, no todos los dias uno inventa una maquina del tiempo...
-      </p>
-      <br />
-      <span>Att: Albert Einstein</span>
-      <div
-        // className={`${stylesButton.footer} ${styles.letterFooter}`}
-        style={{ justifyContent: "center", padding: "10px" }}
-      >
-        <CustomButton text="Crear partida" onClick={() => createGame()} />
+        <span>Albert Einstein</span>
+        <div
+          // className={`${stylesButton.footer} ${styles.letterFooter}`}
+          style={{ justifyContent: "center", padding: "10px" }}
+        >
+          <CustomButton text="Crear partida" onClick={() => createGame()} />
+        </div>
       </div>
-    </div>
     </div>
   );
 };

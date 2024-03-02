@@ -1,13 +1,13 @@
 import { ICard } from "./Firebase/Models/ICard";
 import Header from "./Components/Header/Header";
-import { useProgress } from "@react-three/drei";
+import { Loader, useProgress } from "@react-three/drei";
 import { useDataByPath } from "./Firebase/DataServices";
 import * as BackendService from "./API/BackendServices";
 import { GameContext } from "./Interfaces/IGameContext";
 import { DialogBoard } from "./Components/Dialog/Dialog";
 import { getGameIdFromPath } from "./Common/Utils/Utils";
 import { GameInfo } from "./Components/GameInfo/GameInfo";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { DiceInfo } from "./Components/DiceInfo/DiceInfo";
 import { IStatusGame, mockGame } from "./Firebase/Models/IGame";
 import { DialogComponent } from "./Interfaces/IDialogComponent";
@@ -135,11 +135,14 @@ function App() {
           startManually: (gameId: string) => StartManually(gameId),
         }}
       >
+        <Suspense>
         <Header />
         <DialogBoard />
         <GameInfo />
         <DiceInfo />
         <GameScene />
+        </Suspense>
+        <Loader />
       </GameContext.Provider>
     </>
   );
