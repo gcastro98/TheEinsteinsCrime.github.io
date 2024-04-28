@@ -50,7 +50,7 @@ const pivotStyles: IPivotStyles = {
 
 export function BoardGame(props?: any): JSX.Element {
   const [selectedKey, setKey] = useState(BoardKey.Characters);
-  const { users, game, myCards } = useContext(GameContext);
+  const { users, myCards } = useContext(GameContext);
 
   const [initialized, setInitialized] = useState(false);
   const [characterBoard, setCharacterBoard] = useState<number[][]>([]);

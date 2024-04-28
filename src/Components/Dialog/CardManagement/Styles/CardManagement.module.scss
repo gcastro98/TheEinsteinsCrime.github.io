@@ -68,3 +68,13 @@
 .footerSection {
  width: 20%;
 }
+
+.spinner {
+  div {
+    color: black !important;
+    font-family: "Teletype";
+    font-size: 1em;
+    margin: 0.5em;
+    border-color: rgb(104, 39, 33) rgb(196, 162, 163) rgb(196, 162, 163);
+  }
+}

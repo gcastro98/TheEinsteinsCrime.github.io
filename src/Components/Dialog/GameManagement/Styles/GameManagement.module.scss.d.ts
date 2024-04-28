@@ -14,3 +14,5 @@ export const inputnameDiv: string;
 export const footer: string;
 export const spinner: string;
 export const cardList: string;
+export const clipboardsection: string;
+export const clipboardTextField: string;

@@ -9,6 +9,7 @@ export interface ICarrouselProps {
 export const Carrousel = (props: ICarrouselProps) => {
     const cards = props?.indexArr?.filter(n => n>=0);
     const justifyContent = cards?.length > 3 ? 'space-between' : 'space-arround';
+    console.log(props.indexArr)
   return (
     <div className={styles.carrousel} style={{justifyContent}}>
       {props?.indexArr &&

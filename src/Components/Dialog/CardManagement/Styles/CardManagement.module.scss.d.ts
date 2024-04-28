@@ -9,3 +9,4 @@ export const userName: string;
 export const buttonStartGame: string;
 export const footer: string;
 export const footerSection: string;
+export const spinner: string;

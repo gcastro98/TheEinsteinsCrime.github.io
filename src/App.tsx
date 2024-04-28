@@ -7,13 +7,12 @@ import { GameContext } from "./Interfaces/IGameContext";
 import { DialogBoard } from "./Components/Dialog/Dialog";
 import { getGameIdFromPath } from "./Common/Utils/Utils";
 import { GameInfo } from "./Components/GameInfo/GameInfo";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { DiceInfo } from "./Components/DiceInfo/DiceInfo";
+import { Suspense, useEffect, useState } from "react";
+import { PlayerInfo } from "./Components/PlayerInfo/PlayerInfo";
 import { IStatusGame, mockGame } from "./Firebase/Models/IGame";
 import { DialogComponent } from "./Interfaces/IDialogComponent";
 
 import { GameScene } from "./Scene/GameScene";
-import { Dialog } from "@fluentui/react";
 
 function App() {
 
@@ -25,7 +24,7 @@ function App() {
     myCards: [],
     loaded: false,
     dialogOptions: {
-      type: getGameIdFromPath() !== "" ? DialogComponent.None : DialogComponent.Landing,
+      type:DialogComponent.None,
       props: undefined,
     },
   });
@@ -33,11 +32,11 @@ function App() {
   const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
     BackendService.checkGameReference(gameId)
   );
-  // const { progress } = useProgress();
+  const { progress } = useProgress();
 
   /** Declare consts */
 
-  const progress = 100;
+  // const progress = 100;
   const IsWaitingRoom = gameId !== "initialData" && game && game?.OnProgress === IStatusGame.NotStarted;
   const loading = IsWaitingRoom || progress < 100;
   const Users = game?.Users || [];
@@ -113,8 +112,14 @@ function App() {
     }
   }, [game?.OnProgress])
 
+  useEffect(() => {
+    if (game?.OnProgress === IStatusGame.NotStarted && gameId === "initialData"){
+      setDialog(DialogComponent.Landing)
+    }
+  }, [game?.OnProgress, gameId])
+
   /**Pruebas  */
- 
+ console.log(state, game)
 
   /** Render */
 
@@ -139,7 +144,7 @@ function App() {
         <Header />
         <DialogBoard />
         <GameInfo />
-        <DiceInfo />
+        <PlayerInfo />
         <GameScene />
         </Suspense>
         <Loader />

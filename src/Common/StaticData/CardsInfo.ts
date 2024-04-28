@@ -138,63 +138,25 @@ export const ROOM_OPTIONS = [
 export interface ICardImages {
   id: number;
   url: string;
-} 
+}
 
 export const CARDS_IMAGES: ICardImages[] = [
-  { id: 0,
-      url: 'https://i.imgur.com/QhcZUwg.png'
-  },
-  { id: 1,
-      url: 'https://i.imgur.com/ATrEvyG.png'
-  },
-  { id: 2,
-      url: 'https://i.imgur.com/1pefaJQ.png'
-  },
-  { id: 3,
-      url: 'https://i.imgur.com/aUBiQR8.png'
-  },
-  { id: 4,
-      url: 'https://i.imgur.com/FmR9aFi.png'
-  },
-  { id: 5,
-      url: 'https://i.imgur.com/GGx3T88.png'
-  },
-  { id: 6,
-      url: 'https://i.imgur.com/tAHAzZ4.png'
-  },
-  { id: 7,
-      url: 'https://i.imgur.com/5otv55M.png'
-  },
-  { id: 8,
-      url: 'https://i.imgur.com/KnKocOw.jpeg'
-  },
-  { id: 9,
-      url: 'https://i.imgur.com/91mYo8X.png'
-  },
-  { id: 10,
-      url: 'https://i.imgur.com/kiEBtiE.png'
-  },
-  { id: 11,
-      url: 'https://i.imgur.com/AymqEP7.png'
-  },
-  { id: 12,
-      url: 'https://i.imgur.com/LyzoJck.png'
-  },
-  { id: 13,
-      url: 'https://i.imgur.com/pH8edpF.png'
-  },
-  { id: 14,
-      url: 'https://i.imgur.com/stWihHo.png'
-  },
-  { id: 15,
-      url: 'https://i.imgur.com/TGInXBq.png'
-  },
-  { id: 16,
-      url: 'https://i.imgur.com/RLafArE.png'
-  },
-  { id: 17,
-      url: 'https://i.imgur.com/bQwcH8T.png'
-  },
- 
-]
-
+  { id: 0, url: "https://i.imgur.com/QhcZUwg.png" },
+  { id: 1, url: "https://i.imgur.com/ATrEvyG.png" },
+  { id: 2, url: "https://i.imgur.com/1pefaJQ.png" },
+  { id: 3, url: "https://i.imgur.com/aUBiQR8.png" },
+  { id: 4, url: "https://i.imgur.com/FmR9aFi.png" },
+  { id: 5, url: "https://i.imgur.com/GGx3T88.png" },
+  { id: 6, url: "https://i.imgur.com/tAHAzZ4.png" },
+  { id: 7, url: "https://i.imgur.com/5otv55M.png" },
+  { id: 8, url: "https://i.imgur.com/KnKocOw.jpeg" },
+  { id: 9, url: "https://i.imgur.com/91mYo8X.png" },
+  { id: 10, url: "https://i.imgur.com/AymqEP7.png" },
+  { id: 11, url: "https://i.imgur.com/kiEBtiE.png" },
+  { id: 12, url: "https://i.imgur.com/LyzoJck.png" },
+  { id: 13, url: "https://i.imgur.com/pH8edpF.png" },
+  { id: 14, url: "https://i.imgur.com/stWihHo.png" },
+  { id: 15, url: "https://i.imgur.com/TGInXBq.png" },
+  { id: 16, url: "https://i.imgur.com/RLafArE.png" },
+  { id: 17, url: "https://i.imgur.com/bQwcH8T.png" },
+];

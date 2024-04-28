@@ -14,11 +14,12 @@
   flex-direction: row;
   margin: 1em 0em;
   margin-right: 1em;
-  // width: 50%
-
+  width: 50% label {
+    font-family: "Teletype" !important;
+    font-size: 16px !important;
+  }
   input {
     width: 100%;
-    
   }
 }
 
@@ -27,26 +28,48 @@
   flex-direction: column;
 }
 
-.inputNameSection{
-  
- 
+.inputNameSection {
   margin: 1em 0em;
 
   span {
-    margin: 0em 0.5em;
+    font-weight: 600;
+    font-size: 16px;
+    // margin: 0em 0.5em;
   }
   button {
     margin: 1em 0.5em;
   }
 
-  
+  label {
+    font-family: "Teletype" !important;
+    font-size: 15px !important;
+  }
+  [class*="ms-TextField-wrapper"] {
+    width: 100%;
+  }
+  [class*="ms-TextField"][class*="GameManagement_textfield"] {
+    margin-right: 0em;
+    width: 100%;
+  }
+  [class*="ms-TextField-suffix"] {
+    background-color: transparent;
+    border: 0px;
+    // border-left: 1px solid black;
+    width: auto;
+    padding: 0px;
+    button {
+      z-index: 99;
+      margin-right: -0.3em;
+      background-color: white;
+    }
+  }
 }
 .inputnameDiv {
   display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1em;
 }
 .buttonStartGame {
   margin: 2em 0.5em;
@@ -72,18 +95,17 @@
 
 .leeterDateAndSign {
   display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1.5em;
+  justify-content: flex-end;
+  margin-bottom: 1.5em;
 }
 
 .footer {
   position: relative;
   margin-top: 15%;
-
 }
 
 .spinner {
-  div{
+  div {
     color: black !important;
     font-family: "Teletype";
     font-size: 1em;
@@ -95,5 +117,24 @@
 .cardList {
   display: flex;
   flex-direction: row;
+}
 
+.clipboardsection {
+  height: 4em;
+  margin-bottom: 1em;
+}
+
+.clipboardTextField {
+  label {
+    font-family: "Teletype" !important;
+    font-size: 15px !important;
+  }
+  [class*="ms-TextField-suffix"] {
+    background-color: rgb(196, 162, 163);
+    i {
+      color: rgb(104, 39, 33);
+      font-size: 1.2em;
+      font-weight: 400;
+    }
+  }
 }

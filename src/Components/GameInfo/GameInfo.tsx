@@ -99,8 +99,9 @@ export function GameInfo() {
                   {showMessage(`Ha perdido`)}
                   <CustomButton
                     text="Ver sus cartas"
-                    onClick={async () => {
-                      setActive(DialogComponent.CardsByUser, user?.Id);
+                    onClick={() => {
+                      console.log(user)
+                      setActive(DialogComponent.CardsByUser, {userId: user?.Id});
                     }}
                   />
                 </>

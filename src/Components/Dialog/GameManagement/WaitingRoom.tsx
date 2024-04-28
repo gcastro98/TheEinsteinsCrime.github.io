@@ -1,56 +1,117 @@
-import { PrimaryButton, Spinner, SpinnerSize, TextField } from "@fluentui/react";
+import { Icon, PrimaryButton, Spinner, SpinnerSize, TextField } from "@fluentui/react";
 import { IUser } from "../../../Firebase/Models/IUser";
 import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
 import styles from "./Styles/GameManagement.module.scss";
 import * as BackendService from "../../../API/BackendServices";
 import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
+import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
+
 export function WaitingRoom() {
   const { game, users, userId, updateContext } = useContext(GameContext);
-  const [name, setName] = useState<string>("");
+  // const [name, setName] = useState<string>("");
+  // const [loading, setLoading] = useState<boolean>(false);
+
+  const [state, setState] = useState({
+    loading: false,
+    copied: false,
+    name: "",
+  });
+  const { loading, copied, name } = state;
+  const updateState = (val: any) =>
+    setState((prev) => {
+      return { ...state, ...val };
+    });
 
   const AddUser = async (user: string) => {
-    const myUser = await BackendService.addUserToGame(game?.Id, user);
-    updateContext({ userId: myUser.Id });
-    sessionStorage.setItem(`${game.Id}:userId`, myUser.Id);
+    try {
+      updateState({ loading: true });
+      const myUser = await BackendService.addUserToGame(game?.Id, user);
+      updateContext({ userId: myUser.Id });
+      sessionStorage.setItem(`${game.Id}:userId`, myUser.Id);
+    } catch (ex) {
+      console.error("Error to add the user. Exception", ex);
+    } finally {
+      updateState({ loading: false });
+    }
   };
 
-  const StartGame = () => {
-    void BackendService.startGame(game?.Id);
+  const StartGame = async () => {
+    try {
+      updateState({ loading: true });
+      await BackendService.startGame(game?.Id);
+    } catch (ex) {
+      console.error("Error to start the game. Exception: ", ex);
+    } finally {
+      updateState({ loading: false });
+    }
+  };
+
+  const CopyToClipBoard = async () => {
+    try {
+      await navigator.clipboard.writeText(`${window.location.host}/${window.location.search}`);
+      updateState({ copied: true });
+    } catch (ex) {
+      console.error("Error to copy to clipboard. Exception: ", ex);
+    }
   };
 
   return (
     <div>
+      <DialogHeader label="Sala de espera" />
+      <div className={styles.clipboardsection}>
+        <TextField
+          readOnly
+          className={styles.clipboardTextField}
+          label={"Comparte este enlace con tus amigos para que se unan a la partida"}
+          value={window.location.href}
+          onRenderSuffix={() => (
+            <Icon
+              iconName={copied ? "ClipboardSolid" : "ClipboardList"}
+              onClick={() => CopyToClipBoard()}
+              style={{ cursor: "pointer" }}
+            />
+          )}
+        />
+      </div>
       {!userId && (
         <div className={styles.inputNameSection}>
-          <span>Introduce tu nombre para unirte a la partida</span>
           <div className={styles.inputnameDiv}>
             <TextField
+              label="Introduce tu nombre para unirte"
               className={styles.textfield}
-              onChange={(event: any, newValue: any) => setName(newValue as string)}
+              onChange={(event: any, newValue: any) => updateState({ name: newValue as string })}
+              value={name}
+              onRenderSuffix={() => (
+                <CustomButton
+                  disabled={name === "" || loading}
+                  onClick={() => void AddUser(name)}
+                  text="Unirse"
+                />
+              )}
             />
-            <CustomButton disabled={name === ""} onClick={() => void AddUser(name)}>
-              Unirse
-            </CustomButton>
           </div>
-          <hr />
         </div>
       )}
+      <hr />
       <h3>Detectives en busca de pistas...</h3>
       <div className={styles.playerList}>
         {users?.length > 0 &&
           users?.map((user: IUser) => <span className={styles.userName}>{user.Name}</span>)}
         <div className={styles.footer}>
           <Spinner
-            label="Esperando a que se entren todos los detectives..."
+            label="Esperando a que entren todos los detectives..."
             style={{ marginBottom: "2em", color: "black", fontFamily: "Teletype" }}
             size={SpinnerSize.large}
             className={styles.spinner}
           />
           {users?.length >= 2 && (
-            <CustomButton className={styles.buttonStartGame} onClick={() => void StartGame()}>
-              Iniciar partida
-            </CustomButton>
+            <CustomButton
+              className={styles.buttonStartGame}
+              onClick={() => void StartGame()}
+              disabled={loading}
+              text="Iniciar partida"
+            />
           )}
         </div>
       </div>

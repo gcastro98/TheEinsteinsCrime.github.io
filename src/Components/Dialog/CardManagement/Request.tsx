@@ -6,12 +6,10 @@ import styles from "./Styles/CardManagement.module.scss";
 import * as BackendService from "../../../API/BackendServices";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 import { ALL_CARDS, ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
-import commonStyles from "../../../Common/Styles/Utils.module.scss"
 import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 import { ICardsState, MockCardState } from "./Interfaces/ICardsState";
 import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
-import { update } from "firebase/database";
 
 export function Request(): JSX.Element {
   const { game,users, userId, setDialog: setActive } = useContext(GameContext);
@@ -21,7 +19,7 @@ export function Request(): JSX.Element {
     setState((prev) => {
       return { ...prev, ...val };
     });
-  const { suspect, weapon, room, loading } = state;
+  const { suspect, weapon, loading } = state;
 
   const reset = () => {
     updateState(MockCardState);
@@ -32,7 +30,7 @@ export function Request(): JSX.Element {
   const createRequest = async () => {
     try {
       updateState({loading: true})
-      if ((+suspect > 0 && +weapon > 0 && roomId as number > 0 && !loading)){
+      if ((+suspect > 0 && +weapon > 0 && roomId as number >= 0 && !loading)){
         const request: IRequest = {
           roomId: roomId,
           suspectId: parseInt(suspect as string),
@@ -51,11 +49,12 @@ export function Request(): JSX.Element {
     }finally {
       updateState({loading: false})
   }};
-  const carrouselWithOutEmpties = [suspect, weapon, roomId || ''].filter(n => n !== '')
+  const carrouselWithOutEmpties = [suspect, weapon, roomId]?.filter(n => n !== '') || []
+  console.log([suspect, weapon, roomId || ''], carrouselWithOutEmpties)
   return (
     <div>
      <DialogHeader label={"Pregunta"} />
-     <Carrousel indexArr={carrouselWithOutEmpties.map(n => +n)} />
+     <Carrousel indexArr={carrouselWithOutEmpties?.map(n => n as number)} />
       <div className={styles.footer}>
         <div className={styles.footerSection}>
           <Dropdown
@@ -96,7 +95,7 @@ export function Request(): JSX.Element {
             style={{marginTop: "2em"}}
             text="Comprobar"
             onClick={createRequest}
-            disabled={!(+suspect > 0 && +weapon > 0 && roomId as number > 0 && !loading)}
+            disabled={!(+suspect > 0 && +weapon > 0 && roomId as number >= 0 && !loading)}
           />
         </div>
       </div>

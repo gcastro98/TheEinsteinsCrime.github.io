@@ -14,116 +14,111 @@ export function Observatory(props: any) {
   const [show, setShow] = useState(false);
   const { nodes, materials } = useGLTF(`${selectPath()}/rooms/Observatory.glb`) as any
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Class">
-        <group name="DoorGroup" position={[18.34, 0.53, -5.98]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2001">
-              <group name="RootNode001">
-                <group name="Cube000" position={[-83.59, 29.67, -17.45]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <group name="Cube002" position={[1.57, -0.18, 1.61]}>
-                    <mesh name="Cube002__0" geometry={nodes.Cube002__0.geometry} material={materials['Cube.000__0']} />
-                  </group>
-                </group>
-                <group name="Cube001" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0" geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.64, 1]} />
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
-        <group name="LampLeft" position={[19.38, 2.8, -6.18]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
-          <group name="Collada_visual_scene_group001" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder001">
-              <mesh name="defaultMaterial001" geometry={nodes.defaultMaterial001.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampRight" position={[17.4, 2.81, -6.17]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
-          <group name="Collada_visual_scene_group" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder028">
-              <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampLeft001" position={[14.67, 2.8, -4.48]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group003" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder003">
-              <mesh name="defaultMaterial003" geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft001" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft001_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampRight001" position={[14.67, 2.81, -2.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group002" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder002">
-              <mesh name="defaultMaterial002" geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight001" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight001_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampLeft002" position={[23.3, 2.91, -1.48]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group004" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder004">
-              <mesh name="defaultMaterial004" geometry={nodes.defaultMaterial004.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft002" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft002_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampRight002" position={[23.3, 2.92, -3.46]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group005" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder005">
-              <mesh name="defaultMaterial005" geometry={nodes.defaultMaterial005.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight002" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight002_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="DoorGroup001" position={[14.95, 0.53, -3.48]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx001" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2002">
-              <group name="RootNode002">
-                <group name="Cube007" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0001" geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
-        <group name="DoorGroup002" position={[23.08, 0.53, -2.5]} rotation={[-Math.PI / 2, 0, 1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx002" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2003">
-              <group name="RootNode003">
-                <group name="Cube005" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0002" geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
-        <group name="Room" position={[18.98, 0.56, -2.89]} rotation={[0, -1.57, 0]} scale={[3, 1, 4]}>
-          <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={materials['Floor.001']} />
-          <mesh name="Plane001_1" geometry={nodes.Plane001_1.geometry} material={materials.OutsideWall} />
-          <mesh name="Plane001_2" geometry={nodes.Plane001_2.geometry} material={materials.InsideWall} />
-          <mesh name="Plane001_3" geometry={nodes.Plane001_3.geometry} material={materials.MiddleWall} />
-        </group>
-        <mesh name="Cube" geometry={nodes.Cube.geometry} material={nodes.Cube.material} position={[23.04, 1.5, -2.49]} rotation={[0, Math.PI / 2, 0]} scale={[0.5, 1.25, 0.09]} />
+    <group {...props} dispose={null}>
+      <mesh geometry={nodes.Object_2005.geometry} material={materials['simple_desk_Mat.001']} />
+      <mesh geometry={nodes.Object_4002.geometry} material={materials['Material.010']} />
+      <mesh geometry={nodes.Object_6001.geometry} material={materials['Material.009']} />
+      <mesh geometry={nodes.Object_4.geometry} material={materials['Material.010']} />
+      <mesh geometry={nodes.Object_6.geometry} material={materials['Material.009']} />
+      <mesh geometry={nodes.sidushka001_tkan_0.geometry} material={materials['tkan.001']} />
+      <mesh geometry={nodes.BezierCurve003_metall_0.geometry} material={materials['metall.001']} />
+      <mesh geometry={nodes.BezierCurve004_metall_0.geometry} material={materials['metall.001']} />
+      <mesh geometry={nodes.BezierCurve005_plastic3_2_0.geometry} material={materials['plastic3_2.001']} />
+      <mesh geometry={nodes.Cylinder_metall_0.geometry} material={materials['metall.001']} />
+      <mesh geometry={nodes.Cylinder001_metall_0.geometry} material={materials['metall.001']} />
+      <mesh geometry={nodes.Cylinder002_plastic3_2_0.geometry} material={materials['plastic3_2.001']} />
+      <mesh geometry={nodes.Cylinder003_plastic3_2_0.geometry} material={materials['plastic3_2.001']} />
+      <mesh geometry={nodes.sidushka_plastic3_2_0.geometry} material={materials['plastic3_2.001']} />
+      <mesh geometry={nodes.spinka_plastic3_2_0.geometry} material={materials['plastic3_2.001']} />
+      <mesh geometry={nodes.spinka001_tkan_0.geometry} material={materials['tkan.001']} />
+      <mesh geometry={nodes.arrow_degrees_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.attachment_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.bigScope_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.bolts_degree_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.bolts_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.bolts_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.bolts_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.cap_attach_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.cap_chain_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.cap_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.center_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.chain_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.chain_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.chain_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.compas_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.connection1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.connection2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.degrees_cil_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.degrees_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.glass_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.grip_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.grip_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.grip_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_cap_attach_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_cap_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_center1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_center2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_center3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.helix_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.inside_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.inside_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.inside_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.lilScope_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.outside_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.outside_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.outside_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.plateau_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.rondeel_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.spanleg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.spanleg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.spanleg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.turnable1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.turnable2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.turnthing_leg1_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.turnthing_leg2_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.turnthing_leg3_lowpoly__0.geometry} material={materials['Scene_-_Root']} />
+      <mesh geometry={nodes.frame_Material004_0.geometry} material={materials['Material.004']} />
+      <mesh geometry={nodes.Plane_Material001_0.geometry} material={materials['Material.001']} />
+      <mesh geometry={nodes.Plane001_Material003_0.geometry} material={materials['Material.003']} />
+      <mesh geometry={nodes.frame_Material004_0001.geometry} material={materials['Material.004']} />
+      <mesh geometry={nodes.Plane_Material001_0001.geometry} material={materials['Material.005']} />
+      <mesh geometry={nodes.Plane001_Material003_0001.geometry} material={materials['Material.003']} />
+      <mesh geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} />
+      <group position={[19.37, 2.92, -6.25]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
       </group>
+      <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.012']} />
+      <group position={[17.39, 2.95, -6.25]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} />
+      <group position={[14.6, 2.92, -4.46]} rotation={[0, 1.57, 0]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} />
+      <group position={[14.6, 2.95, -2.48]} rotation={[0, 1.57, 0]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} />
+      <group position={[23.37, 3.04, -2.5]} rotation={[0, -1.57, 0]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <mesh geometry={nodes.defaultMaterial004.geometry} material={materials['Material.012']} />
+      <group position={[23.37, 3.07, -4.48]} rotation={[0, -1.57, 0]} scale={0.16}>
+        <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <mesh geometry={nodes.defaultMaterial005.geometry} material={materials['Material.012']} />
+      <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} />
+      <mesh geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0']} />
+      <mesh geometry={nodes.Plane001_1.geometry} material={materials['Floor.001']} />
+      <mesh geometry={nodes.Plane001_2.geometry} material={materials.OutsideWall} />
+      <mesh geometry={nodes.Plane001_3.geometry} material={materials.InsideWall} />
+      <mesh geometry={nodes.Plane001_4.geometry} material={materials.MiddleWall} />
     </group>
   )
 }
+
 
 useGLTF.preload(`${selectPath()}/rooms/Observatory.glb`)

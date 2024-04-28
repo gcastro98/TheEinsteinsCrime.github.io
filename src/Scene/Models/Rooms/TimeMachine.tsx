@@ -15,116 +15,162 @@ export function TimeMachine(props: any) {
   const { nodes, materials } = useGLTF(`${selectPath()}/rooms/TimeMachine.glb`) as any
  
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Class">
-        <group name="DoorGroup" position={[4.49, 0.53, -9.9]} rotation={[-Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2001">
-              <group name="RootNode001">
-                <group name="Cube000" position={[-83.59, 29.67, -17.45]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <group name="Cube002" position={[1.57, -0.18, 1.61]}>
-                    <mesh name="Cube002__0" geometry={nodes.Cube002__0.geometry} material={materials['Cube.000__0']} />
-                  </group>
-                </group>
-                <group name="Cube001" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0" geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.64, 1]} />
-                </group>
-              </group>
-            </group>
+    <group {...props} dispose={null}>
+      <group position={[-4.65, -0.12, -10.44]} rotation={[-Math.PI / 2, 0, -1.31]} scale={0.59}>
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group position={[1.54, 2.99, -12.24]} scale={0.82}>
+            <mesh geometry={nodes.Object_20.geometry} material={materials.mr_fusion} />
+            <mesh geometry={nodes.Object_21.geometry} material={materials.mr_fusion_2} />
+            <mesh geometry={nodes.Object_22.geometry} material={materials.mr_fusion_3} />
+          </group>
+          <group position={[-5.12, 2.37, -12.23]} rotation={[2.67, -0.14, 0.27]}>
+            <mesh geometry={nodes.Object_24.geometry} material={materials.front_part} />
+            <mesh geometry={nodes.Object_25.geometry} material={materials.front_part_2} />
+          </group>
+          <mesh geometry={nodes.Object_27.geometry} material={materials.cables} position={[1.63, 2.91, -11.12]} />
+          <mesh geometry={nodes.Object_29.geometry} material={materials.cables} position={[-2.01, 2.15, -10.44]} rotation={[Math.PI / 2, 0, 0]} scale={2.17} />
+          <mesh geometry={nodes.Object_31.geometry} material={materials.cables} position={[1.12, 2.93, -11.95]} rotation={[-Math.PI, 0, -Math.PI]} />
+          <mesh geometry={nodes.Object_33.geometry} material={materials.cables} position={[-2.01, 2.15, -13.87]} rotation={[Math.PI / 2, 0, 0]} scale={2.17} />
+          <mesh geometry={nodes.Object_35.geometry} material={materials.cables} position={[1.13, 2.91, -13.2]} rotation={[-Math.PI, 0, -Math.PI]} />
+          <mesh geometry={nodes.Object_37.geometry} material={materials.cables} position={[1.64, 2.91, -13.2]} />
+          <mesh geometry={nodes.Object_10.geometry} material={materials.cooler} />
+          <mesh geometry={nodes.Object_11.geometry} material={materials.metal_parts} />
+          <mesh geometry={nodes.Object_12.geometry} material={materials.buttons} />
+          <mesh geometry={nodes.Object_13.geometry} material={materials.buttons_2} />
+          <mesh geometry={nodes.Object_14.geometry} material={materials.board} />
+          <mesh geometry={nodes.Object_15.geometry} material={materials.circuits} />
+          <mesh geometry={nodes.Object_16.geometry} material={materials.circuits_2} />
+          <mesh geometry={nodes.Object_17.geometry} material={materials.time_circuits} />
+          <mesh geometry={nodes.Object_18.geometry} material={materials.back_part} />
+          <mesh geometry={nodes.Object_4.geometry} material={materials.delorean} />
+          <mesh geometry={nodes.Object_5.geometry} material={materials.window} />
+          <mesh geometry={nodes.Object_6.geometry} material={materials.windshield} />
+          <mesh geometry={nodes.Object_7.geometry} material={materials.sides} />
+          <mesh geometry={nodes.Object_8.geometry} material={materials.wheels} />
+          <mesh geometry={nodes.Object_9.geometry} material={materials.wheels_2} />
+        </group>
+      </group>
+      <group position={[-0.13, 1.32, -11.55]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={2.19}>
+        <mesh geometry={nodes.SM_BoardA_v3_bulletin_board_0.geometry} material={materials.bulletin_board} rotation={[Math.PI / 2, 0, 0]} scale={0.01} />
+      </group>
+      <group position={[-0.12, 1.49, -14.48]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={0.92}>
+        <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+          <mesh geometry={nodes.Cube_Board_0.geometry} material={materials.Board} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.map_Board_0.geometry} material={materials.Board} position={[8.76, 74.47, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin_Board_0.geometry} material={materials.Board} position={[-30.51, 130.59, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin001_Board_0.geometry} material={materials.Board} position={[47.81, 130.59, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin002_Board_0.geometry} material={materials.Board} position={[-30.51, 19.08, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin003_Board_0.geometry} material={materials.Board} position={[47.81, 18.31, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin004_Board_0.geometry} material={materials.Board} position={[-67.76, 115.62, 1.29]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin005_Board_0.geometry} material={materials.Board} position={[-98.79, 99.48, 1.08]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin006_Board_0.geometry} material={materials.Board} position={[79.19, 135.57, 1.06]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin007_Board_0.geometry} material={materials.Board} position={[6.45, 98.26, 0.74]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin008_Board_0.geometry} material={materials.Board} position={[-68.59, 63.62, 0.9]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin009_Board_0.geometry} material={materials.Board} position={[-84.37, 138.49, 1.91]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin010_Board_0.geometry} material={materials.Board} position={[-96.96, 52.56, 1.85]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin011_Board_0.geometry} material={materials.Board} position={[-17.87, 26.81, 0.85]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin012_Board_0.geometry} material={materials.Board} position={[-15.12, 15.88, 1.23]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin013_Board_0.geometry} material={materials.Board} position={[18.22, 59.56, 0.96]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin014_Board_0.geometry} material={materials.Board} position={[79.81, 32.62, 1.23]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.pin015_Board_0.geometry} material={materials.Board} position={[100.57, 75.08, 1.98]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+          <mesh geometry={nodes.Plane_Board_0.geometry} material={materials.Board} position={[-20.08, -14.78, 2.24]} rotation={[-Math.PI / 2, -0.18, 0]} scale={100} />
+          <mesh geometry={nodes.Plane001_Board_0.geometry} material={materials.Board} position={[62.41, 5.39, 2.09]} rotation={[-Math.PI / 2, -0.11, 0]} scale={100} />
+          <mesh geometry={nodes.Plane002_Board_0.geometry} material={materials.Board} position={[-109.8, 29.08, 1.59]} rotation={[-Math.PI / 2, 0.62, 0]} scale={100} />
+          <mesh geometry={nodes.Plane003_Board_0.geometry} material={materials.Board} position={[-92.3, 120.56, 1.56]} rotation={[-Math.PI / 2, 0.25, 0]} scale={100} />
+          <mesh geometry={nodes.Plane004_Board_0.geometry} material={materials.Board} position={[80.68, 106.74, 0.97]} rotation={[-Math.PI / 2, 0.16, 0]} scale={100} />
+          <mesh geometry={nodes.Plane005_Board_0.geometry} material={materials.Board} position={[36.58, 134.2, 0.8]} rotation={[-Math.PI / 2, 0.31, 0]} scale={100} />
+          <mesh geometry={nodes.Plane006_Board_0.geometry} material={materials.Board} position={[95.44, 45.93, 1.63]} rotation={[-Math.PI / 2, 0.12, 0]} scale={100} />
+          <mesh geometry={nodes.Plane007_Board_0.geometry} material={materials.Board} position={[-77.77, 88.76, 0.84]} rotation={[-Math.PI / 2, 0.09, 0]} scale={100} />
+          <mesh geometry={nodes.Plane008_Board_0.geometry} material={materials.Board} position={[-64.52, 98.42, 0.82]} rotation={[-Math.PI / 2, -0.15, 0]} scale={100} />
+          <mesh geometry={nodes.Plane009_Board_0.geometry} material={materials.Board} position={[-105.44, 83.32, 1.86]} rotation={[-1.6, 0.33, 0.05]} scale={100} />
+          <mesh geometry={nodes.Plane010_Board_0.geometry} material={materials.Board} position={[-83.47, 140.09, 1.54]} rotation={[-Math.PI / 2, 1.34, 0]} scale={100} />
+          <mesh geometry={nodes.Plane011_Board_0.geometry} material={materials.Board} position={[-66.21, 51.99, 0.73]} rotation={[-Math.PI / 2, 1.4, 0]} scale={112.88} />
+          <mesh geometry={nodes.Plane012_Board_0.geometry} material={materials.Board} position={[72.77, 127.02, 0.9]} rotation={[Math.PI / 2, 1.16, Math.PI]} scale={100} />
+          <mesh geometry={nodes.Plane013_Board_0.geometry} material={materials.Board} position={[-98.14, 41.57, 1.56]} rotation={[Math.PI / 2, 1.28, -Math.PI]} scale={100} />
+          <mesh geometry={nodes.Plane014_Board_0.geometry} material={materials.Board} position={[-14.63, 3.62, 1.62]} rotation={[-1.61, Math.PI / 2, 0]} scale={100} />
+          <mesh geometry={nodes.Plane015_Board_0.geometry} material={materials.Board} position={[74.66, 21.74, 1.44]} rotation={[Math.PI / 2, 1.27, 3.1]} scale={100} />
+          <mesh geometry={nodes.Plane016_Board_0.geometry} material={materials.Board} position={[97.3, 63.85, 1.59]} rotation={[Math.PI / 2, 1.09, Math.PI]} scale={100} />
+          <mesh geometry={nodes.Vert_Board_0.geometry} material={materials.Board} position={[-84.54, 138.55, 0.75]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+        </group>
+      </group>
+      <group position={[4.49, 0.53, -9.9]} rotation={[-Math.PI / 2, 0, 0]} scale={0.01 *REDUCE_SCALE_DOOR}>
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+            <mesh geometry={nodes.Cube001__0.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.64, 1]} />
           </group>
         </group>
-        <group name="LampLeft" position={[3.44, 2.8, -9.71]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={0.28}>
-          <group name="Collada_visual_scene_group001" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder001">
-              <mesh name="defaultMaterial001" geometry={nodes.defaultMaterial001.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <group position={[3.44, 2.8, -9.71]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial001.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[5.42, 2.81, -9.71]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[8.15, 2.8, -11.41]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[8.15, 2.81, -13.39]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[5.38, 2.91, -16.3]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial004.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[3.4, 2.92, -16.29]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
+        <group position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh geometry={nodes.defaultMaterial005.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
+        </group>
+        <group position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
+          <pointLight intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+        </group>
+      </group>
+      <group position={[7.87, 0.53, -12.4]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+            <mesh geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
           </group>
         </group>
-        <group name="LampRight" position={[5.42, 2.81, -9.71]} rotation={[-Math.PI / 2, 0, -Math.PI]} scale={0.28}>
-          <group name="Collada_visual_scene_group" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder028">
-              <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
+      </group>
+      <group position={[4.36, 0.53, -16.08]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+            <mesh geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
           </group>
         </group>
-        <group name="LampLeft001" position={[8.15, 2.8, -11.41]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group003" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder003">
-              <mesh name="defaultMaterial003" geometry={nodes.defaultMaterial003.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft001" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft001_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampRight001" position={[8.15, 2.81, -13.39]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.28}>
-          <group name="Collada_visual_scene_group002" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder002">
-              <mesh name="defaultMaterial002" geometry={nodes.defaultMaterial002.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight001" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight001_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampLeft002" position={[5.38, 2.91, -16.3]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
-          <group name="Collada_visual_scene_group004" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder004">
-              <mesh name="defaultMaterial004" geometry={nodes.defaultMaterial004.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightLeft002" position={[-0.06, 0.26, 0.46]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightLeft002_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="LampRight002" position={[3.4, 2.92, -16.29]} rotation={[-Math.PI / 2, 0, 0]} scale={0.28}>
-          <group name="Collada_visual_scene_group005" position={[0.01, 0, -0.04]} rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Cylinder005">
-              <mesh name="defaultMaterial005" geometry={nodes.defaultMaterial005.geometry} material={materials['Material.012']} position={[-0.07, 0, 0]} />
-            </group>
-          </group>
-          <group name="LightRight002" position={[-0.06, 0.26, 0.52]} rotation={[Math.PI / 2, 0, 0]} scale={0.55}>
-            <pointLight name="LightRight002_Orientation" intensity={SCENE_LIGHT_INTENSITY} decay={2} rotation={[-Math.PI / 2, 0, 0]} />
-          </group>
-        </group>
-        <group name="DoorGroup001" position={[7.87, 0.53, -12.4]} rotation={[-Math.PI / 2, 0, -1.57]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx001" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2002">
-              <group name="RootNode002">
-                <group name="Cube007" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0001" geometry={nodes.Cube001__0001.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
-        <group name="DoorGroup002" position={[4.36, 0.53, -16.08]} rotation={[-Math.PI / 2, 0, 3.14]} scale={0.01 *REDUCE_SCALE_DOOR}>
-          <group name="0d6cf17bcfde48d9b7d35e076d70e1e3fbx002" rotation={[Math.PI / 2, 0, 0]}>
-            <group name="Object_2003">
-              <group name="RootNode003">
-                <group name="Cube005" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh name="Cube001__0002" geometry={nodes.Cube001__0002.geometry} material={materials['Cube.000__0']} position={[0, 0.07, -0.03]} scale={[1, 0.83, 1]} />
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
-        <group name="Room" position={[3.84, 0.56, -13]} rotation={[0, Math.PI / 2, 0]} scale={[3, 1, 4]}>
-          <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={materials['Floor.001']} />
-          <mesh name="Plane001_1" geometry={nodes.Plane001_1.geometry} material={materials.OutsideWall} />
-          <mesh name="Plane001_2" geometry={nodes.Plane001_2.geometry} material={materials.InsideWall} />
-          <mesh name="Plane001_3" geometry={nodes.Plane001_3.geometry} material={materials.MiddleWall} />
-        </group>
-        <mesh name="Cube" geometry={nodes.Cube.geometry} material={nodes.Cube.material} position={[4.37, 1.5, -16.03]} rotation={[-Math.PI, 0, -Math.PI]} scale={[0.5, 1.25, 0.09]} />
+      </group>
+      <group position={[3.84, 0.56, -13]} rotation={[0, Math.PI / 2, 0]} scale={[3, 1, 4]}>
+        <mesh geometry={nodes.Plane001_1.geometry} material={materials['Floor.001']} />
+        <mesh geometry={nodes.Plane001_2.geometry} material={materials.OutsideWall} />
+        <mesh geometry={nodes.Plane001_3.geometry} material={materials.InsideWall} />
+        <mesh geometry={nodes.Plane001_4.geometry} material={materials.MiddleWall} />
       </group>
     </group>
   )
+
 }
 
 useGLTF.preload(`${selectPath()}/rooms/TimeMachine.glb`)

@@ -1,5 +1,4 @@
-import styles from "./DiceInfo.module.scss";
-import { PrimaryButton } from "@fluentui/react";
+import styles from "./PlayerInfo.module.scss";
 import { useContext, useEffect, useRef } from "react";
 import sylesButton from "../GameInfo/GameInfo.module.scss";
 import { GameContext } from "../../Interfaces/IGameContext";
@@ -10,7 +9,7 @@ import { IStatusPlayer } from "../../Firebase/Models/IUser";
 import { IStatusGame } from "../../Firebase/Models/IGame";
 import { CustomButton } from "../../Common/Components/CustomButton/CustomButton";
 
-export function DiceInfo(): any {
+export function PlayerInfo(): any {
   const { game, loaded } = useContext(GameContext);
   const ref = useRef<ReactDiceRef>(null);
   const prevStatusRef = useRef<boolean>(false);

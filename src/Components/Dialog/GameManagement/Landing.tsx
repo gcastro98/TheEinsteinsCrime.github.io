@@ -32,9 +32,7 @@ export const Landing = (): JSX.Element => {
 
       <div className={styles.letter}>
         <span className={styles.leeterDateAndSign}>
-          <i>Viernes, 13 de Marzo de 1942</i>
-          <br />
-          <br />
+          Viernes, 13 de Marzo de 1942
         </span>
         <p>
           A quien le interese,
