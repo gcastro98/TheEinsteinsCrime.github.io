@@ -1,4 +1,4 @@
-import { Icon, PrimaryButton, Spinner, SpinnerSize, TextField } from "@fluentui/react";
+import { Icon,  Spinner, SpinnerSize, TextField } from "@fluentui/react";
 import { IUser } from "../../../Firebase/Models/IUser";
 import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
@@ -9,8 +9,6 @@ import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHead
 
 export function WaitingRoom() {
   const { game, users, userId, updateContext } = useContext(GameContext);
-  // const [name, setName] = useState<string>("");
-  // const [loading, setLoading] = useState<boolean>(false);
 
   const [state, setState] = useState({
     loading: false,

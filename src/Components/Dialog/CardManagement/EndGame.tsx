@@ -2,7 +2,6 @@ import { useContext } from "react";
 import styles from "./Styles/CardManagement.module.scss";
 import { GameContext } from "../../../Interfaces/IGameContext";
 import { IStatusPlayer } from "../../../Firebase/Models/IUser";
-import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 
 import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
@@ -27,8 +26,8 @@ export function EndGame() {
       />
       <Carrousel indexArr={cardsIndex} />
       <div className={styles.footer}>
-        <CustomButton text="Jugar de nuevo" />
-        <CustomButton text="Salir" />
+        {/* <CustomButton text="Jugar de nuevo" />
+        <CustomButton text="Salir" /> */}
       </div>
     </div>
   );

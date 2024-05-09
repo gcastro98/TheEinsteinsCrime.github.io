@@ -1,18 +1,20 @@
 import { ICard } from "./Firebase/Models/ICard";
 import Header from "./Components/Header/Header";
-import { Loader, useProgress } from "@react-three/drei";
+import { CameraControls, Loader, useProgress } from "@react-three/drei";
 import { useDataByPath } from "./Firebase/DataServices";
 import * as BackendService from "./API/BackendServices";
 import { GameContext } from "./Interfaces/IGameContext";
 import { DialogBoard } from "./Components/Dialog/Dialog";
 import { getGameIdFromPath } from "./Common/Utils/Utils";
 import { GameInfo } from "./Components/GameInfo/GameInfo";
-import { Suspense, useEffect, useState } from "react";
+import {  RefObject, Suspense, useEffect, useRef, useState } from "react";
 import { PlayerInfo } from "./Components/PlayerInfo/PlayerInfo";
 import { IStatusGame, mockGame } from "./Firebase/Models/IGame";
 import { DialogComponent } from "./Interfaces/IDialogComponent";
 
 import { GameScene } from "./Scene/GameScene";
+import { IPosition } from "./Firebase/Models/IUser";
+import { Vector3 } from "three";
 
 function App() {
 
@@ -27,12 +29,14 @@ function App() {
       type:DialogComponent.None,
       props: undefined,
     },
+    
   });
   const { gameId, userId, myCards, loaded, dialogOptions } = state;
   const [game, checkGame] = useDataByPath(`/games/${gameId}`, mockGame, (gameId) =>
     BackendService.checkGameReference(gameId)
   );
   const { progress } = useProgress();
+  const cameraRef = useRef<CameraControls>();
 
   /** Declare consts */
 
@@ -44,6 +48,10 @@ function App() {
   const isYourTurn = ActivePlayer ? Users?.[ActivePlayer]?.Id === userId : false;
 
   /** Methods used in the context */
+
+  const setLookAt = ({positionX, positionY}: IPosition): void => {
+    cameraRef.current?.setLookAt(positionX,15,positionY, positionX, 0, positionY, true);
+  }
 
   const updateContext = (val: any) => {
     setState((prev) => {
@@ -65,6 +73,7 @@ function App() {
   };
 
   /** Callbacks */
+
   const loadMyData = async () => {
     if (gameId && gameId !== "initialData" && game?.OnProgress === IStatusGame.InProgress && !loaded) {
       try {
@@ -97,6 +106,12 @@ function App() {
   };
 
   /** Effects */
+console.log("cameras" , cameraRef.current?.camera)
+  useEffect(()=> {
+    console.log("algo")
+      if (progress === 100)
+         cameraRef.current?.setLookAt(14, 23, -14,14, 0, -14, true);
+  }, [progress])
 
   useEffect(() => {
     void loadMyData();
@@ -119,12 +134,12 @@ function App() {
   }, [game?.OnProgress, gameId])
 
   /**Pruebas  */
- console.log(state, game)
+
 
   /** Render */
 
   return (
-    <>
+    <div style={{position: "fixed", top: 0, width: "100%", height: "100%"}}>
       <GameContext.Provider
         value={{
           game,
@@ -138,6 +153,8 @@ function App() {
           loaded: !loading,
           isYourTurn,
           startManually: (gameId: string) => StartManually(gameId),
+          cameraRef: cameraRef as RefObject<CameraControls>,
+          setLookAt
         }}
       >
         <Suspense>
@@ -149,7 +166,7 @@ function App() {
         </Suspense>
         <Loader />
       </GameContext.Provider>
-    </>
+    </div>
   );
 }
 

@@ -1,8 +1,9 @@
 import { DialogComponent } from "./IDialogComponent";
 import { IGame } from "../Firebase/Models/IGame";
 import { ICard } from "../Firebase/Models/ICard";
-import { IUser } from "../Firebase/Models/IUser";
-import { createContext } from "react";
+import { IPosition, IUser } from "../Firebase/Models/IUser";
+import {  RefObject, createContext } from "react";
+import { CameraControls } from "@react-three/drei";
 
 
 export interface IGameContext {
@@ -17,6 +18,8 @@ export interface IGameContext {
   startManually: (gameId: string) => void;
   isYourTurn: boolean;
   props?: any;
+  cameraRef: RefObject<CameraControls>;
+  setLookAt: (position: IPosition) => void;
 }
 
 export const GameContext = createContext<IGameContext>({} as IGameContext);

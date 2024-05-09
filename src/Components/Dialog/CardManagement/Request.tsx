@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
-import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { Dropdown } from "@fluentui/react";
 import { IRequest } from "../../../Firebase/Models/IRequest";
 import styles from "./Styles/CardManagement.module.scss";
 import * as BackendService from "../../../API/BackendServices";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
-import { ALL_CARDS, ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
+import { ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
 import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 import { ICardsState, MockCardState } from "./Interfaces/ICardsState";

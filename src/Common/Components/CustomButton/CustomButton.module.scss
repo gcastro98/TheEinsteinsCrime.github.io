@@ -22,29 +22,7 @@
         box-shadow: inset 0px 0px 0px 4px rgb(104, 39, 33);
     }
 
-    // button:after {
-    //     content: "";
-    //     position: absolute;
-    //     left: 0;
-    //     top: 0;
-    //     width: 100%;
-    //     height: 100%;
-    //     // background-image: url("http://i.imgur.com/5O74VI6.jpg");
-    //     mix-blend-mode: lighten;
-    // }
 
-    button:disabled {
-        background-color: transparent;
-        font-family: "Teletype";
-        color: gray;
-        border: none;
-        box-shadow: inset 0px 0px 0px 4px gray;
-    }
-    button:hover:disabled {
-        background-color: transparent;
-        font-family: "Teletype";
-        color: gray;
-        border: none;
-        box-shadow: inset 0px 0px 0px 4px gray;
-    }
+
+   
 }

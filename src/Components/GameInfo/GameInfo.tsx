@@ -1,7 +1,7 @@
 import styles from "./GameInfo.module.scss";
 import { useContext, useState } from "react";
 import { ICard } from "../../Firebase/Models/ICard";
-import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { Dropdown} from "@fluentui/react";
 import { GameContext } from "../../Interfaces/IGameContext";
 import * as BackendService from "../../API/BackendServices";
 import { IStatusPlayer, IUser } from "../../Firebase/Models/IUser";
@@ -100,7 +100,6 @@ export function GameInfo() {
                   <CustomButton
                     text="Ver sus cartas"
                     onClick={() => {
-                      console.log(user)
                       setActive(DialogComponent.CardsByUser, {userId: user?.Id});
                     }}
                   />

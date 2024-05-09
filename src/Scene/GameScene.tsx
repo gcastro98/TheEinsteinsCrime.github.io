@@ -1,5 +1,5 @@
 import "./Styles/GameScene.scss";
-import { Canvas } from "@react-three/fiber";
+import {  Canvas } from "@react-three/fiber";
 import { Board } from "./Models/Board/Board";
 import { Class } from "./Models/Rooms/Class";
 import { Library } from "./Models/Rooms/Library";
@@ -12,40 +12,34 @@ import { IStatusPlayer } from "../Firebase/Models/IUser";
 import { Observatory } from "./Models/Rooms/Observatory";
 import { Suspense, useContext } from "react";
 import { TimeMachine } from "./Models/Rooms/TimeMachine";
-import { BakeShadows, Environment, Loader, OrbitControls, useEnvironment } from "@react-three/drei";
+import {
+  BakeShadows,
+  CameraControls,
+  Environment,
+} from "@react-three/drei";
 
 export function GameScene() {
-  const { game, users, userId } = useContext(GameContext);
+  const { game, users, userId, cameraRef } = useContext(GameContext);
   const setMove = async (move: string | number) => {
     await BackendService.makeMovement(game?.Id, userId, move);
   };
 
   return (
-    <>
+    <div style={{position: "fixed", top: 0, width: "100%", height: "100%"}}>
       <Canvas
-        camera={{ fov: 75, position: [30, 10, -30] }}
+        camera={{ fov: 75, position: [13, 0, -13] }}
         style={{
           opacity: 1,
           transition: "opacity 200ms ease-in-out",
         }}
-        
       >
         <color attach="background" args={["#202030"]} />
-        {/* <fog attach="fog" args={["#202030", 1, 45]} /> */}
-        <Environment
-          files="assets/environment.hdr"
-          background={true}
-          blur={0.8}
+        <Environment files="assets/environment.hdr" background={true} blur={0.8} />
+        <CameraControls
+          ref={cameraRef}
+          minPolarAngle={-Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
         />
-        <OrbitControls
-          target={[13, 0, -13]}
-          // autoRotate
-          // minAzimuthAngle={-Math.PI / 4}
-          // maxAzimuthAngle={Math.PI / 4}
-          // minPolarAngle={Math.PI / 6}
-          // maxPolarAngle={Math.PI - Math.PI / 6}
-        />
-        {/* <ambientLight intensity={0.25} /> */}
         <BakeShadows />
         <Suspense>
           <Class />
@@ -69,6 +63,6 @@ export function GameScene() {
             })}
         </Suspense>
       </Canvas>
-    </>
+    </div>
   );
 }

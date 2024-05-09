@@ -5,19 +5,14 @@ import { useContext } from "react";
 
 
 export function Header() {
-  const {loaded} = useContext(GameContext)
   return (
-     <nav className={`${styles.navMenu} ${styles.navMenuLoading}`}> 
-      <ul className={styles.navListButton}>
+     <div className={`${styles.navMenu} ${styles.navMenuLoading}`}> 
         <img
           src={PATHS.logoPathLoading}
           alt="The Einstein's Crime"
-          className={!loaded ? styles.navMenuLogoLoading : styles.navMenuLogo}
-          // className={styles.navMenuLogoLoading}
+          className={styles.navMenuLogo}
         />
-      
-      </ul>
-    </nav>
+    </div>
   );
 }
 

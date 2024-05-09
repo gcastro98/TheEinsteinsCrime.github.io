@@ -1,24 +1,17 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../Interfaces/IGameContext";
-import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { Dropdown } from "@fluentui/react";
 import { IRequest } from "../../../Firebase/Models/IRequest";
 import styles from "./Styles/CardManagement.module.scss";
-import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 import * as BackendService from "../../../API/BackendServices";
 import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
-import { ALL_CARDS, ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
+import {  ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/StaticData/CardsInfo";
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
-import { ICard } from "../../../Firebase/Models/ICard";
-import { mockGame } from "../../../Firebase/Models/IGame";
 import { ICardsState, MockCardState } from "./Interfaces/ICardsState";
-interface IDropdownOption {
-  key: string;
-  text: string;
-}
 
 export function Solution(): JSX.Element {
-  const { game, userId, setDialog: setActive } = useContext(GameContext);
+  const { game, userId } = useContext(GameContext);
 
   const [state, setState] = useState<ICardsState>(MockCardState);
   const updateState = (val: any) =>
@@ -43,7 +36,7 @@ export function Solution(): JSX.Element {
           readed: false,
           response: undefined,
         };
-        const solution = await BackendService.checkSolution(game?.Id, request);
+         await BackendService.checkSolution(game?.Id, request);
         reset();
       }
     } catch (ex) {

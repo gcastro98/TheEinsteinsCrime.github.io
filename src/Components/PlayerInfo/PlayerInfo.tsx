@@ -1,5 +1,5 @@
 import styles from "./PlayerInfo.module.scss";
-import { useContext, useEffect, useRef } from "react";
+import {  useContext, useEffect, useRef } from "react";
 import sylesButton from "../GameInfo/GameInfo.module.scss";
 import { GameContext } from "../../Interfaces/IGameContext";
 import ReactDice, { ReactDiceRef } from "react-dice-complete";
@@ -8,9 +8,10 @@ import { DialogComponent } from "../../Interfaces/IDialogComponent";
 import { IStatusPlayer } from "../../Firebase/Models/IUser";
 import { IStatusGame } from "../../Firebase/Models/IGame";
 import { CustomButton } from "../../Common/Components/CustomButton/CustomButton";
+import { CustomSelector } from "../../Common/Components/CustomSelector/CustomSelector";
 
 export function PlayerInfo(): any {
-  const { game, loaded } = useContext(GameContext);
+  const { game, loaded, setLookAt, cameraRef} = useContext(GameContext);
   const ref = useRef<ReactDiceRef>(null);
   const prevStatusRef = useRef<boolean>(false);
   const dice = game?.Dice;
@@ -28,15 +29,25 @@ export function PlayerInfo(): any {
   useEffect(() => {
     prevStatusRef.current = users?.findIndex((user) => user.Status === IStatusPlayer.ThrowingDice) >= 0;
   });
-  const hidden = !(loaded && game?.OnProgress === IStatusGame.InProgress) ? {display: "none"} : {}
+
+  const hidden = !(loaded && game?.OnProgress === IStatusGame.InProgress) ? { display: "none" } : {};
+  const generalOption = {
+    text: "General",
+    onClick: () => cameraRef.current?.setLookAt(14, 23, -14, 14, 0, -14, true),
+  };
+  const options = [
+    generalOption,
+    ...(users?.map((user) => {
+      return { text: user?.Name, onClick: () => setLookAt(user?.Position) };
+    }) || []),
+  ];
+
   return (
-    <div className={styles.GameInfo} 
-    style={hidden}
-    >
+    <div className={styles.GameInfo} style={hidden}>
       <ReactDice
         numDice={2}
         ref={ref}
-        rollDone={(totalNumber: any) => {
+        rollDone={(_: any) => {
           prevStatusRef.current = false;
         }}
         faceColor={"#65211C"}
@@ -57,6 +68,7 @@ export function PlayerInfo(): any {
             setDialog(DialogComponent.Board);
           }}
         />
+        <CustomSelector options={options || []} />
       </div>
     </div>
   );

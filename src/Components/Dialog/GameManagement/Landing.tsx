@@ -1,15 +1,12 @@
 import styles from "./Styles/GameManagement.module.scss";
-// import stylesButton from "../../../../GameInfo/GameInfo.module.scss";
 import { generateRandomId } from "../../../Common/Utils/Utils";
 import { GameContext } from "../../../Interfaces/IGameContext";
-import { useContext, useState } from "react";
-import { Dropdown, PrimaryButton } from "@fluentui/react";
+import { useContext} from "react";
 import { CustomButton } from "../../../Common/Components/CustomButton/CustomButton";
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 
 export const Landing = (): JSX.Element => {
   const { startManually } = useContext(GameContext);
-  const [gameGUID, setGUID] = useState<string>();
   const createGame = (gameId?: string) => {
     if (!gameId) {
       gameId = generateRandomId();
@@ -67,7 +64,6 @@ export const Landing = (): JSX.Element => {
         <br />
         <span>Albert Einstein</span>
         <div
-          // className={`${stylesButton.footer} ${styles.letterFooter}`}
           style={{ justifyContent: "center", padding: "10px" }}
         >
           <CustomButton text="Crear partida" onClick={() => createGame()} />

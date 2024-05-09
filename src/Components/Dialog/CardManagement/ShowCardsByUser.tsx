@@ -4,7 +4,7 @@ import { GameContext } from "../../../Interfaces/IGameContext";
 import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
 import styles from "./Styles/CardManagement.module.scss";
-import { useCallback, useContext, useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 import { Spinner, SpinnerSize } from "@fluentui/react";
@@ -21,7 +21,6 @@ export function ShowCardsByUser() {
       return { ...prev, ...val };
     });
   const loadMyCards = async () => {
-    console.log("algo");
     if (
       loaded &&
       dialog === DialogComponent.CardsByUser &&
@@ -41,7 +40,6 @@ export function ShowCardsByUser() {
   useEffect(() => {
     void loadMyCards();
   }, [props]);
-  console.log(props);
 
   return (
     <div>
