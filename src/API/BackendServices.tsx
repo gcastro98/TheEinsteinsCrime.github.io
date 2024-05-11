@@ -1,11 +1,9 @@
-import { IGame } from "../Firebase/Models/IGame";
 import { ICard } from "../Firebase/Models/ICard";
 import { IRequest } from "../Firebase/Models/IRequest";
-import { IPosition, IUser } from "../Firebase/Models/IUser";
 
-const backendUri = "https://the-einsteins-crime-backend.glitch.me/api/games";
+// const backendUri = "https://the-einsteins-crime-backend.glitch.me/api/games";
 
-// const backendUri = "http://localhost:3000/api/games";
+const backendUri = "http://localhost:3000/api/games";
 
 export async function getGame(gameId: string) {
   try {

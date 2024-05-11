@@ -14,7 +14,6 @@ import { DialogComponent } from "./Interfaces/IDialogComponent";
 
 import { GameScene } from "./Scene/GameScene";
 import { IPosition } from "./Firebase/Models/IUser";
-import { Vector3 } from "three";
 
 function App() {
 
@@ -101,6 +100,10 @@ function App() {
       checkGame(gameId);
       if (IsWaitingRoom) {
         setDialog(DialogComponent.Waiting);
+        const userIdSaved = sessionStorage.getItem(`${gameId}:userId`);
+        if (userIdSaved && userIdSaved !== "") {
+          updateContext({ userId: userIdSaved });
+        }
       }
     }
   };

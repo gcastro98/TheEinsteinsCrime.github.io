@@ -1,0 +1,60 @@
+:root {
+  --bg-color-0: green;
+  --bg-color-webkit: green;
+  --bg-color-moz: green;
+  --bg-color-box: green;
+  --bg-color-100: green;
+}
+
+.ledBox {
+  padding: 0.1em;
+  background-color: #202030;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.25em;
+}
+
+
+@keyframes SwitchOnSwitchOff {
+  0% {
+    background-color: var(--bg-color-0);
+    -webkit-box-shadow: 0px 0px 15px 5px var(--bg-color-webkit);
+    -moz-box-shadow: 0px 0px 15px 5px var(--bg-color-moz);
+    box-shadow: 0px 0px 15px 5px var(--bg-color-box);
+  }
+  100% {
+    background-color: var(--bg-color-100);
+  }
+}
+
+.ledOn {
+  display: flex;
+  margin: 0.25em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 2em;
+  animation-name: SwitchOnSwitchOff;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+}
+
+.ledOff {
+  display: flex;
+  margin: 0.25em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 2em;
+  background-color: var(--bg-color-100);
+}
+
+// @keyframes SwitchOnSwitchOff {
+//   0% {
+//     background-color: rgba(17, 255, 0, 1);
+//     -webkit-box-shadow: 0px 0px 15px 5px rgba(17, 255, 0, 0.75);
+//     -moz-box-shadow: 0px 0px 15px 5px rgba(102, 255, 0, 0.75);
+//     box-shadow: 0px 0px 15px 5px rgba(111, 255, 0, 0.75);
+//   }
+//   100% {
+//     background-color: green;
+//   }
+// }

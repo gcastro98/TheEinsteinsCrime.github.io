@@ -53,7 +53,7 @@ export function WaitingRoom() {
       console.error("Error to copy to clipboard. Exception: ", ex);
     }
   };
-
+  console.log(userId)
   return (
     <div>
       <DialogHeader label="Sala de espera" />
@@ -72,7 +72,7 @@ export function WaitingRoom() {
           )}
         />
       </div>
-      {!userId && (
+      {!userId && users?.length < 4 && (
         <div className={styles.inputNameSection}>
           <div className={styles.inputnameDiv}>
             <TextField
@@ -96,7 +96,9 @@ export function WaitingRoom() {
       <div className={styles.playerList}>
         {users?.length > 0 &&
           users?.map((user: IUser) => <span className={styles.userName}>{user.Name}</span>)}
-        <div className={styles.footer}>
+       
+      </div>
+      <div className={styles.footer}>
           <Spinner
             label="Esperando a que entren todos los detectives..."
             style={{ marginBottom: "2em", color: "black", fontFamily: "Teletype" }}
@@ -112,7 +114,6 @@ export function WaitingRoom() {
             />
           )}
         </div>
-      </div>
     </div>
   );
 }

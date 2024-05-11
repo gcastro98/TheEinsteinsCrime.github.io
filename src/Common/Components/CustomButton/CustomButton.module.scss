@@ -12,6 +12,12 @@
         box-shadow: inset 0px 0px 0px 4px rgba(104, 39, 33, 0.85);
         width: 15em;
         margin: 5px 0;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
     }
 
     button:hover {

@@ -1,13 +1,16 @@
 import styles from "./GameInfo.module.scss";
 import { useContext, useState } from "react";
 import { ICard } from "../../Firebase/Models/ICard";
-import { Dropdown} from "@fluentui/react";
+import { Dropdown, Icon} from "@fluentui/react";
 import { GameContext } from "../../Interfaces/IGameContext";
 import * as BackendService from "../../API/BackendServices";
 import { IStatusPlayer, IUser } from "../../Firebase/Models/IUser";
 import { DialogComponent } from "../../Interfaces/IDialogComponent";
 import { IStatusGame } from "../../Firebase/Models/IGame";
 import { CustomButton } from "../../Common/Components/CustomButton/CustomButton";
+import { ALL_CARDS } from "../../Common/StaticData/CardsInfo";
+import { getPieceColorByIndex } from "../../Common/Utils/Utils";
+import { Led } from "./Led/Led";
 
 export function GameInfo() {
   const {
@@ -18,6 +21,7 @@ export function GameInfo() {
     myCards,
     users,
     loaded,
+    setLookAt
   } = useContext(GameContext);
 
   const gameId = game?.Id;
@@ -44,16 +48,16 @@ export function GameInfo() {
   };
 
   const completeCards = () => {
-    const room = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.roomId);
-    const suspect = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.suspectId);
-    const weapon = ((game?.AllCards as ICard[]) || []).find((card) => card.id === activeRequest?.weaponId);
+    const room = ALL_CARDS[activeRequest?.roomId as number]
+    const suspect = ALL_CARDS[activeRequest?.suspectId as number]
+    const weapon = ALL_CARDS[activeRequest?.weaponId as number]
     return { suspect, room, weapon };
   };
 
   const responseCardName = () => {
-    const cardId = activeRequest?.response?.cardId;
-    if (cardId && game?.AllCards) {
-      return game?.AllCards.find((card) => card?.id === cardId)?.name;
+    const cardId = activeRequest?.response?.cardId as number;
+    if (cardId as number >= 0) {
+      return ALL_CARDS[cardId].name;
     }
   };
 
@@ -82,6 +86,8 @@ export function GameInfo() {
               );
             case IStatusPlayer.PreparingRequest: // Es tu turno, te has desplazado, y estas dentro de una habitacion
               return showMessage(`Preparando la pregunta...`);
+              case IStatusPlayer.MarkingAsReaded: // Es tu turno, te has desplazado, y estas dentro de una habitacion
+              return showMessage(`Leyendo la respuesta...`);
             case IStatusPlayer.ShowingRequest: // Es tu turno, te has desplazado y has hecho una pregunta
               const requestCards = completeCards();
               return showMessage(
@@ -125,6 +131,7 @@ export function GameInfo() {
               onClick={async () => {
                 setActive(DialogComponent.None);
                 await throwDice();
+                setLookAt(user?.Position)
               }}
             />
             <CustomButton
@@ -213,9 +220,13 @@ export function GameInfo() {
             return (
               <div className={styles.userSection}>
                 <div className={styles.userName}>
-                  <div className={styles.ledBox}>
-                    <div className={isActivePlayer ? styles.ledOn : styles.ledOff} />
-                  </div>
+                  {/* <div className={styles.ledBox}>
+                    <div className={isActivePlayer ? styles.ledOn : styles.ledOff} style={{backgroundColor: getPieceColorByIndex(user?.Ind)}}/>
+                  </div> */}
+                  <Led isActivePlayer={isActivePlayer} user={user} />
+                  {/* <div className={styles.ledBox}>
+                    <Icon iconName={isYourUser ? "Contact" : "ContactInfo"} />
+                  </div> */}
                   <span className={styles.name}>{user.Name}</span>
                 </div>
                 {isYourUser

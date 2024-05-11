@@ -100,8 +100,14 @@
 }
 
 .footer {
-  position: relative;
-  margin-top: 15%;
+  position: absolute;
+  display: flex;
+  width: 90%;
+  bottom: 8%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
 }
 
 .spinner {

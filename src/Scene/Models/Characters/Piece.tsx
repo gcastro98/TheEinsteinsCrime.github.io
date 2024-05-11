@@ -6,23 +6,23 @@ Command: npx gltfjsx@6.1.4 .\Tesla.glb
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { selectPath } from "../../../Common/Utils/Utils";
+import { MeshStandardMaterial } from "three";
 
 export interface IPieceProp{
   userIndex: number
 }
 
 export function Piece(props: IPieceProp) {
-  const { nodes, materials } = useGLTF(
+  const { nodes, } = useGLTF(
     `${selectPath()}/characters/Piece.glb`
   ) as any;
-
   const materialByUser = (userIndex: number) => {
     switch(userIndex){
-      case 0: return materials.Red_Texture;
-      case 1: return materials.Green_Texture;
-      case 2: return materials.Blue_Texture;
-      case 3: return materials.White_Texture;
-      default: return materials.White_Texture;
+      case 0: return new MeshStandardMaterial({color: 0xff0000});
+      case 1: return new MeshStandardMaterial({color: 0x008000});
+      case 2: return new MeshStandardMaterial({color: 0x0000ff});
+      case 3: return new MeshStandardMaterial({color: 0xffff00});
+      default: return new MeshStandardMaterial({color: 0xffffff});
     }
   }
   return (
