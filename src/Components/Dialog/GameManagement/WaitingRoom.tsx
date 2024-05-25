@@ -105,7 +105,7 @@ export function WaitingRoom() {
             size={SpinnerSize.large}
             className={styles.spinner}
           />
-          {users?.length >= 2 && (
+          {userId !== "" && users?.length >= 2 && (
             <CustomButton
               className={styles.buttonStartGame}
               onClick={() => void StartGame()}
