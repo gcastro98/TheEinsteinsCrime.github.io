@@ -22,7 +22,7 @@ export function Solution(): JSX.Element {
   const { suspect, weapon, room, loading } = state;
 
   const reset = () => {
-    setDialog(DialogComponent.None);
+    // setDialog(DialogComponent.None);
     updateState(MockCardState);
   };
 
