@@ -36,20 +36,12 @@ export function GameScene() {
       >
         <color attach="background" args={["#202030"]} />
         <Environment files="assets/environment.hdr" background={true} blur={0.8} />
-        {/* <CameraControls
+        <CameraControls
           ref={cameraRef}
           minPolarAngle={-Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
-        /> */}
-         <OrbitControls
-          autoRotate
-          target={[13, 0, -13]}
-
-          // minAzimuthAngle={-Math.PI / 4}
-          // maxAzimuthAngle={Math.PI / 4}
-          // minPolarAngle={Math.PI / 6}
-          // maxPolarAngle={Math.PI - Math.PI / 6}
         />
+      
         <BakeShadows />
         <Suspense>
           <Class />
