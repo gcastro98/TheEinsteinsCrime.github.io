@@ -10,11 +10,12 @@ import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHead
 import { Spinner, SpinnerSize } from "@fluentui/react";
 
 export function ShowCardsByUser() {
-  const { game, props, dialog, loaded } = useContext(GameContext);
+  const { game, props, dialog, loaded, users } = useContext(GameContext);
   const [cardState, setCardsStates] = useState({
     cardsIds: [],
     cardsPrepared: false,
     loading: false,
+    userName: ''
   });
   const updateCardsStates = (val: any) =>
     setCardsStates((prev) => {
@@ -27,9 +28,10 @@ export function ShowCardsByUser() {
       props?.userId !== "" &&
       !cardState.cardsPrepared
     ) {
+      const userName = users.filter((user) => user.Id === props?.userId)?.pop()?.Name;
       const cards: ICard[] = await BackendService.getMyCards(game?.Id, props?.userId.toString());
       const cardsIds = cards?.map((card) => card?.id);
-      updateCardsStates({ cardsIds, cardsPrepared: true });
+      updateCardsStates({ cardsIds,userName, cardsPrepared: true });
     }
   };
 
@@ -43,7 +45,7 @@ export function ShowCardsByUser() {
 
   return (
     <div>
-      <DialogHeader label={"Cartas de Prueba"} />
+      <DialogHeader label={`Cartas de ${cardState?.userName}`} />
       {cardState?.cardsPrepared ? <Carrousel indexArr={cardState?.cardsIds} /> : <Spinner
             label="Esperando a que entren todos los detectives..."
             style={{ marginBottom: "2em", color: "black", fontFamily: "Teletype" }}

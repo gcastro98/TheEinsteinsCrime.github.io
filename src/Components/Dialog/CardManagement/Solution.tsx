@@ -9,9 +9,10 @@ import {  ROOM_OPTIONS, SUSPECT_OPTIONS, WEAPON_OPTIONS } from "../../../Common/
 import { DialogHeader } from "../../../Common/Components/DialogHeader/DialogHeader";
 import { Carrousel } from "../../../Common/Components/Carrousel/CarrouselCards";
 import { ICardsState, MockCardState } from "./Interfaces/ICardsState";
+import { DialogComponent } from "../../../Interfaces/IDialogComponent";
 
 export function Solution(): JSX.Element {
-  const { game, userId } = useContext(GameContext);
+  const { game, userId, setDialog } = useContext(GameContext);
 
   const [state, setState] = useState<ICardsState>(MockCardState);
   const updateState = (val: any) =>
@@ -21,6 +22,7 @@ export function Solution(): JSX.Element {
   const { suspect, weapon, room, loading } = state;
 
   const reset = () => {
+    setDialog(DialogComponent.None);
     updateState(MockCardState);
   };
 
